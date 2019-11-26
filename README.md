@@ -30,7 +30,7 @@ Install npm dependencies
 
 Run the app in the development mode
 
-```$ npm start```
+```$ npm run dev```
 
 ## Testing
 Install devDependencies, run ```npm install --only=dev```.
