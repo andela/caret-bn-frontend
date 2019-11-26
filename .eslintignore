@@ -1,0 +1,10 @@
+# Build
+build/*
+dist/*
+lib/*
+
+# Tests
+src/**/*.spec.js
+
+# Dependency
+node_modules/
