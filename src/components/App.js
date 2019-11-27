@@ -1,13 +1,38 @@
-import React from 'react';
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { fireReduxAction } from '../actions/defaultAction';
 
-const App = () => (
-    <div>
-        <h1> Welcome to Barefoot Nomad App</h1>
-        <h2>
-<Link to="/users">Go to users route</Link>
-        </h2>
-    </div>
-);
 
-export default App;
+class App extends Component {
+  componentDidMount() {
+    const { props } = this;
+    props.fireReduxAction();
+  }
+
+  render() {
+    const { props: { default: { text } } } = this;
+    return (
+      <div>
+        <h1>Welcome to barefoot Nomad</h1>
+        <h3>{text}</h3>
+        <h4>
+          <Link to="/users">Go to users route</Link>
+        </h4>
+      </div>
+    );
+  }
+}
+
+App.propTypes = {
+  fireReduxAction: PropTypes.func.isRequired,
+  default: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  default: state.default,
+});
+
+export default connect(mapStateToProps, { fireReduxAction })(App);
