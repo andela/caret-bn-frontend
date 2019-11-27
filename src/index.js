@@ -6,6 +6,7 @@ import App from './components/App';
 import store from './reduxStore';
 import Users from './views/Authentication';
 import NotFound from './components/NotFound';
+import './styles/styles.scss';
 
 const Root = () => (
     <Provider store={store}>

@@ -15,11 +15,11 @@ export class App extends Component {
   render() {
     const { props: { default: { text } } } = this;
     return (
-      <div>
+      <div className="header">
         <h1>Welcome to barefoot Nomad</h1>
         <h3>{text}</h3>
         <h4>
-          <Link to="/users">Go to users route</Link>
+          <Link to="/users" className="link">Go to users route</Link>
         </h4>
       </div>
     );

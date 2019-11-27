@@ -1,0 +1,21 @@
+@import 'variables';
+
+* {
+	font-family: $master-font;
+}
+
+.header {
+	background-color: $primary;
+	color: $light;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.link {
+		color: $light;
+	}
+}
+
+.link {
+	text-decoration: none;
+}
