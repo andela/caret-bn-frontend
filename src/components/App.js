@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { fireReduxAction } from '../actions/defaultAction';
+
 
 class App extends Component {
   componentDidMount() {
@@ -16,6 +18,9 @@ class App extends Component {
       <div>
         <h1>Welcome to barefoot Nomad</h1>
         <h3>{text}</h3>
+        <h4>
+          <Link to="/users">Go to users route</Link>
+        </h4>
       </div>
     );
   }
