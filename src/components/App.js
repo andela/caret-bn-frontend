@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { fireReduxAction } from '../actions/defaultAction';
 
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     const { props } = this;
     props.fireReduxAction();

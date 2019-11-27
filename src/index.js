@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from './components/App';
 import store from './reduxStore';
-import Users from './views/Autthentication';
+import Users from './views/Authentication';
 import NotFound from './components/NotFound';
 
 const Root = () => (

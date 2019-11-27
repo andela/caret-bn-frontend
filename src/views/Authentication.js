@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoginComponent from '../components/LoginComponent';
+import Login from '../components/Login';
 
-export default function Users() {
-  return (
+const Users = () => (
         <div>
             <p>
 <Link to="/">Home</Link>
             </p>
             <h1> This is the main user component </h1>
-            <LoginComponent />
+            <Login />
         </div>
-  );
-}
+);
+
+export default Users;
