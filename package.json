@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "build-storybook",
+    "start": "serve -s ./dist",
     "dev": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
-    "heroku-build": "build-storybook ",
     "test": "jest --config ./jest.config.json --coverage",
     "test:watch": "npm run test -- --watch",
-    "storybook": "start-storybook",
-    "build-storybook": "build-storybook -c .storybook -o .out"
+    "storybook": "build-storybook && start-storybook",
+    "build-storybook": "build-storybook -c .storybook"
   },
   "repository": {
     "type": "git",
