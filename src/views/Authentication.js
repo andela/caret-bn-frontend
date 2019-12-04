@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from '../components/global/Header';
+import Header from '../components/Header';
 import AuthHolder from '../components/global/AuthHolder';
 
-const Users = () => (
-        <div className="authentication">
-            <Header />
-            <AuthHolder />
-        </div>
+const Authentication = () => (
+    <div className="authentication">
+        <Header />
+        <AuthHolder data-test="auth-holder" />
+    </div>
 );
 
-export default Users;
+export default Authentication;

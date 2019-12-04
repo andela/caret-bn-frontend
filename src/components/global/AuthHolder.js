@@ -2,16 +2,17 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import SocialButtons from '../pages/SocialButtons';
 
 export default function AuthHolder() {
   return (
         <div className="auth-holder">
             <div>
                 <Route path="/login">
-                <Login />
+                    <Login />
                 </Route>
                 <Route path="/register">
-                <Signup />
+                    <Signup />
                 </Route>
             </div>
             <span className="auth-separator">
@@ -19,8 +20,8 @@ export default function AuthHolder() {
                 <h5>OR</h5>
                 <div className="line" />
             </span>
-            <div>
-                <img width="75%" src="https://pngimage.net/wp-content/uploads/2018/06/login-with-google-png-4.png" alt="Social Auth" />
+            <div className="social-auth">
+                <SocialButtons />
             </div>
         </div>
   );

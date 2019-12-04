@@ -1,5 +1,5 @@
 import {
-  SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAILURE,
+  SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_SUCCESS, SOCIAL_AUTH_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +33,18 @@ export default (state = initialState, action) => {
         ...state,
         dataError: action.payload,
         status: 'Failure',
+      };
+    case SOCIAL_AUTH_SUCCESS:
+      return {
+        ...state,
+        data: action.payload,
+        status: 'success',
+      };
+    case SOCIAL_AUTH_ERROR:
+      return {
+        ...state,
+        dataError: action.payload,
+        status: 'failure',
       };
     default:
       return {

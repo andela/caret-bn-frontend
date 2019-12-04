@@ -1,6 +1,10 @@
-/* eslint-disable import/prefer-default-export */
-export const DEFAULT_ACTION = 'DEFAULT_ACTION';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const SIGN_IN_FACEBOOK = 'SIGN_IN_FACEBOOK';
+export const SIGN_IN_GOOGLE = 'SIGN_IN_GOOGLE';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGIN_PENDING = 'LOGIN_PENDING';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const SOCIAL_AUTH_SUCCESS = 'SOCIAL_AUTH_SUCCESS';
+export const SOCIAL_AUTH_ERROR = 'SOCIAL_AUTH_ERROR';

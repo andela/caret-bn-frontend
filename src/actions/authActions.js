@@ -1,5 +1,6 @@
 import {
-  SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAILURE,
+  SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_ERROR,
+  SOCIAL_AUTH_SUCCESS,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import 'regenerator-runtime';
@@ -31,3 +32,12 @@ const userLogin = ({ email, password }) => async (dispatch) => {
 };
 
 export default userLogin;
+export const socialAuthAction = (userData) => (dispatch) => new Promise((resolve, reject) => {
+  try {
+    localStorage.setItem('token', userData.token);
+    dispatch(authType(SOCIAL_AUTH_SUCCESS, userData));
+    resolve();
+  } catch (error) {
+    dispatch(authType(SOCIAL_AUTH_ERROR, error.message));
+  }
+});
