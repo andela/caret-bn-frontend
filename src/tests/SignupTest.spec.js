@@ -66,7 +66,7 @@ describe('Signup Test Suite', () => {
     const component = setUp(mainState); 
     component.setProps({history: {push: jest.fn()}, status: 'success'});
     const { push } = component.instance().props.history;
-    expect(push).toHaveBeenCalledWith('/'); 
+    expect(push).toHaveBeenCalledWith('/login'); 
   }); 
 
   it('Should Simulate Failed Signup', () => {

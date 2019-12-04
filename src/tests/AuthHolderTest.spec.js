@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import AuthHolder from '../components/global/AuthHolder';
 import Signup from '../components/pages/Signup';
 import Login from '../components/pages/Login';
+import UserVerify from '../components/pages/UserVerify';
 
 const wrapper = shallow(<AuthHolder  />);
 
@@ -20,5 +21,9 @@ describe('AuthHolder Test Suite', () => {
 
   it('Should Find Login component ', () => {
     expect(wrapper.find(Login)).toHaveLength(1);
+  });
+
+  it('Should Find User verify In AuthHolder', () => {
+    expect(wrapper.find(UserVerify)).toHaveLength(1);
   });
 });

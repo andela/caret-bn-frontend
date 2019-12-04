@@ -11,6 +11,7 @@ import 'regenerator-runtime/runtime';
 import SocialAuthSuccess from './views/SocialAuthSuccess';
 
 import Home from './views/Home';
+import Verify from './views/Verify';
 
 const Root = () => (
     <Provider store={store}>
@@ -20,6 +21,7 @@ const Root = () => (
                 <Route path="/login" component={AuthPage} />
                 <Route path="/register" component={AuthPage} />
                 <Route exact path="/users/auth/success" component={SocialAuthSuccess} />
+                <Route path="/verify/:token" component={Verify} />
                 <Route path="*" component={NotFound} />
             </Switch>
         </Router>
