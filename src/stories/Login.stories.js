@@ -1,7 +1,6 @@
 import React from 'react';
-import LoginComponent from '../components/Login'
+import LoginComponent from '../components/pages/Login';
 
 export default { title: 'Login' };
 
-export const Login = () => 
-<LoginComponent/>
+export const Login = () => <LoginComponent />;

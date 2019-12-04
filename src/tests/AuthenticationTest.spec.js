@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Authenticaton from '../views/Authentication';
-import Login from '../components/Login';
+import AuthHolder from '../components/global/AuthHolder';
 import NotFound from '../components/NotFound';
 
 const wrapper = shallow(<Authenticaton />);
@@ -12,8 +12,8 @@ describe('Authentication Test Suite', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should contain <Login /> Component', () => {
-    expect(wrapper.find(Login)).toHaveLength(1);
+  it('Should contain AuthHolder Component', () => {
+    expect(wrapper.find(AuthHolder)).toHaveLength(1);
   });
 
   it('Should not contain <NotFound /> Component', () => {

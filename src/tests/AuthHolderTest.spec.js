@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
-import AuthHolder from '../components/AuthHolder';
+import AuthHolder from '../components/global/AuthHolder';
 import Signup from '../components/pages/Signup';
+import Login from '../components/pages/Login';
 
 const wrapper = shallow(<AuthHolder  />);
 
@@ -13,5 +13,12 @@ describe('AuthHolder Test Suite', () => {
 
   it('Should Find Signup In AuthHolder', () => {
     expect(wrapper.find(Signup)).toHaveLength(1);
+  });
+  it('Should Render the AthHolder Component', () => {
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('Should Find Login component ', () => {
+    expect(wrapper.find(Login)).toHaveLength(1);
   });
 });

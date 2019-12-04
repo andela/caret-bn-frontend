@@ -1,4 +1,6 @@
-import { SIGNUP_SUCCESS, SIGNUP_FAIL } from '../actions/types';
+import {
+  SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAILURE,
+} from '../actions/types';
 
 const initialState = {
   data: null,
@@ -19,6 +21,18 @@ export default (state = initialState, action) => {
         ...state,
         dataError: action.payload,
         status: 'error',
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        data: action.payload,
+        status: 'Success',
+      };
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        dataError: action.payload,
+        status: 'Failure',
       };
     default:
       return {
