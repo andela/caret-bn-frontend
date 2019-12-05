@@ -5,7 +5,7 @@ import mockStore from '../utilities/tests/mockStore';
 
 const setUp = (initialState = {}) => {
     const store = mockStore(initialState);
-    const wrapper = shallow(<Home store={store} />).childAt(0).dive();
+    const wrapper = shallow(<Home store={store} {...{match: { params: {token: 'jdjdjdkk'}}}} />).childAt(0).dive();
     return wrapper;
 };
 
