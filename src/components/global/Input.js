@@ -17,6 +17,7 @@ const Input = ({
       required
     />
 );
+
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

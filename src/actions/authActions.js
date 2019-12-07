@@ -6,7 +6,9 @@ const authType = (type, payload) => ({
   payload,
 });
 
-export const signupAction = (userData) => (dispatch) => backendCall.post('/users/register', userData)
+const host = window.location.origin;
+
+export const signupAction = (userData) => (dispatch) => backendCall.post('/users/register', { ...userData, host })
   .then((response) => {
     dispatch(authType(SIGNUP_SUCCESS, response.data));
   })

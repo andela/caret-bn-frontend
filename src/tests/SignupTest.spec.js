@@ -1,11 +1,10 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Signup } from '../components/pages/Signup';
-import Input from '../components/global/Input';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
-import {BrowserRouter as Router} from 'react-router-dom';
+import { mapStateToProps } from '../components/pages/Signup';
 
 const middlewares = [thunk];
 
@@ -28,7 +27,6 @@ const props = {
 
   },
   signupAction: jest.fn()
-
 }
 
 const testStore = (state) => {
@@ -45,13 +43,12 @@ const setUp = (initialState =  {}) => {
 } 
 
 describe('Signup Test Suite', () => { 
-
-    it('Should Mount Successfully', () => {
+  it('Should Mount Successfully', () => {
     const component = setUp(mainState); 
     const handleSubmitSpy = jest.spyOn(component.instance(), 'handleSubmit');
-		const email = { target: { name: 'email', value: 'johndoe@gmail.com' } };
-		const username = { target: { name: 'username', value: 'johndoe' } };
-		const password = { target: { name: 'password', value: 'Pa$5w0rd' } };
+    const email = { target: { name: 'email', value: 'johndoe@gmail.com' } };
+    const username = { target: { name: 'username', value: 'johndoe' } };
+    const password = { target: { name: 'password', value: 'Pa$5w0rd' } };
     const confirmPassword = { target: { name: 'confirmPassword', value: 'Pa$5w0rd' } };
     
     component.find('[data-test="email"]').simulate('change', email);
@@ -62,28 +59,39 @@ describe('Signup Test Suite', () => {
     component.find('form').simulate('submit', {
       preventDefault() {},
     });
+  expect(handleSubmitSpy).toReturn();
+  });
 
-    expect(handleSubmitSpy).toReturn();
-    });
-
-    it('Should Simulate Successfull Signup', () => {
-      const component = setUp(mainState); 
-      component.setProps({history: {push: jest.fn()}, status: 'success'});
-      const { push } = component.instance().props.history;
-      expect(push).toHaveBeenCalledWith('/'); 
+  it('Should Simulate Successfull Signup', () => {
+    const component = setUp(mainState); 
+    component.setProps({history: {push: jest.fn()}, status: 'success'});
+    const { push } = component.instance().props.history;
+    expect(push).toHaveBeenCalledWith('/'); 
   }); 
 
-    it('Should Simulate Failed Signup', () => {
-      const component = setUp(mainState); 
-      component.setProps({history: {push: jest.fn()}, dataError: { data: { message: 'Failed' } }, status: 'error'});
-      const { push } = component.instance().props.history;
-      expect(push).toHaveBeenCalledTimes(0); 
+  it('Should Simulate Failed Signup', () => {
+    const component = setUp(mainState); 
+    component.setProps({history: {push: jest.fn()}, dataError: { data: { message: 'Failed' } }, status: 'error'});
+    const { push } = component.instance().props.history;
+    expect(push).toHaveBeenCalledTimes(0); 
   }); 
 
-    it('Should Simulate Default Status', () => {
-      const component = setUp(mainState); 
-      component.setProps({history: {push: jest.fn()}, status: ''});
-      const { push } = component.instance().props.history;
-      expect(push).toHaveBeenCalledTimes(0); 
+  it('Should Simulate Default Status', () => {
+    const component = setUp(mainState); 
+    component.setProps({history: {push: jest.fn()}, status: ''});
+    const { push } = component.instance().props.history;
+    expect(push).toHaveBeenCalledTimes(0);
   }); 
+
+  it('Should return initial data', () => {
+    const initialState = {
+        auth: {
+          data: null,
+          dataError: null,
+          status: '',
+        }
+    };
+    expect(mapStateToProps(initialState).data).toEqual(null);
+  });
+
 });

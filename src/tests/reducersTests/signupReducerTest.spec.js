@@ -1,5 +1,5 @@
 import authReducer from '../../reducers/authReducer';
-import { SIGNUP_PENDING, SIGNUP_FAIL, SIGNUP_SUCCESS } from '../../actions/types';
+import { SIGNUP_FAIL, SIGNUP_SUCCESS } from '../../actions/types';
 
 describe('Signup Reducer Test Suite', () => {
     it('Should return default state', () => {
@@ -46,18 +46,4 @@ describe('Signup Reducer Test Suite', () => {
           "status": 'error',
         });
     });
-
-    it('Should return SIGNUP_PENDING', () => {
-        const action = {
-            type: SIGNUP_PENDING,
-            payload: true,
-        }
-        const returnedSate = authReducer(undefined, action);
-        expect(returnedSate).toEqual({
-          "data": null,
-          "dataError": null,
-          "status": '',
-        })
-    });
-
 });
