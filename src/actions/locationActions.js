@@ -1,8 +1,6 @@
 import { GET_LOCATIONS, GET_LOCATIONS_ERROR } from './types';
-import authHelper from '../helpers/authHelper';
+import { getToken } from '../helpers/authHelper';
 import backendCall from '../helpers/backendCall';
-
-const { getToken } = authHelper;
 
 const token = getToken();
 

@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import Login, { Login as LoginComponent } from '../../components/pages/Login';
 import Input from '../../components/global/Input';
+import findByTestAttribute from '../../utilities/tests/findByTestAttribute';
 
 const mockFunc = jest.fn();
 const mockStore = configureStore([thunk]);
@@ -48,8 +49,8 @@ describe('Login Test Suite', () => {
   });
 
   it('Should handle change when input data changed', () => {
-    const input = wrapper.find(Input).first();
-    input.simulate('change');
+    const input = findByTestAttribute(wrapper, 'email');
+    input.at(0).simulate('change');
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -57,7 +58,7 @@ describe('Login Test Suite', () => {
     wrapper = shallow(
       <LoginComponent />
     );
-      // test Success case
+    // test Success case
 
     const success = {
       status: 'Success',
@@ -92,7 +93,7 @@ describe('Login Test Suite', () => {
 
 
     // test Default case
-    
+
     const Default = {
       status: 'Default',
       history: {

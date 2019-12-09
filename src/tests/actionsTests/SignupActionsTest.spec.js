@@ -33,14 +33,14 @@ describe('Signup Actions Test Suite', () => {
         response: {
           message: 'any message',
           error: ["username required"],
-      },
+        },
       });
     });
 
     const expectedActions = [{
       payload: {
-          message: 'any message',
-          error: ["username required"],
+        message: 'any message',
+        error: ["username required"],
       },
       type: SIGNUP_FAIL
     }];
@@ -60,14 +60,14 @@ describe('Signup Actions Test Suite', () => {
         response: {
           message: 'any message',
           data: userData
-      },
+        },
       });
     });
 
     const expectedActions = [{
       payload: {
-          message: 'any message',
-          data: userData
+        message: 'any message',
+        data: userData
       },
       type: SIGNUP_SUCCESS
     }];
@@ -77,5 +77,5 @@ describe('Signup Actions Test Suite', () => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
       });
- });
+  });
 });

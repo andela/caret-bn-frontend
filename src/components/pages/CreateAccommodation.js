@@ -6,12 +6,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import {
-  Form, Container, Row, Col,
+  Form, Container, Row, Col, Button,
 } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import createAccommodation from '../../actions/accommodationActions';
 import { getLocations } from '../../actions/locationActions';
-import Button from '../global/Button';
 import Breadcrumbs from '../global/Breadcrumbs';
 import AlertComponent from '../global/AlertComponent';
 
@@ -155,7 +154,9 @@ export class CreateAccommodation extends Component {
               <Form.Label>Image(s)</Form.Label>
               <Form.Control id="image" name="selectedFile" type="file" onChange={this.handleFileChange} accept="image/*" multiple="multiple" required />
             </Form.Group>
-            <Button name={isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Create'} />
+            <Button variant="primary" type="submit">
+              {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Create'}
+            </Button>
           </Form>
         </Container>
       </div>

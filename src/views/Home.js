@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AllAccommodation from '../components/pages/AllAccommodation'
 
-const Home = () =>(
+const Home = () => (
   <>
   </>
 );

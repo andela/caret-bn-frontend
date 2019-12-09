@@ -7,8 +7,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { compose } from 'redux';
-import Input from '../global/Input';
-import Button from '../global/Button';
+import { Button, Form } from 'react-bootstrap';
 import userLogin from '../../actions/authActions';
 
 export class Login extends Component {
@@ -65,9 +64,9 @@ export class Login extends Component {
     return (
       <div className="login-form">
         <form onSubmit={this.submitForm} className="auth-form">
-          <Input type="email" name="email" id="email" placeholder="Email..." onChange={this.handleChange} data="email" value={email} title="Enter a valid email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required />
-          <Input type="password" name="password" id="password" placeholder="Password..." onChange={this.handleChange} data="password" value={password} title="Enter your password" required />
-          <Button name={isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'login'} />
+          <Form.Control data-test="email" type="email" name="email" id="email" placeholder="Email..." onChange={this.handleChange} data="email" value={email} title="Enter a valid email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required />
+          <Form.Control type="password" name="password" id="password" placeholder="Password..." onChange={this.handleChange} data="password" value={password} title="Enter your password" required />
+          <Button type="submit" variant="primary">{isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'login'}</Button>
         </form>
         <Link to="/forgotpassword">
           <p className="forgot-password">Forgot password?</p>
