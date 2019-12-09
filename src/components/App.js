@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fireReduxAction } from '../actions/defaultAction';
 
-
 export class App extends Component {
   componentDidMount() {
     const { props } = this;
@@ -13,14 +12,18 @@ export class App extends Component {
   }
 
   render() {
-    const { props: { default: { text } } } = this;
     return (
       <div className="header">
         <h1>Welcome to barefoot Nomad</h1>
-        <h3>{text}</h3>
+        <br />
         <h4>
-          <Link to="/users" className="link">Go to users route</Link>
+          <Link to="/users" className="link">Login</Link>
         </h4>
+        <br />
+        <h4>
+          <Link to="/register" className="link">Register</Link>
+        </h4>
+        <br />
       </div>
     );
   }
@@ -28,10 +31,9 @@ export class App extends Component {
 
 App.propTypes = {
   fireReduxAction: PropTypes.func.isRequired,
-  default: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   default: state.default,
 });
 

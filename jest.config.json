@@ -1,7 +1,8 @@
 {
   "testRegex": "((\\.|/*.)(spec))\\.js?$",
   "setupFilesAfterEnv": [
-    "<rootDir>/jest.setup.js"
+    "<rootDir>/jest.setup.js",
+    "@babel/polyfill"
   ],
   "collectCoverageFrom": [
     "src/**/*.{js,jsx,ts,tsx}",

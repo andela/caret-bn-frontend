@@ -1,6 +1,6 @@
-import { DEFAULT_ACTION } from '../actions/types';
-import { fireReduxAction } from '../actions/defaultAction';
-import store from '../reduxStore';
+import { DEFAULT_ACTION } from '../../actions/types';
+import { fireReduxAction } from '../../actions/defaultAction';
+import store from '../../reduxStore';
 
 describe('Actions Test Suite', () => {
   it('Should run default actions', () => {
