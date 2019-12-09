@@ -25,7 +25,7 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-  pattern: PropTypes.string.isRequired,
+  pattern: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 

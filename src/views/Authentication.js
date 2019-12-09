@@ -1,14 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Login from '../components/Login';
+import Header from '../components/global/Header';
+import AuthHolder from '../components/global/AuthHolder';
 
 const Users = () => (
-        <div>
-            <p>
-<Link to="/">Home</Link>
-            </p>
-            <h1> This is the main user component </h1>
-            <Login />
+        <div className="authentication">
+            <Header />
+            <AuthHolder />
         </div>
 );
 

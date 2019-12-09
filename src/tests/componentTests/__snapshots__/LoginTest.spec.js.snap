@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Test Suite Should check if form handling clicked 1`] = `ReactWrapper {}`;
+
+exports[`Login Test Suite Should handle change when input data changed 1`] = `ReactWrapper {}`;
+
+exports[`Login Test Suite should render the Login page 1`] = `ReactWrapper {}`;
