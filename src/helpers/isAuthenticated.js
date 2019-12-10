@@ -1,4 +1,5 @@
 import jwtDecode from 'jsonwebtoken';
+// eslint-disable-next-line import/no-cycle
 import { getToken } from './authHelper';
 
 const isAuthenticated = () => {

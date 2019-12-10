@@ -4,7 +4,6 @@ import MenuComponent from './global/MenuComponent';
 
 export default function Home() {
   return (
-    <Container fluid="true">
-    </Container>
+    <Container fluid="true" />
   );
 }
