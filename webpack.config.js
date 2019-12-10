@@ -1,10 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.join(__dirname, '/dist'),
+    publicPath: '/',
     filename: 'index_bundle.js',
   },
   module: {
@@ -45,6 +47,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+    }),
+    new webpack.DefinePlugin({
+      __API__: JSON.stringify('https://caret-bn-backend-staging.herokuapp.com/api/v1/'),
     }),
   ],
 };
