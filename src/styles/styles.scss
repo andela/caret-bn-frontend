@@ -1,148 +1,265 @@
 @import './node_modules/react-toastify/scss/main.scss';
 @import 'variables';
 @import './pages/SocialAuthSuccessStyles.scss';
+@import './requests/requests.scss';
+@import './requests/index.scss';
+@import './breadcrumbs.scss';
+@import './menuBar.scss';
+@import '~bootstrap/scss/bootstrap';
+
 * {
-	font-family: $master-font;
-	margin: 0;
-	padding: 0;
+  font-family: $master-font;
+  margin: 0;
+  padding: 0;
 }
 .header {
-	background-color: $primary;
-	color: $light;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	.link {
-		color: $light;
-	}
+  background-color: $primary;
+  color: $light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .link {
+    color: $light;
+  }
 }
 .link {
-	text-decoration: none;
+  text-decoration: none;
 }
-
-.header-component {
-	color: $light;
-	display: flex;
-	flex-direction: column;
-    align-items: center;
-    margin-top: 5rem;
-	img {
-		margin: 10rem;
-		height: 10rem;
-		width: 10rem;
-		margin-bottom: 10px;
-	}
-	h2,
-	h4 {
-		margin-bottom: 1rem;
-	}
-	color: $light;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	height: 200px;
-	.link {
-		color: $light;
-	}
-}
-
 .authentication {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: $bg-image;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-	height: 100vh;
+  background: $bg-image;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 120vh;
 }
-
+.header-component {
+  color: $light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .header-img {
+    margin: 1rem;
+    height: 5rem;
+    width: 5rem;
+  }
+  h2,
+  h4 {
+    margin-bottom: 1rem;
+  }
+}
 .auth-holder {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	margin: auto;
-	padding: 1rem 0;
-	background-color: $white;
-	text-align: center;
-	width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  padding: 2rem 0;
+  background-color: $white;
+  text-align: center;
+  width: 90%;
+  .auth-separator {
+    display: flex;
+    margin: 1rem 0;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    div {
+      border-top: 1px solid $primary;
+      width: 100px;
+      height: fit-content;
+    }
+    h5 {
+      margin: 5px;
+    }
+  }
 }
+.login-form,
+.signup-form {
+  form {
+    input {
+      width: 80%;
+      padding-left: 0.5rem;
+    }
+    button {
+      text-transform: uppercase;
+      font-size: 1rem;
+      background: $primary;
+      border-color: $light;
+      color: $light;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      margin: 0.2rem 0.5rem 1rem 0;
+      transition: all 0.5s ease-in-out;
+      height: 2rem;
+      width: 150px;
 
-.auth-separator {
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-	align-items: center;
-	justify-content: center;
-	div {
-		border-top: 1px solid $primary;
-		width: 100px;
-		height: fit-content;
-	}
-	h5 {
-		margin: 5px;
-	}
+      &:hover {
+        border-color: $primary;
+        background: $light;
+        color: $primary;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .forgot-password {
+    color: $redish;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .switch-auth {
+    color: $primary;
+    margin: 0;
+    padding: 0;
+  }
 }
-
+.form-input {
+  border: 1px solid $blackish;
+  margin-bottom: 1rem;
+  height: 2rem;
+  font-size: 0.8rem;
+}
 .button-holder {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
 .btn-social {
-	display: flex;
-	flex-direction: row;
-	background-color: blueviolet;
-	justify-content: space-evenly;
-	align-items: center;
-	border-radius: 3px;
-	font-size: 15px;
-	font-weight: 900;
-	text-decoration: none;
-	width: 80%;
-	height: 60px;
-	text-transform: uppercase;
-	margin: 5px 0;
-	img {
-		height: 35px;
-		width: 35px;
-		align-self: center;
-		justify-content: start;
-	}
+  display: flex;
+  flex-direction: row;
+  background-color: blueviolet;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 900;
+  text-decoration: none;
+  width: 80%;
+  height: 60px;
+  text-transform: uppercase;
+  margin: 5px 0;
+  img {
+    height: 35px;
+    width: 35px;
+    align-self: center;
+    justify-content: start;
+  }
 }
-
 .btn-google {
-	color: $white;
-	background-color: $googleRed;
-	border: 1px solid $googleRed;
+  color: $white;
+  background-color: $googleRed;
+  border: 1px solid $googleRed;
 
-	&:hover {
-		background-color: $googleRedDark;
-	}
+  &:hover {
+    background-color: $googleRedDark;
+  }
 }
-
 .btn-facebook {
-	color: white;
-	background-color: $facebookBlue;
-	border: 2px solid $facebookBlue;
+  color: white;
+  background-color: $facebookBlue;
+  border: 2px solid $facebookBlue;
 
-	&:hover {
-		background-color: $facebookBlueDark;
-	}
-    .header-img{
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-        height: 7rem;
-        width: 7rem;
-    }
-    h2,h4{
-        margin-bottom: 2rem;
-    }
+  &:hover {
+    background-color: $facebookBlueDark;
+  }
+  .header-img {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    height: 7rem;
+    width: 7rem;
+  }
+  h2,
+  h4 {
+    margin-bottom: 2rem;
+  }
 }
-.auth-holder{
+.auth-holder {
+  margin: auto;
+  padding: 2rem 0;
+  background-color: $white;
+  text-align: center;
+  width: 60vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  > div {
+    margin: 1%;
+    width: 50%;
+  }
+}
+.login-form,
+.signup-form,
+.forgot-password {
+  > form input {
+    width: 80%;
+    padding-left: 0.5rem;
+  }
+  button {
+    text-transform: uppercase;
+    font-size: 1rem;
+    background: #073763;
+    border-color: $light;
+    color: #e2e2e2;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    margin: 0.2rem 0.5rem 1rem 0;
+    transition: all 0.5s ease-in-out;
+    height: 2rem;
+    width: 150px;
+
+    &:hover {
+      border-color: #073763;
+      background: #e2e2e2;
+      color: #073763;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .forgot-password {
+    color: $redish;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .switch-auth {
+    color: $primary;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Media Queries
+@media only screen and (min-width: 768px) {
+  .authentication {
+    background: $bg-image;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 110vh;
+  }
+  .header-component {
+    color: $light;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .header-img {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      height: 7rem;
+      width: 7rem;
+    }
+    h2,
+    h4 {
+      margin-bottom: 2rem;
+    }
+  }
+  .auth-holder {
     margin: auto;
     padding: 2rem 0;
     background-color: $white;
@@ -152,227 +269,71 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    > div{
-        margin: 1%;
-        width: 50%;
+    > div {
+      margin: 1%;
+      width: 50%;
     }
-}
-.login-form, .signup-form, .forgot-password{
-    > form Input{
+    .auth-separator {
+      margin-left: 2.5rem;
+      flex-direction: column;
+      width: fit-content;
+      div {
+        border-top: 0px;
+        border-left: 1px solid $primary;
+        height: 8rem;
+        width: fit-content;
+      }
+      h5 {
+        margin: 5px -10px;
+      }
+    }
+  }
+  .login-form,
+  .signup-form {
+    form {
+      input {
         width: 80%;
         padding-left: 0.5rem;
-    }
-    button{
-			text-transform: uppercase;
-			font-size: 1rem;
-			background: #073763;
-			border-color: $light;
-			color: #e2e2e2;
-			padding: 0.2rem 0.5rem;
-			cursor: pointer;
-			margin: 0.2rem 0.5rem 1rem 0;
-			transition: all 0.5s ease-in-out;
-			height: 2rem;
-			width: 150px;
-
-		&:hover{
-				border-color: #073763;
-				background: #e2e2e2;
-				color: #073763;
-		}
-		
-		&:focus{
-				outline: none;
-		}
-    }
-    .forgot-password{
-        color: $redish;
-        font-size: 0.8rem;
+      }
+      button {
+        text-transform: uppercase;
+        font-size: 1rem;
+        background: $primary;
+        border-color: $light;
+        color: $light;
+        padding: 0.2rem 0.5rem;
         cursor: pointer;
+        margin: 0.2rem 0.5rem 1rem 0;
+        transition: all 0.5s ease-in-out;
+        height: 2rem;
+        width: 150px;
+
+        &:hover {
+          border-color: $primary;
+          background: $light;
+          color: $primary;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
     }
-    .switch-auth{
-        color: $primary;
-        margin: 0;
-        padding: 0;
+    .forgot-password {
+      color: $redish;
+      font-size: 0.8rem;
+      cursor: pointer;
     }
-}
-
-.auth-holder {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	margin: auto;
-	padding: 2rem 0;
-	background-color: $white;
-	text-align: center;
-	width: 90%;
-	.auth-separator {
-		display: flex;
-		margin: 1rem 0;
-		flex-direction: row;
-		width: 100%;
-		align-items: center;
-		justify-content: center;
-		div {
-			border-top: 1px solid $primary;
-			width: 100px;
-			height: fit-content;
-		}
-		h5 {
-			margin: 5px;
-		}
-	}
-}
-.login-form,
-.signup-form {
-	form {
-		Input {
-			width: 80%;
-			padding-left: 0.5rem;
-		}
-		button {
-			text-transform: uppercase;
-			font-size: 1rem;
-			background: $primary;
-			border-color: $light;
-			color: $light;
-			padding: 0.2rem 0.5rem;
-			cursor: pointer;
-			margin: 0.2rem 0.5rem 1rem 0;
-			transition: all 0.5s ease-in-out;
-			height: 2rem;
-			width: 150px;
-
-			&:hover {
-				border-color: $primary;
-				background: $light;
-				color: $primary;
-			}
-
-			&:focus {
-				outline: none;
-			}
-		}
-	}
-	.forgot-password {
-		color: $redish;
-		font-size: 0.8rem;
-		cursor: pointer;
-	}
-	.switch-auth {
-		color: $primary;
-		margin: 0;
-		padding: 0;
-	}
-}
-.form-input {
-	border: 1px solid $blackish;
-	margin-bottom: 1rem;
-	height: 2rem;
-	font-size: 0.8rem;
-}
-
-// Media Queries
-@media only screen and (min-width: 768px) {
-	.authentication {
-		background: $bg-image;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: cover;
-		background-attachment: fixed;
-		height: 100vh;
-	}
-	.header-component {
-		color: $light;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		.header-img {
-			margin-top: 2rem;
-			margin-bottom: 2rem;
-			height: 7rem;
-			width: 7rem;
-		}
-		h2,
-		h4 {
-			margin-bottom: 2rem;
-		}
-	}
-	.auth-holder {
-		margin: auto;
-		padding: 2rem 0;
-		background-color: $white;
-		text-align: center;
-		width: 60vw;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		> div {
-			margin: 1%;
-			width: 50%;
-		}
-		.auth-separator {
-			margin-left: 2.5rem;
-			flex-direction: column;
-			width: fit-content;
-			div {
-				border-top: 0px;
-				border-left: 1px solid $primary;
-				height: 8rem;
-				width: fit-content;
-			}
-			h5 {
-				margin: 5px -10px;
-			}
-		}
-	}
-	.login-form,
-	.signup-form {
-		form {
-			Input {
-				width: 80%;
-				padding-left: 0.5rem;
-			}
-			button {
-				text-transform: uppercase;
-				font-size: 1rem;
-				background: $primary;
-				border-color: $light;
-				color: $light;
-				padding: 0.2rem 0.5rem;
-				cursor: pointer;
-				margin: 0.2rem 0.5rem 1rem 0;
-				transition: all 0.5s ease-in-out;
-				height: 2rem;
-				width: 150px;
-
-				&:hover {
-					border-color: $primary;
-					background: $light;
-					color: $primary;
-				}
-
-				&:focus {
-					outline: none;
-				}
-			}
-		}
-		.forgot-password {
-			color: $redish;
-			font-size: 0.8rem;
-			cursor: pointer;
-		}
-		.switch-auth {
-			color: $primary;
-			margin: 0;
-			padding: 0;
-		}
-	}
-	.form-input {
-		border: 1px solid $blackish;
-		margin-bottom: 1rem;
-		height: 2rem;
-		font-size: 0.8rem;
-	}
+    .switch-auth {
+      color: $primary;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .form-input {
+    border: 1px solid $blackish;
+    margin-bottom: 1rem;
+    height: 2rem;
+    font-size: 0.8rem;
+  }
 }

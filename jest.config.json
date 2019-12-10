@@ -6,6 +6,7 @@
 		"!<rootDir>/node_modules/",
 		"!src/**/*.stories.js",
 		"!src/index.js",
+		"!src/App.js",
 		"!src/config/*.{js,jsx}"
 	],
 	"moduleNameMapper": {

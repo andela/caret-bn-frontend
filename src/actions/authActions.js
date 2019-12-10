@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import {
   SIGNUP_SUCCESS, SIGNUP_FAIL, VERIFY_SUCCESS, VERIFY_ERROR, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_ERROR,
-  SOCIAL_AUTH_SUCCESS,RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
+  SOCIAL_AUTH_SUCCESS, RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import 'regenerator-runtime';
-import storeToken from '../helpers/authHelper';
+import { storeToken } from '../helpers/authHelper';
 
 const authType = (type, payload) => ({
   type,

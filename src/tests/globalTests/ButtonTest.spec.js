@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Button from '../../components/global/Button';
 
-const wrapper = shallow(<Button name="button" />);
+const wrapper = shallow(<Button name="button" image="image" />);
 
 describe('Button Test Suite', () => {
   it('Should Render Button Component', () => {
