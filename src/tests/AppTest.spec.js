@@ -1,8 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+// import { App } from '../components/App';
 import Home  from '../components/Home';
+import { mapStateToProps } from '../components/Home';
+
+const text =  { text: 'Hola Amigos!' };
+const mock = jest.fn();
  
-const wrapper = shallow(<Home />);
+const wrapper = shallow(
+      <Home default={text} fireReduxAction={mock} />
+);
 
 describe('Default Test Suite', () => {
   it('Should return true equal true', () => {
@@ -16,5 +23,4 @@ describe('Default Test Suite', () => {
   it('Should render <h1>', () => {
     expect(wrapper.find('h1').text()).toBe('Welcome to barefoot Nomad');
   });
-
 });

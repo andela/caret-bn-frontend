@@ -36,19 +36,4 @@ describe('Social Auth Test Suite', () => {
         });
         expect(dispatch).toEqual(expectedAction);
     });
-
-    it('Should get state', () => {
-        const state = store.getState();
-        const expectedState = {
-            auth: {
-                data: {
-                    username: 'Cheza',
-                    token: 'hello0029sdk20'
-                },
-                dataError: null,
-                status: 'success'
-            }
-        };
-        expect(state).toEqual(expectedState);
-    });
 });

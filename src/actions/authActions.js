@@ -1,6 +1,8 @@
 import {
-  SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_ERROR,
+  SIGNUP_SUCCESS, SIGNUP_FAIL, VERIFY_SUCCESS, VERIFY_ERROR, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_ERROR,
   SOCIAL_AUTH_SUCCESS,
+
+
 } from './types';
 import backendCall from '../helpers/backendCall';
 import 'regenerator-runtime';
@@ -41,3 +43,14 @@ export const socialAuthAction = (userData) => (dispatch) => new Promise((resolve
     dispatch(authType(SOCIAL_AUTH_ERROR, error.message));
   }
 });
+
+export const VerifyUsers = (token) => (dispatch) => backendCall.get(`/users/verify/${token}`, { token })
+  .then((response) => {
+    dispatch(
+      authType(VERIFY_SUCCESS, response.data),
+    );
+  }).catch((error) => {
+    dispatch(
+      authType(VERIFY_ERROR, error.response.data),
+    );
+  });

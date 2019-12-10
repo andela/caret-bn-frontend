@@ -27,7 +27,7 @@ export class Signup extends Component {
     switch (status) {
       case 'success':
         toast.success('Successfully Registered! \n Check your email for the verification link.');
-        history.push('/');
+        history.push('/login');
         this.setState({ isLoading: false });
         break;
       case 'error':

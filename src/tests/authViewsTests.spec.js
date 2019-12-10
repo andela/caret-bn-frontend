@@ -19,16 +19,6 @@ describe('Authentication Views & Holders', () => {
         expect(googleButton.length).toBe(1);
     });
 
-    it('Should Display Auth Holder', () => {
-        const component = setUp(<AuthHolder />);
-        const authHolderDiv = component.find('div.auth-holder').length;
-        const lineDiv = component.find('div.line').length;
-        const socialAuth = component.find('div.social-auth').length;
-        expect(authHolderDiv).toEqual(1);
-        expect(lineDiv).toEqual(2);
-        expect(socialAuth).toEqual(1);
-    });
-
     it('Should Simulate Events', () => {
         const component = setUp(<SocialButtons />);
         const buttonFacebook = findByTestAttribute(component, 'facebookButton');

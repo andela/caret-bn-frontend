@@ -3,26 +3,23 @@ import { Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import SocialButtons from '../pages/SocialButtons';
+import Separator from './auth-separator';
+import UserVerify from '../pages/UserVerify';
 
-export default function AuthHolder() {
+export default function AuthHolder(props) {
   return (
         <div className="auth-holder">
-            <div>
-                <Route path="/login">
-                    <Login />
-                </Route>
-                <Route path="/register">
-                    <Signup />
-                </Route>
-            </div>
-            <span className="auth-separator">
-                <div className="line" />
-                <h5>OR</h5>
-                <div className="line" />
-            </span>
-            <div className="social-auth">
-                <SocialButtons />
-            </div>
+            <Route path="/login">
+                <Login />
+                <Separator />
+            </Route>
+            <Route path="/register">
+                <Signup />
+                <Separator />
+            </Route>
+            <Route path="/verify/:token">
+                <UserVerify token={props.token} />
+            </Route>
         </div>
   );
 }
