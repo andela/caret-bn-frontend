@@ -76,11 +76,11 @@ export class Signup extends Component {
           <Input data-test="username" type="text" id="username" name="username" placeholder="Username..." required pattern="[a-zA-Z]{3,10}" value={username} onChange={this.handleChange} title="Enter a valid name. Between 3 and 10 characters allowed." />
           <Input data-test="password" type="password" id="password" name="password" placeholder="Password..." required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}" value={password} onChange={this.handleChange} title="Enter an 8+ length valid password. Allowed = 1 Uppercase, 1 lowercase, 1 number, 1 special character." />
           <Input data-test="confirmPassword" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password..." required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}" value={confirmPassword} onChange={this.handleChange} title="Enter an 8+ length valid password. Allowed = 1 Uppercase, 1 lowercase, 1 number, 1 special character." />
-          <Button data-test="submitButton" name={isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'signup'} />
+          <Button data-test="submitButton" buttonType="submit" name={isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'signup'} />
           <br />
           <div className="link">
-            <Link to="/users">
-            Login instead
+            <Link to="/login">
+              Login instead
             </Link>
           </div>
         </form>

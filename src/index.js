@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/Home';
 import store from './reduxStore';
 import AuthPage from './views/Authentication';
 import NotFound from './components/NotFound';
 import './styles/styles.scss';
 import 'regenerator-runtime/runtime';
+import SocialAuthSuccess from './views/SocialAuthSuccess';
 
+import Home from './views/Home';
 
 const Root = () => (
     <Provider store={store}>
@@ -18,6 +19,7 @@ const Root = () => (
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={AuthPage} />
                 <Route path="/register" component={AuthPage} />
+                <Route exact path="/users/auth/success" component={SocialAuthSuccess} />
                 <Route path="*" component={NotFound} />
             </Switch>
         </Router>
