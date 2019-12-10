@@ -15,10 +15,7 @@ describe('AuthHolder Test Suite', () => {
   it('Should Find Signup In AuthHolder', () => {
     expect(wrapper.find(Signup)).toHaveLength(1);
   });
-  it('Should Render the AthHolder Component', () => {
-    expect(wrapper.exists()).toBe(true);
-  });
-
+  
   it('Should Find Login component ', () => {
     expect(wrapper.find(Login)).toHaveLength(1);
   });

@@ -132,6 +132,69 @@
 	&:hover {
 		background-color: $facebookBlueDark;
 	}
+    .header-img{
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        height: 7rem;
+        width: 7rem;
+    }
+    h2,h4{
+        margin-bottom: 2rem;
+    }
+}
+.auth-holder{
+    margin: auto;
+    padding: 2rem 0;
+    background-color: $white;
+    text-align: center;
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    > div{
+        margin: 1%;
+        width: 50%;
+    }
+}
+.login-form, .signup-form, .forgot-password{
+    > form Input{
+        width: 80%;
+        padding-left: 0.5rem;
+    }
+    button{
+			text-transform: uppercase;
+			font-size: 1rem;
+			background: #073763;
+			border-color: $light;
+			color: #e2e2e2;
+			padding: 0.2rem 0.5rem;
+			cursor: pointer;
+			margin: 0.2rem 0.5rem 1rem 0;
+			transition: all 0.5s ease-in-out;
+			height: 2rem;
+			width: 150px;
+
+		&:hover{
+				border-color: #073763;
+				background: #e2e2e2;
+				color: #073763;
+		}
+		
+		&:focus{
+				outline: none;
+		}
+    }
+    .forgot-password{
+        color: $redish;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+    .switch-auth{
+        color: $primary;
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .auth-holder {

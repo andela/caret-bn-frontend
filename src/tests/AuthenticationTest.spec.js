@@ -4,7 +4,7 @@ import Authenticaton from '../views/Authentication';
 import NotFound from '../components/NotFound';
 import findByTestAttribute from '../utilities/tests/findByTestAttribute';
 
-const wrapper = shallow(<Authenticaton />);
+const wrapper = shallow(<Authenticaton {...{match: { params: {token: 'jdjdjdkk'}}}} />);
 
 describe('Authentication Test Suite', () => {
   it('Should render <Authentication />', () => {

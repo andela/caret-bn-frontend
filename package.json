@@ -9,8 +9,8 @@
     "build": "webpack --mode production",
     "test": "jest --config ./jest.config.json --coverage",
     "test:watch": "npm run test -- --watch",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "build-storybook && start-storybook",
+    "build-storybook": "build-storybook -c .storybook"
   },
   "repository": {
     "type": "git",

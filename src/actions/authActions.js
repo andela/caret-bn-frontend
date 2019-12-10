@@ -1,8 +1,7 @@
+import { toast } from 'react-toastify';
 import {
   SIGNUP_SUCCESS, SIGNUP_FAIL, VERIFY_SUCCESS, VERIFY_ERROR, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_ERROR,
-  SOCIAL_AUTH_SUCCESS,
-
-
+  SOCIAL_AUTH_SUCCESS,RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import 'regenerator-runtime';
@@ -31,6 +30,38 @@ const userLogin = ({ email, password }) => async (dispatch) => {
   } catch (error) {
     dispatch(authType(LOGIN_FAILURE, error.response));
   }
+};
+
+export const resetPaswordRequest = (email) => (dispatch) => {
+  return backendCall.post('/users/forgotpassword', { host, email })
+    .then((res) => {
+      const response = res.data;
+      dispatch(
+        authType(RESET_PASSWORD_REQUEST_SUCESS, response),
+      );
+      toast.success(response.message);
+    }).catch((error) => {
+      dispatch(
+        authType(RESET_PASSWORD_REQUEST_FAILURE, error.response.data),
+      );
+      toast.error(error.response.data.message);
+    });
+};
+
+export const resetPasword = (newPassword, confirmPassword, token) => (dispatch) => {
+  return backendCall.patch(`/users/resetpassword/${token}`, { newPassword, confirmPassword })
+    .then((res) => {
+      const response = res.data;
+      dispatch(
+        authType(RESET_PASSWORD_SUCCESS, response),
+      );
+      toast.success(res.data.message);
+    }).catch((error) => {
+      dispatch(
+        authType(RESET_PASSWORD_FAILURE, error.response.data),
+      );
+      toast.error(error.response.data.message);
+    });
 };
 
 export default userLogin;

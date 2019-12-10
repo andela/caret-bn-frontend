@@ -9,7 +9,6 @@ import NotFound from './components/NotFound';
 import './styles/styles.scss';
 import 'regenerator-runtime/runtime';
 import SocialAuthSuccess from './views/SocialAuthSuccess';
-
 import Home from './views/Home';
 import Verify from './views/Verify';
 
@@ -22,6 +21,8 @@ const Root = () => (
                 <Route path="/register" component={AuthPage} />
                 <Route exact path="/users/auth/success" component={SocialAuthSuccess} />
                 <Route path="/verify/:token" component={Verify} />
+                <Route path="/forgotpassword" component={AuthPage} />
+                <Route path="/resetpassword/:token" component={AuthPage} />
                 <Route path="*" component={NotFound} />
             </Switch>
         </Router>
