@@ -2,7 +2,11 @@ export default () => {
   switch (process.env.NODE_ENV) {
     case 'development':
       return {
-        hostUrl: __API__,
+        hostUrl: DEVELOPMENT_API,
+      };
+    case 'production':
+      return {
+        hostUrl: PRODUCTION_API,
       };
     default:
       return {
