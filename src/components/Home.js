@@ -1,34 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-// import { Container } from 'react-bootstrap';
-import MenuBar from './global/menuBar';
+import { Link } from 'react-router-dom';
 
-const Home = (props) => {
-  const token = window.localStorage.getItem('token');
-  const { user } = props;
-  if (user === null && token === null) {
-    return <Redirect to="/login" />;
-  }
-
+export default function Home() {
   return (
-    <>
-        <MenuBar />
-    </>
+    <div className="header">
+      <h1>Welcome to barefoot Nomad</h1>
+        <br />
+        <h4>
+          <Link to="/login" className="link">Login</Link>
+        </h4>
+        <br />
+        <h4>
+          <Link to="/register" className="link">Register</Link>
+        </h4>
+        <br />
+    </div>
   );
-};
-
-Home.defaultProps = {
-  user: null,
-};
-
-Home.propTypes = {
-  user: PropTypes.object,
-};
-
-const mapStateToProps = (state) => ({
-  user: state.auth.data,
-});
-
-export default connect(mapStateToProps, {})(Home);
+}
