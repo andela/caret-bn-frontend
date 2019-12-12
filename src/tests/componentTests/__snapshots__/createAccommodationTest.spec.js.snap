@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Create accommodation Test Suite Should check if form handling clicked 1`] = `ReactWrapper {}`;
-
-exports[`Create accommodation Test Suite Should handle change when image is selected 1`] = `ReactWrapper {}`;
-
-exports[`Create accommodation Test Suite Should handle change when input data changed 1`] = `ReactWrapper {}`;
-
-exports[`Create accommodation Test Suite should render the create accommodation page 1`] = `ReactWrapper {}`;
