@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from './reduxStore';
 import AuthPage from './views/Authentication';
@@ -11,6 +11,10 @@ import 'regenerator-runtime/runtime';
 import SocialAuthSuccess from './views/SocialAuthSuccess';
 import Home from './views/Home';
 import Verify from './views/Verify';
+import Accommodations from './views/accommodations/Accommodations';
+import ProtectedRoutes from './components/global/ProtectedRoutes';
+
+toast.configure();
 
 const Root = () => (
     <Provider store={store}>
@@ -23,10 +27,10 @@ const Root = () => (
                 <Route path="/verify/:token" component={Verify} />
                 <Route path="/forgotpassword" component={AuthPage} />
                 <Route path="/resetpassword/:token" component={AuthPage} />
+                <ProtectedRoutes path="/accommodations/new" ComponentView={Accommodations} />
                 <Route path="*" component={NotFound} />
             </Switch>
         </Router>
-        <ToastContainer />
     </Provider>
 );
 

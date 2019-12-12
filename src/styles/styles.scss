@@ -1,6 +1,11 @@
 @import './node_modules/react-toastify/scss/main.scss';
 @import 'variables';
 @import './pages/SocialAuthSuccessStyles.scss';
+@import './breadcrumbs.scss';
+@import './menuBar.scss';
+@import '~bootstrap/scss/bootstrap';
+@import './button.scss';
+
 * {
 	font-family: $master-font;
 	margin: 0;
