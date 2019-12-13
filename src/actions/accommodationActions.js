@@ -1,4 +1,6 @@
-import { ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE } from './types';
+import {
+  ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE, SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
+} from './types';
 import backendCall from '../helpers/backendCall';
 import authHelper from '../helpers/authHelper';
 
@@ -26,3 +28,33 @@ const createAccommodation = (accommodationDetails) => async (dispatch) => {
 };
 
 export default createAccommodation;
+export const GetAllAccommodation = () => (dispatch) => {
+  const { token } = localStorage;
+  const AuthUser = 'Bearer '.concat(token);
+  return backendCall.get('accommodations', { headers: { Authorization: AuthUser } })
+    .then((res) => {
+      const response = res.data;
+      dispatch(
+        accommodationType(ALL_ACCOMMODATION_SUCCESS, response),
+      );
+    }).catch((error) => {
+      dispatch(
+        accommodationType(ALL_ACCOMMODATION_FAILURE, error.response.data),
+      );
+    });
+};
+
+export const GetSingleAccommodation = (slug) => (dispatch) => {
+  const AuthUser = 'Bearer '.concat(token);
+  return backendCall.get(`accommodations/${slug}`, { headers: { Authorization: AuthUser } })
+    .then((res) => {
+      const response = res.data;
+      dispatch(
+        accommodationType(SINGLE_ACCOMMODATION_SUCCESS, response),
+      );
+    }).catch((error) => {
+      dispatch(
+        accommodationType(SINGLE_ACCOMMODATION_FAILURE, error.response.data),
+      );
+    });
+};

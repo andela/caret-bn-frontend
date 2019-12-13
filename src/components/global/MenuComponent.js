@@ -2,9 +2,8 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import {
   Notifications, AccountCircle,
-  ArrowDropDown, FileCopy, HomeOutlined,
+  ArrowDropDown, FileCopy, HomeOutlined, Hotel,
 } from '@material-ui/icons';
-import AirlineSeatFlatAngledIcon from '@material-ui/icons/AirlineSeatFlatAngled';
 import barefootLogo from '../../assets/images/foot-print.png';
 
 const MenuComponent = () => (
@@ -23,7 +22,7 @@ const MenuComponent = () => (
                 </Nav.Link>
                 <Nav.Link href="/accommodations">
                     <div className="account-icon">
-                        <AirlineSeatFlatAngledIcon />
+                        <Hotel />
                         Accommodations
                     </div>
                 </Nav.Link>
