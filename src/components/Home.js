@@ -1,19 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import MenuComponent from './global/MenuComponent';
 
 export default function Home() {
   return (
-    <div className="header">
-      <h1>Welcome to barefoot Nomad</h1>
-        <br />
-        <h4>
-          <Link to="/login" className="link">Login</Link>
-        </h4>
-        <br />
-        <h4>
-          <Link to="/register" className="link">Register</Link>
-        </h4>
-        <br />
-    </div>
+    <Container fluid="true">
+    </Container>
   );
 }

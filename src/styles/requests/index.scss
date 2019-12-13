@@ -1,0 +1,21 @@
+@import './destinations.scss';
+@import './node_modules/react-day-picker/lib/style';
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  padding: 15px;
+}
+
+.form-section {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100vw;
+  flex-wrap: wrap;
+
+  .select {
+    width: 20vw;
+    display: flex;
+  }
+}

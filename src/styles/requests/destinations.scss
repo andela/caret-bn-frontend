@@ -1,0 +1,53 @@
+.destinations {
+  display: flex;
+  flex-direction: column;
+}
+
+.destination-item {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  margin: 0px 15px;
+  width: 100%;
+  flex-wrap: wrap;
+
+  .pad-items {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+.action-row {
+  padding: 0 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+.destination-buttons {
+  text-transform: uppercase;
+  margin: 0 5px;
+}
+.destination-action {
+  margin-right: 50px;
+  :hover {
+    cursor: pointer;
+  }
+}
+.delete-destination {
+  color: red;
+}
+
+.approve-destination {
+  color: $primary;
+}
+.textarea {
+  width: 60vw;
+}
+
+.isFinal-switch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 50px;
+}

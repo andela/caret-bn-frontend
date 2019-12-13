@@ -1,0 +1,12 @@
+.request-item {
+  background-color: $light;
+  .request-status {
+    text-transform: uppercase;
+  }
+}
+.loader-big {
+  font-size: 100px;
+  color: $primary;
+  margin: 0 auto;
+  margin-top: 5rem;
+}
