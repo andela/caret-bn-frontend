@@ -21,11 +21,10 @@ export class Login extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {
-      data, dataError, status, history,
+      dataError, status, history,
     } = nextProps;
     switch (status) {
       case 'Success':
-        toast.success(data.message);
         history.push('/');
         this.setState({ isLoading: false });
         break;

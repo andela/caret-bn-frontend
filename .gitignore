@@ -13,3 +13,6 @@ lib
 
 # Coverage
 coverage
+
+# env file
+.env

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import {
@@ -13,6 +14,11 @@ import Verify from './views/Verify';
 import SingleRequest from './views/requests/SingleRequest';
 import MenuComponent from './components/global/MenuComponent';
 import isAuth from './helpers/isAuthenticated';
+import authHelper from './helpers/authHelper';
+import AllAccommodations from './views/accommodations/AllAccommodations';
+import NewAccommodation from './views/accommodations/NewAccommodation';
+
+const { checkSupplier } = authHelper;
 
 const App = (props) => {
   const { location: { pathname } } = props;
@@ -32,8 +38,10 @@ const App = (props) => {
           <Route path="/verify/:token" component={Verify} />
           <Route path="/forgotpassword" component={AuthPage} />
           <Route path="/resetpassword/:token" component={AuthPage} />
-          <Route exact path="/requests" render={() => (authRoute(<ViewRequests />))} />
+          <Route path="/requests" render={() => (authRoute(<ViewRequests />))} />
           <Route path="/requests/:requestId" render={() => (authRoute(<SingleRequest />))} />
+          <Route exact path="/accommodations" render={() => (authRoute(<AllAccommodations />))} />
+          <Route path="/accommodations/new" render={() => (isAuth() ? (checkSupplier() ? <NewAccommodation /> : <AllAccommodations />) : <Redirect to="/login" />)} />
           <Route path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

@@ -4,6 +4,7 @@ import {
   Notifications, AccountCircle,
   ArrowDropDown, FileCopy, HomeOutlined,
 } from '@material-ui/icons';
+import AirlineSeatFlatAngledIcon from '@material-ui/icons/AirlineSeatFlatAngled';
 import barefootLogo from '../../assets/images/foot-print.png';
 
 const MenuComponent = () => (
@@ -18,6 +19,12 @@ const MenuComponent = () => (
                     <div className="account-icon">
                         <HomeOutlined />
                         Home
+                    </div>
+                </Nav.Link>
+                <Nav.Link href="/accommodations">
+                    <div className="account-icon">
+                        <AirlineSeatFlatAngledIcon />
+                        Accommodations
                     </div>
                 </Nav.Link>
                 <Nav.Link href="/requests">
