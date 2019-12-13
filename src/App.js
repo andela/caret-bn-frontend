@@ -21,6 +21,7 @@ import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 import editAccommodation from './views/accommodations/editAccommodation';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserProfile from './components/pages/profiles/UserProfile';
 
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
@@ -49,6 +50,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
           <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
           <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />
+          <ProtectedRoute exact path="/profile" component={UserProfile} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
