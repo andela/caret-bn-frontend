@@ -1,21 +1,79 @@
 @import './destinations.scss';
-@import './node_modules/react-day-picker/lib/style';
 
 .row {
-  display: flex;
-  flex-direction: row;
-  width: 80vw;
-  padding: 15px;
+	margin: 5px;
+	padding: 5px;
+}
+.center-items {
+	justify-content: space-around;
+	padding: 0 10px;
 }
 
-.form-section {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100vw;
-  flex-wrap: wrap;
+.error-holder {
+	display: flex;
+	justify-content: flex-end;
+}
 
-  .select {
-    width: 20vw;
-    display: flex;
-  }
+.row-between {
+	justify-content: space-between;
+	padding: 10px 25px;
+}
+.form-section {
+	display: flex;
+	justify-content: space-evenly;
+	width: 100vw;
+	flex-wrap: wrap;
+	.select {
+		width: 20vw;
+		display: flex;
+	}
+}
+
+.loading-componenent {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 80vh;
+
+	p {
+		text-align: center;
+		font-size: 12px;
+		margin-top: 5px;
+	}
+
+	img {
+		height: 80px;
+	}
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	p {
+		font-size: 15px;
+		justify-content: center;
+		text-align: center;
+	}
+}
+
+@media (min-width: 1024px) {
+	.center-items {
+		justify-content: space-around;
+		padding: 0 50px;
+	}
+	.row {
+		margin: 10px;
+	}
+	.space-horizontal {
+		display: flex;
+		justify-content: space-between;
+	}
+	.loading-componenent {
+		p {
+			font-size: 20px;
+		}
+	}
 }

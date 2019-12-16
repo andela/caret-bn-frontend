@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
 
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
 import requestsMocks from '../mocks/requestsMocks';
@@ -17,6 +16,6 @@ describe('DestinationDisplay Test Suite', () => {
   });
 
   it('Should Return DayPickerInput from react-bootstrap ', () => {
-    expect(wrapper.find(DayPickerInput)).toHaveLength(2);
+    expect(wrapper.find('[data-test="destination-display"]')).toHaveLength(1);
   });
 });

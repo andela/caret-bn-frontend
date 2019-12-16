@@ -12,7 +12,7 @@ const RequestItem = ({ item }) => {
     switch (status.id) {
       case 1:
         return (
-          <Col className="request-status font-weight-bold pl-5 text-warning">{status.name}</Col>
+          <Col className="request-status font-weight-bold pl-5" style={{ color: '#C2A90F' }}>{status.name}</Col>
         );
       case 2:
         return (

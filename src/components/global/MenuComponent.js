@@ -1,55 +1,73 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Notifications, AccountCircle,
-  ArrowDropDown, FileCopy, HomeOutlined,
+  ExitToApp, FileCopy, HomeOutlined,
 } from '@material-ui/icons';
-import AirlineSeatFlatAngledIcon from '@material-ui/icons/AirlineSeatFlatAngled';
+import AirlineSeatFlatAngled from '@material-ui/icons/AirlineSeatFlatAngled';
 import barefootLogo from '../../assets/images/foot-print.png';
 
-const MenuComponent = () => (
-        <Navbar bg="primary" className="menuBar mb-3" variant="dark">
-            <Navbar.Brand className="logo" href="/">
-                <img src={barefootLogo} alt="barefoot nomad" />
-                Barefoot Nomad
-            </Navbar.Brand>
-            <Nav className="mr-auto" />
-            <Nav className="navigation-bar">
-                <Nav.Link href="/">
+const MenuComponent = (props) => {
+  const { pathname } = props;
+  console.log('pathname MenuComp ===> ', pathname);
+  const urls = ['/login', '/register', '/forgotpassword'];
+  const displayMenu = !(urls.includes(pathname) || pathname.match(/resetpassword/) || pathname.match(/verify/));
+
+  if (displayMenu) {
+    return (
+        <Navbar data-test="menu-test" bg="primary" variant="dark" expand="lg">
+        <Navbar.Brand href="#home">
+            <img src={barefootLogo} className="navbar-logo" alt="barefoot nomad" />
+            {' '}
+            Barefoot Nomad
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+                <Link to="/">
                     <div className="account-icon">
-                        <HomeOutlined />
+                        <HomeOutlined className="icon" />
                         Home
                     </div>
-                </Nav.Link>
-                <Nav.Link href="/accommodations">
+                </Link>
+                <Link to="/requests">
                     <div className="account-icon">
-                        <AirlineSeatFlatAngledIcon />
-                        Accommodations
-                    </div>
-                </Nav.Link>
-                <Nav.Link href="/requests">
-                    <div className="account-icon">
-                        <FileCopy />
+                        <FileCopy className="icon" />
                         Requests
                     </div>
-                </Nav.Link>
-                <Nav.Link href="#">
+                </Link>
+
+                <Link to="/accommodations">
                     <div className="account-icon">
-                        <Notifications />
+                        <AirlineSeatFlatAngled className="icon" />
+                        Accommodations
+                    </div>
+                </Link>
+
+                <Link to="#">
+                    <div className="account-icon">
+                        <Notifications className="icon" />
                         Notifications
                     </div>
-                </Nav.Link>
-                <Nav.Link href="#">
+                </Link>
+                <Link to="#">
                     <div className="account-icon">
-                        <div>
-                            <AccountCircle fontSize="small" />
-                            <ArrowDropDown />
-                        </div>
+                        <AccountCircle className="icon" />
                         Thanos
                     </div>
-                </Nav.Link>
+                </Link>
             </Nav>
+        </Navbar.Collapse>
         </Navbar>
-);
+    );
+  }
+  return null;
+};
+
+MenuComponent.propTypes = {
+  pathname: PropTypes.string,
+};
 
 export default MenuComponent;

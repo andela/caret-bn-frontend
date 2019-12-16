@@ -1,0 +1,34 @@
+.full-width-buttons {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 10px 0;
+}
+
+@media (min-width: 768px) {
+	.full-width-buttons {
+		width: 40%;
+		margin: 0 10px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.full-width-buttons {
+		width: 20%;
+		font-size: 13px;
+	}
+}
+
+@media (min-width: 1440px) {
+	.full-width-buttons {
+		width: 15%;
+	}
+}
+
+@media (min-width: 2560px) {
+	.full-width-buttons {
+		width: 15%;
+	}
+}
