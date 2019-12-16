@@ -12,10 +12,11 @@ import ViewRequests from './views/requests/ViewRequests';
 import Home from './views/Home';
 import Verify from './views/Verify';
 import SingleRequest from './views/requests/SingleRequest';
+import GetsingleAccommodation from './views/accommodations/SingleAccommodation';
 import MenuComponent from './components/global/MenuComponent';
 import isAuth from './helpers/isAuthenticated';
 import authHelper from './helpers/authHelper';
-import AllAccommodations from './views/accommodations/AllAccommodations';
+import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 
 const { checkSupplier } = authHelper;
@@ -40,8 +41,16 @@ const App = (props) => {
           <Route path="/resetpassword/:token" component={AuthPage} />
           <Route path="/requests" render={() => (authRoute(<ViewRequests />))} />
           <Route path="/requests/:requestId" render={() => (authRoute(<SingleRequest />))} />
-          <Route exact path="/accommodations" render={() => (authRoute(<AllAccommodations />))} />
-          <Route path="/accommodations/new" render={() => (isAuth() ? (checkSupplier() ? <NewAccommodation /> : <AllAccommodations />) : <Redirect to="/login" />)} />
+          <Route path="/accommodations/new" render={() => (isAuth() ? (checkSupplier() ? <NewAccommodation /> : <GetAllAccommodations />) : <Redirect to="/login" />)} />
+          <Route exact path="/accommodations" render={() => (authRoute(<GetAllAccommodations />))} />
+          <Route
+            exact
+            path="/accommodations/:slug"
+            render={(props) => {
+              const { slug } = props.match.params;
+              return (authRoute(<GetsingleAccommodation slug={slug} />));
+            }}
+          />
           <Route path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

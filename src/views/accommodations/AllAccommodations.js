@@ -2,21 +2,25 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { Add } from '@material-ui/icons';
+import Row from 'react-bootstrap/Row';
 import authHelper from '../../helpers/authHelper';
+import AllAccommodation from '../../components/pages/AllAccommodation';
 
 const { checkSupplier } = authHelper;
 
-export class AllAccommodations extends Component {
+export class GetAllAccommodations extends Component {
   render() {
     return (
             <div>
-                <h1>All Accommodations</h1>
                 { checkSupplier() ? (
                     <ButtonToolbar>
-                        <Button href="/accommodations/new">
+                         <Row className="createButton">
+                          <Button href="/accommodations/new">
                             <Add />
                             Create new accommodation
-                        </Button>
+                          </Button>
+                         </Row>
+                        <AllAccommodation data-test="AllAccommodation" />
                     </ButtonToolbar>
                 ) : null}
             </div>
@@ -24,4 +28,4 @@ export class AllAccommodations extends Component {
   }
 }
 
-export default AllAccommodations;
+export default GetAllAccommodations;

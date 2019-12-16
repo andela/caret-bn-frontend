@@ -1,0 +1,80 @@
+
+.accommodation{
+  width: 100%;
+  text-align: center;
+  h1{
+    padding:10px;
+    color:#073763;
+    text-decoration: underline;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+  h2{
+    padding:10px;
+    font-size: 15px;
+  }
+  h3{
+    padding:10px;
+    color:#073763;
+    text-decoration: underline;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  h4{
+    padding:10px;
+    color:#2d3436;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+
+  h5{
+    padding:10px;
+    color:#2a8804;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top:10px;
+  }
+  
+  h6{
+    padding:10px;
+    color:#073763;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top:70px;
+
+  }
+  .booking{
+    background-color:#073763;
+    width: 12rem;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 0 2px;
+  }
+  img {
+    height: 300px; width: 300px; overflow: hidden; 
+  }
+  
+}
+.container{
+  border-style: groove;
+  min-width: 500px;
+  margin-bottom:35px;
+  padding-left: 20px;
+}
+.info{
+  text-align: right;
+  margin-right: 10px;
+}
+.createButton{
+  // float:right;
+  margin-left: calc(100% - 30% ) !important;
+}
