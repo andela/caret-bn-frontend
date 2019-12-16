@@ -3,7 +3,13 @@ import { shallow } from 'enzyme';
 import SingleAccommodation from '../components/pages/SingleAccommodation';
 import GetsingleAccommodation from '../views/accommodations/SingleAccommodation';
 
-const wrapper = shallow(<GetsingleAccommodation  />);
+const props = {
+  match: {
+    params: 'isimbi-hotel'
+  }
+}
+
+const wrapper = shallow(<GetsingleAccommodation  {...props} />);
 
 describe('GetSingleAccommodations view Test Suite', () => {
   it('Should Render Accommodations Component', () => {

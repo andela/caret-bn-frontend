@@ -1,45 +1,43 @@
 import React from 'react';
 import { Row, Form, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
 
 const DestinationDisplay = ({ destination, index }) => (
-      <Row>
-        <Row className="destination-item">
-          <div className="pad-items">
-            <Form.Group controlId="tripRequests.TripTypeInputs">
-              <h6>
-                Destination
-                {' '}
-                {index + 1}
-              </h6>
-              <Form.Control className="select" as="select" defaultValue={destination.id}>
-                <option value={destination.id}>{destination.location.name}</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="tripRequests.TripTypeInputs">
-              <h6>Arrival Date</h6>
-              <DayPickerInput value={destination.arrivalDate} />
-            </Form.Group>
-            <Form.Group controlId="tripRequests.TripTypeInputs">
-              <h6>Departure Date</h6>
-              <DayPickerInput value={destination.departureDate || 'N/A'} />
-            </Form.Group>
-            <Form.Group controlId="tripRequests.TripTypeInputs">
-              <h6>Bookings</h6>
-              <Form.Control className="select" as="select">
-                <option value="1">Booking</option>
-              </Form.Control>
-            </Form.Group>
-          </div>
-          <Row className="row">
-            <Col>
-              <Form.Label as="label">Reasons</Form.Label>
-              <Form.Control className="textarea" as="textarea" rows="5" value={destination.reasons} />
-            </Col>
-          </Row>
-        </Row>
-      </Row>
+  <span data-test="destination-display" className="destination-wrapper">
+    <Col xs={12} sm={12} md={4} lg={4}>
+      <Form.Group>
+        <Form.Label>
+            Destination
+            {' '}
+            {index + 1}
+        </Form.Label>
+        <Form.Control as="select" defaultValue={destination.id} disabled>
+          <option value={destination.id}>{destination.location.name}</option>
+        </Form.Control>
+      </Form.Group>
+    </Col>
+
+    <Col xs={12} sm={12} md={4} lg={4}>
+      <Form.Group>
+        <Form.Label>Arrival Date</Form.Label>
+        <Form.Control as="input" type="date" name="arrivalDate" defaultValue={destination.arrivalDate} disabled />
+      </Form.Group>
+    </Col>
+
+    <Col xs={12} sm={12} md={4} lg={4}>
+      <Form.Group>
+        <Form.Label>Departure Date</Form.Label>
+        <Form.Control as="input" type="date" name="departureDate" defaultValue={destination.departureDate || 'N/A'} disabled />
+      </Form.Group>
+    </Col>
+
+    <Col xs={12} sm={12} md={9} lg={9}>
+      <Form.Group>
+        <Form.Label>Reasons</Form.Label>
+        <Form.Control as="textarea" rows="3" name="reasons" value={destination.reasons} disabled />
+      </Form.Group>
+    </Col>
+  </span>
 );
 
 DestinationDisplay.propTypes = {
