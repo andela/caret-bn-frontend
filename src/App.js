@@ -17,12 +17,11 @@ import Verify from './views/Verify';
 import SingleRequest from './views/requests/SingleRequest';
 import GetsingleAccommodation from './views/accommodations/SingleAccommodation';
 import MenuComponent from './components/global/MenuComponent';
-import authHelper from './helpers/authHelper';
 import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 import ProtectedRoute from './components/ProtectedRoute';
-
-const { checkSupplier } = authHelper;
+import ViewAllUsers from './views/admin/ViewAllUsers';
+import SpecificUSer from './views/admin/SpecificUSer';
 
 export class App extends Component {
   render() {
@@ -42,10 +41,11 @@ export class App extends Component {
           <ProtectedRoute exact path="/requests/create" component={CreateRequest} />
           <ProtectedRoute exact path="/requests" component={ViewRequests} />
           <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
-          {/* <ProtectedRoute exact path="/accommodations" component={AllAccommodations} /> */}
           <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
           <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
+          <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
+          <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

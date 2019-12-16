@@ -27,7 +27,7 @@ class LocalStorageMock {
   
   Object.defineProperty(window, 'localStorage', { value:  new LocalStorageMock()});
   
-  const { getToken, checkSupplier } = authHelper;
+  const { getToken, checkSupplier, checkAdmin } = authHelper;
 
   describe('Auth Helper Tests', () => {
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo0LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6InVzZXJAY2FyZXRibi5jb20iLCJyb2xlIjo1LCJsaW5lTWFuYWdlciI6OH0sImlhdCI6MTU3NjE2NzIxNCwiZXhwIjoxNTc2MjUzNjE0fQ.4B3L_z0jwWvF6qEzPxPHYTt4CUNhpgEPCBWEaepJPuM';
@@ -38,6 +38,9 @@ class LocalStorageMock {
 
       it('Should check for a supplier role', () => {
         checkSupplier();
+      });
 
+      it('Should check for an admin role', () => {
+        checkAdmin();
       });
   });

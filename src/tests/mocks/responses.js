@@ -77,6 +77,55 @@ const locations = {
   },
 };
 
+const users = {
+  status: 200,
+  response: {
+    status: 200,
+    data: [
+      {
+        id: 1,
+        username: 'username',
+      },
+      {
+        id: 2,
+        username: 'usernames',
+      },
+    ],
+  },
+};
+
+const usersError = {
+  status: 400,
+  response: {
+    status: 400,
+    message: 'No users',
+  },
+};
+const roles = {
+  status: 200,
+  response: {
+    status: 200,
+    data: [
+      {
+        id: 1,
+        name: 'supplier',
+      },
+      {
+        id: 2,
+        name: 'manager',
+      },
+    ],
+  },
+};
+
+const rolesError = {
+  status: 400,
+  response: {
+    status: 400,
+    message: 'No roles',
+  },
+};
+
 const locationsError = {
   status: 400,
   response: {
@@ -85,6 +134,53 @@ const locationsError = {
   },
 };
 
+const user = {
+  status: 200,
+  response: {
+    status: 200,
+    data: {
+      id: 1,
+      username: 'username',
+    },
+  },
+};
+
+const userError = {
+  status: 400,
+  response: {
+    status: 400,
+    message: 'No user',
+  },
+};
+const assignedRole = {
+  status: 200,
+  response: {
+    status: 200,
+    message: 'You have assigned role to this user',
+  },
+};
+
+const assignedRoleError = {
+  status: 409,
+  response: {
+    status: 409,
+    message: 'user already has this role',
+  },
+};
+
 export default {
-  loginSuccess, loginFailure, newAccommodationCreated, newAccommodationFailed, locations, locationsError,
+  loginSuccess,
+  loginFailure,
+  newAccommodationCreated,
+  newAccommodationFailed,
+  locations,
+  locationsError,
+  users,
+  usersError,
+  user,
+  userError,
+  roles,
+  rolesError,
+  assignedRole,
+  assignedRoleError,
 };

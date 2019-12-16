@@ -17,7 +17,19 @@ export const checkSupplier = () => {
   }
   return false;
 };
+export const checkAdmin = () => {
+  const userInfo = isAuth();
+  if (userInfo) {
+    const { payload } = userInfo;
+    const { role } = payload;
+    if (role !== 1) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
 
 export default {
-  storeToken, getToken, checkSupplier,
+  storeToken, getToken, checkSupplier, checkAdmin,
 };
