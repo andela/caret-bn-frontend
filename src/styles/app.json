@@ -1,0 +1,16 @@
+{
+  "name": "Barefoot Nomand",
+  "description": "Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff by leveraging the modern web.",
+  "keywords": [
+    "productivity",
+    "React"
+  ],
+
+  "repository": "https://github.com/andela/caret-bn-frontend.git",
+  "logo": "https://img.icons8.com/ultraviolet/80/000000/bear-footprint.png",
+  "scripts": {
+    "postdeploy": "bundle exec rake bootstrap",
+    "pr-predestroy": "bundle exec rake cleanup"
+  }
+
+} 

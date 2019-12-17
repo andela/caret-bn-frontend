@@ -7,9 +7,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import { Add } from '@material-ui/icons';
 import StarRatings from 'react-star-ratings';
+import { checkSupplier } from '../../helpers/authHelper';
 import { GetAllAccommodation } from '../../actions/accommodationActions';
 import Breadcrumbs from '../global/Breadcrumbs';
+
 
 export class AllAccommodation extends React.Component {
   constructor(props) {
@@ -91,19 +94,27 @@ export class AllAccommodation extends React.Component {
     const { isLoading } = this.state;
     return (
       <div className="accommodation">
-        <Row>
-        <Col md={5} className="breadcrumbs">
-          <Breadcrumbs itemsArray={['> Home', '  accommodations']} />
-        </Col>
-        </Row>
+      <Row>
+      <Col md={5} className="breadcrumbs">
+        <Breadcrumbs itemsArray={['> Home', '  accommodations']} />
+      </Col>
+      <Col>
+      { checkSupplier() ? (
+      <Button href="/accommodations/new">
+            <Add />
+            reate new accommodation
+      </Button>
+      ) : null }
+      </Col>
+      </Row>
 
-        {isLoading
-          ? (
-          <div className="d-flex justify-content-center">
-            <i className="fas fa-spinner fa-pulse loader-big" />
-          </div>
-          )
-          : this.renderAcommodation()}
+      {isLoading
+        ? (
+        <div className="d-flex justify-content-center">
+          <i className="fas fa-spinner fa-pulse loader-big" />
+        </div>
+        )
+        : this.renderAcommodation()}
       </div>
     );
   }

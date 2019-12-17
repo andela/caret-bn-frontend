@@ -46,15 +46,15 @@ export class SingleAccommodation extends React.Component {
           break;
       }
       return (
-        <div key={post.id}>
+        <div key={post.id} className="container-fluid border single-container">
           <Row>
         <Col md={5} className="breadcrumbs">
           <Breadcrumbs itemsArray={['> Home', '  accommodations', post.name]} />
         </Col>
           </Row>
-          <Container className="containerA accommodation-container" class="container-fluid">
+          <Container className="containerA " class="container-fluid">
             <Row>
-              <Col xs={6}>
+              <Col xs={6} className="single-column">
                 <Carousel className="MyCarousel">
                   {images.map((image, index) => (
                     <Carousel.Item key={index}>
@@ -62,7 +62,7 @@ export class SingleAccommodation extends React.Component {
                     </Carousel.Item>
                   ))}
                 </Carousel>
-                <Container className="containerC accommodation-container">
+                <Container className="containerC container-fluid">
                  <h3> Highlights & Anemities </h3>
                   <div>
                     <img src={img3} alt="icon" />
@@ -81,7 +81,7 @@ export class SingleAccommodation extends React.Component {
                   </div>
                 </Container>
               </Col>
-              <Col xs={6}>
+              <Col xs={6} className="single-column">
                 <div className="infio">
                   <i>
                     <h1>{post.name}</h1>
@@ -121,7 +121,7 @@ export class SingleAccommodation extends React.Component {
                   <h4>Description</h4>
                   <i>{post.description}</i>
                 </div>
-                <Container className="containerB accommodation-container">
+                <Container className="containerB accommodation-container ">
                   <h3><b>Make a reservation</b></h3>
                   <div className="bookingContainer">
                     <i>
