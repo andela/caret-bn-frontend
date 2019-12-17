@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { compose } from 'redux';
-import Button from '../global/Button';
+import { Button, Form } from 'react-bootstrap';
 import Input from '../global/Input';
 import { signupAction } from '../../actions/authActions';
 
@@ -71,12 +71,12 @@ export class Signup extends Component {
 
     return (
       <div className="signup-form">
-        <form onSubmit={this.handleSubmit}>
-          <Input data-test="email" type="email" id="email" name="email" placeholder="Email..." required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={email} onChange={this.handleChange} title="Enter a valid email. eg: johndoe@gmail.com" />
-          <Input data-test="username" type="text" id="username" name="username" placeholder="Username..." required pattern="[a-zA-Z]{3,10}" value={username} onChange={this.handleChange} title="Enter a valid name. Between 3 and 10 characters allowed." />
-          <Input data-test="password" type="password" id="password" name="password" placeholder="Password..." required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}" value={password} onChange={this.handleChange} title="Enter an 8+ length valid password. Allowed = 1 Uppercase, 1 lowercase, 1 number, 1 special character." />
-          <Input data-test="confirmPassword" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password..." required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}" value={confirmPassword} onChange={this.handleChange} title="Enter an 8+ length valid password. Allowed = 1 Uppercase, 1 lowercase, 1 number, 1 special character." />
-          <Button data-test="submitButton" buttonType="submit" name={isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'signup'} />
+        <form onSubmit={this.handleSubmit} className="auth-form">
+          <Form.Control data-test="email" type="email" id="email" name="email" placeholder="Email..." required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={email} onChange={this.handleChange} title="Enter a valid email. eg: johndoe@gmail.com" />
+          <Form.Control data-test="username" type="text" id="username" name="username" placeholder="Username..." required pattern="[a-zA-Z]{3,10}" value={username} onChange={this.handleChange} title="Enter a valid name. Between 3 and 10 characters allowed." />
+          <Form.Control data-test="password" type="password" id="password" name="password" placeholder="Password..." required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}" value={password} onChange={this.handleChange} title="Enter an 8+ length valid password. Allowed = 1 Uppercase, 1 lowercase, 1 number, 1 special character." />
+          <Form.Control data-test="confirmPassword" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password..." required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}" value={confirmPassword} onChange={this.handleChange} title="Enter an 8+ length valid password. Allowed = 1 Uppercase, 1 lowercase, 1 number, 1 special character." />
+          <Button data-test="submitButton" buttonType="submit">{isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'signup'}</Button>
           <br />
           <div className="link">
             <Link to="/login">

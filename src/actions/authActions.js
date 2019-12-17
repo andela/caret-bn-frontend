@@ -32,37 +32,33 @@ const userLogin = ({ email, password }) => async (dispatch) => {
   }
 };
 
-export const resetPaswordRequest = (email) => (dispatch) => {
-  return backendCall.post('/users/forgotpassword', { host, email })
-    .then((res) => {
-      const response = res.data;
-      dispatch(
-        authType(RESET_PASSWORD_REQUEST_SUCESS, response),
-      );
-      toast.success(response.message);
-    }).catch((error) => {
-      dispatch(
-        authType(RESET_PASSWORD_REQUEST_FAILURE, error.response.data),
-      );
-      toast.error(error.response.data.message);
-    });
-};
+export const resetPaswordRequest = (email) => (dispatch) => backendCall.post('/users/forgotpassword', { host, email })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      authType(RESET_PASSWORD_REQUEST_SUCESS, response),
+    );
+    toast.success(response.message);
+  }).catch((error) => {
+    dispatch(
+      authType(RESET_PASSWORD_REQUEST_FAILURE, error.response.data),
+    );
+    toast.error(error.response.data.message);
+  });
 
-export const resetPasword = (newPassword, confirmPassword, token) => (dispatch) => {
-  return backendCall.patch(`/users/resetpassword/${token}`, { newPassword, confirmPassword })
-    .then((res) => {
-      const response = res.data;
-      dispatch(
-        authType(RESET_PASSWORD_SUCCESS, response),
-      );
-      toast.success(res.data.message);
-    }).catch((error) => {
-      dispatch(
-        authType(RESET_PASSWORD_FAILURE, error.response.data),
-      );
-      toast.error(error.response.data.message);
-    });
-};
+export const resetPasword = (newPassword, confirmPassword, token) => (dispatch) => backendCall.patch(`/users/resetpassword/${token}`, { newPassword, confirmPassword })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      authType(RESET_PASSWORD_SUCCESS, response),
+    );
+    toast.success(res.data.message);
+  }).catch((error) => {
+    dispatch(
+      authType(RESET_PASSWORD_FAILURE, error.response.data),
+    );
+    toast.error(error.response.data.message);
+  });
 
 export default userLogin;
 export const socialAuthAction = (userData) => (dispatch) => new Promise((resolve, reject) => {

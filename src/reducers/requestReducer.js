@@ -1,5 +1,5 @@
 import {
-  GET_LOCATIONS, GET_LOCATIONS_ERROR,
+  MAKE_REQUEST_SUCCESS, MAKE_REQUEST_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -10,13 +10,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_LOCATIONS:
+    case MAKE_REQUEST_SUCCESS:
       return {
         ...state,
         data: action.payload,
         status: 'success',
       };
-    case GET_LOCATIONS_ERROR:
+    case MAKE_REQUEST_FAILURE:
       return {
         ...state,
         dataError: action.payload,

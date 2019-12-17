@@ -5,6 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: './src/index.js',
   output: {
+    publicPath: '/',
     path: path.join(__dirname, '/dist'),
     publicPath: '/',
     filename: 'index_bundle.js',

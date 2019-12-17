@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './../views/Home';
 import mockStore from './../utilities/tests/mockStore';
 import { shallow } from 'enzyme';
+import findTestByAttribute from '../utilities/tests/findByTestAttribute';
 
 const setUp = (initialState = {}) => {
   const store = mockStore(initialState);

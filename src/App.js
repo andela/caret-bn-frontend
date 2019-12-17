@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import AuthPage from './views/Authentication';
 import NotFound from './components/NotFound';
+import CreateRequest from './views/requests/CreateRequests';
 import SocialAuthSuccess from './views/SocialAuthSuccess';
 import ViewRequests from './views/requests/ViewRequests';
 import Home from './views/Home';
@@ -28,26 +29,27 @@ export class App extends Component {
     const { location: { pathname } } = this.props;
 
     return (
-        <Router>
-          <MenuComponent pathname={pathname} />
-          <Switch>
-            <ProtectedRoute exact path="/" component={Home} />
-            <Route path="/login" component={AuthPage} />
-            <Route path="/register" component={AuthPage} />
-            <ProtectedRoute exact path="/users/auth/success" component={SocialAuthSuccess} />
-            <Route path="/verify/:token" component={Verify} />
-            <Route path="/forgotpassword" component={AuthPage} />
-            <Route path="/resetpassword/:token" component={AuthPage} />
-            <ProtectedRoute exact path="/requests" component={ViewRequests} />
-            <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
-            {/* <ProtectedRoute exact path="/accommodations" component={AllAccommodations} /> */}
-            <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
-            <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
-            <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
-            <ProtectedRoute path="*" component={NotFound} />
-          </Switch>
-          <ToastContainer />
-        </Router>
+      <Router>
+        <MenuComponent pathname={pathname} />
+        <Switch>
+          <ProtectedRoute exact path="/" component={Home} />
+          <Route path="/login" component={AuthPage} />
+          <Route path="/register" component={AuthPage} />
+          <ProtectedRoute exact path="/users/auth/success" component={SocialAuthSuccess} />
+          <Route path="/verify/:token" component={Verify} />
+          <Route path="/forgotpassword" component={AuthPage} />
+          <Route path="/resetpassword/:token" component={AuthPage} />
+          <ProtectedRoute exact path="/requests/create" component={CreateRequest} />
+          <ProtectedRoute exact path="/requests" component={ViewRequests} />
+          <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
+          {/* <ProtectedRoute exact path="/accommodations" component={AllAccommodations} /> */}
+          <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
+          <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
+          <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
+          <ProtectedRoute path="*" component={NotFound} />
+        </Switch>
+        <ToastContainer />
+      </Router>
     );
   }
 }

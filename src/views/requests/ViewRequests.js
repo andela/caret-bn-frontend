@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Add } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 import { getRequestsAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import RequestItem from '../../components/pages/requests/RequestItem';
@@ -44,10 +45,15 @@ export class ViewRequests extends Component {
           </Col>
           <Col md={5} />
           <Col>
-            <Button variant="primary" onClick={() => props.history.push('/requests/create')}>
-              <Add />
-              Place Request
-            </Button>
+            <Link to="/requests/create">
+              <Button
+                variant="primary"
+              >
+                <Add />
+                Place Request
+              </Button>
+            </Link>
+
           </Col>
         </Row>
 
@@ -55,15 +61,15 @@ export class ViewRequests extends Component {
           {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
         </Row>
         <Row />
-          { data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
-          { data && data.map((item) => (
-            <Row key={item.id}>
-              <RequestItem item={item} />
-            </Row>
-          ))}
-          <Row>
-            { dataError && <Alert variant="danger" heading="Error" message={dataError.message} /> }
+        {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
+        {data && data.map((item) => (
+          <Row key={item.id}>
+            <RequestItem item={item} />
           </Row>
+        ))}
+        <Row>
+          {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
+        </Row>
       </Container>
     );
   }

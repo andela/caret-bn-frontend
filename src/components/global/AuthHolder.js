@@ -2,7 +2,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import SocialButtons from '../pages/SocialButtons';
 import Separator from './auth-separator';
 import UserVerify from '../pages/UserVerify';
 import ForgotPassword from '../pages/ForgotPassword';
@@ -23,11 +22,11 @@ export default function AuthHolder(props) {
                 <UserVerify token={props.token} />
             </Route>
             <Route path="/forgotpassword">
-                        <ForgotPassword />
+                <ForgotPassword />
             </Route>
-                <Route path="/resetpassword/:token">
-                        <ResetPassword token={props.token} />
-                </Route>
+            <Route path="/resetpassword/:token">
+                <ResetPassword token={props.token} />
+            </Route>
         </div>
   );
 }
