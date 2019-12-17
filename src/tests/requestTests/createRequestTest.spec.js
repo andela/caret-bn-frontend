@@ -1,4 +1,4 @@
-import CreateRequests from './../../views/Requests/CreateRequests';
+import CreateRequests from './../../views/requests/CreateRequests';
 import React from 'react';
 import { shallow, render, mount } from 'enzyme';
 import mockStore from '../../utilities/tests/mockStore';
