@@ -5,11 +5,13 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Add } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getRequestsAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import RequestItem from '../../components/pages/requests/RequestItem';
 import Alert from '../../components/global/AlertComponent';
+import SearchBar from '../../components/pages/requests/SearchBar';
+import { checkSupplier } from '../../helpers/authHelper';
 
 export class ViewRequests extends Component {
   state = {
@@ -25,11 +27,32 @@ export class ViewRequests extends Component {
     this.setState({ isLoading: false });
   }
 
+  renderResults = (data, dataError) => (
+    <div>
+    { data && data.length === 0 && (
+      <Row>
+        No request
+      </Row>
+    ) }
+    { data && data.map((item) => (
+          <Row key={item.id}>
+            <RequestItem item={item} />
+          </Row>
+    )) }
+        <Row>
+          { dataError && <Row>{dataError.message}</Row> }
+        </Row>
+    </div>
+  );
+
   render() {
     let data;
     let dataError;
     const { isLoading } = this.state;
     const { props } = this;
+    const { searchRequests } = props;
+    const { status, searchData, searchDataError } = searchRequests;
+
     if (props.data) {
       data = props.data.data;
     }
@@ -38,39 +61,42 @@ export class ViewRequests extends Component {
     }
 
     return (
-      <Container>
-        <Row>
-          <Col md={4} className="breadcrumbs">
-            <Breadcrumbs itemsArray={['> Home', 'Requests']} />
-          </Col>
-          <Col md={5} />
-          <Col>
-            <Link to="/requests/create">
-              <Button
-                variant="primary"
-              >
-                <Add />
-                Place Request
-              </Button>
-            </Link>
+      <>
+      { checkSupplier() && <Redirect to="/" />}
+        <Container>
+          <Row>
+            <Col md={4} className="breadcrumbs">
+              <Breadcrumbs itemsArray={['> Home', 'Requests']} />
+            </Col>
+            <Col md={5} />
+            <Col>
+              <Link to="/requests/create">
+                <Button
+                  variant="primary"
+                >
+                  <Add />
+                  Place Request
+                </Button>
+              </Link>
 
-          </Col>
-        </Row>
-
-        <Row className="text-center mx-auto">
-          {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
-        </Row>
-        <Row />
-        {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
-        {data && data.map((item) => (
-          <Row key={item.id}>
-            <RequestItem item={item} />
+            </Col>
           </Row>
-        ))}
-        <Row>
-          {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
-        </Row>
-      </Container>
+
+          <SearchBar />
+
+          <Row className="text-center mx-auto">
+            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+          </Row>
+
+          <Row className="text-center mx-auto">
+          {status && <Row className="section"><h4>Results of your search:</h4></Row>}
+          </Row>
+
+          <Row />
+          { status === '' && this.renderResults(data, dataError)}
+          { status !== '' && this.renderResults(searchData, searchDataError)}
+        </Container>
+      </>
     );
   }
 }
@@ -78,13 +104,18 @@ export class ViewRequests extends Component {
 export const mapStateToProps = (state) => ({
   data: state.requests.data,
   dataError: state.requests.dataError,
+
+  searchRequests: state.searchRequests,
 });
 
 ViewRequests.propTypes = {
   getRequestsAction: PropTypes.func.isRequired,
-  history: PropTypes.any,
   data: PropTypes.object,
   dataError: PropTypes.object,
+  searchRequests: PropTypes.object,
+  status: PropTypes.string,
+  searchData: PropTypes.object,
+  searchDataError: PropTypes.object,
 };
 
 export default connect(mapStateToProps, { getRequestsAction })(ViewRequests);

@@ -3,19 +3,19 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-    Notifications, AccountCircle,
-    ExitToApp, FileCopy, HomeOutlined,
+  Notifications, AccountCircle,
+  ExitToApp, FileCopy, HomeOutlined,
 } from '@material-ui/icons';
 import AirlineSeatFlatAngled from '@material-ui/icons/AirlineSeatFlatAngled';
 import barefootLogo from '../../assets/images/foot-print.png';
 
 const MenuComponent = (props) => {
-    const { pathname } = props;
-    const urls = ['/login', '/register', '/forgotpassword'];
-    const displayMenu = !(urls.includes(pathname) || pathname.match(/resetpassword/) || pathname.match(/verify/));
+  const { pathname } = props;
+  const urls = ['/login', '/register', '/forgotpassword', '/registered'];
+  const displayMenu = !(urls.includes(pathname) || pathname.match(/resetpassword/) || pathname.match(/verify/));
 
-    if (displayMenu) {
-        return (
+  if (displayMenu) {
+    return (
             <Navbar data-test="menu-test" bg="primary" variant="dark" expand="lg">
                 <Link to="/">
                     <Navbar.Brand>
@@ -62,13 +62,13 @@ const MenuComponent = (props) => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-        );
-    }
-    return null;
+    );
+  }
+  return null;
 };
 
 MenuComponent.propTypes = {
-    pathname: PropTypes.string,
+  pathname: PropTypes.string,
 };
 
 export default MenuComponent;

@@ -14,11 +14,21 @@ const mainState = {
     dataError: null,
     data: null,
     singleData: null,
+  },
+  searchRequests: {
+    status: '',
+    searchData: null,
+    searchDataError: null,
   }
 }
 
 const props = {
   props: requestsMocks.viewRequestsProps,
+  searchRequests: {
+    status: '',
+    searchData: null,
+    searchDataError: null,
+  },
   getRequestsAction: jest.fn(),
 }
 
@@ -47,6 +57,11 @@ describe('ViewRequests Test Suite', () => {
         dataError: null,
         data: null,
         singleData: null,
+      },
+      searchRequests: {
+        status: '',
+        searchData: null,
+        searchDataError: null,
       }
     };
     expect(mapStateToProps(initialState).data).toEqual(null);

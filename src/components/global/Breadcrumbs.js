@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Breadcrumbs = ({ itemsArray }) => (
   <div>
-    <Breadcrumb>
+    <Breadcrumb className="bc-bg">
       {itemsArray.map((item, i) => (
         <Breadcrumb.Item active={(i === itemsArray.length - 1)} key={i}>
           {item}

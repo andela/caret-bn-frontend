@@ -6,16 +6,20 @@
 @import './pages/allAccommodation.scss';
 @import './pages/singleAccommodation.scss';
 @import './breadcrumbs.scss';
-@import './comnponents/menubar.scss';
+@import './components/menubar.scss';
 @import './button.scss';
 @import '~bootstrap/scss/bootstrap';
-@import './comnponents/buttons.scss';
+@import './components/buttons.scss';
 @import './authentication/index.scss';
 
 * {
 	font-family: $master-font;
 	margin: 0;
 	padding: 0;
+}
+
+body {
+	background-color: rgb(233, 235, 238);
 }
 
 input[disabled] {

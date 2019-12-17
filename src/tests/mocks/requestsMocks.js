@@ -101,6 +101,18 @@ const requestsMocks = {
       data: {},
       singleData: {},
     },
+    searchRequests: {
+      status: '',
+      searchData: null,
+      searchDataError: null,
+    },
+  },
+
+  getLocationsProps: {
+    locations: {
+      data: null,
+      dataError: null,
+    },
   },
 
 
