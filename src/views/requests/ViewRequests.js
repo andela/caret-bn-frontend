@@ -76,7 +76,7 @@ export const mapStateToProps = (state) => ({
 
 ViewRequests.propTypes = {
   getRequestsAction: PropTypes.func.isRequired,
-  history: PropTypes.any.isRequired,
+  history: PropTypes.any,
   data: PropTypes.object,
   dataError: PropTypes.object,
 };

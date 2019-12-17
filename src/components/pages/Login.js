@@ -25,7 +25,7 @@ export class Login extends Component {
     } = nextProps;
     switch (status) {
       case 'Success':
-        history.push('/');
+        window.location.replace('/');
         this.setState({ isLoading: false });
         break;
       case 'Failure':
@@ -64,7 +64,7 @@ export class Login extends Component {
 
     return (
       <div className="login-form">
-        <form onSubmit={this.submitForm}>
+        <form onSubmit={this.submitForm} className="auth-form">
           <Input type="email" name="email" id="email" placeholder="Email..." onChange={this.handleChange} data="email" value={email} title="Enter a valid email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required />
           <Input type="password" name="password" id="password" placeholder="Password..." onChange={this.handleChange} data="password" value={password} title="Enter your password" required />
           <Button name={isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'login'} />

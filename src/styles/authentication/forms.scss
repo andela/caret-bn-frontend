@@ -1,0 +1,42 @@
+.login-form,
+.signup-form {
+	form {
+		input {
+			width: 80%;
+			padding-left: 0.5rem;
+		}
+		button {
+			text-transform: uppercase;
+			font-size: 1rem;
+			background: $primary;
+			border-color: $light;
+			color: $light;
+			padding: 0.2rem 0.5rem;
+			cursor: pointer;
+			margin: 0.2rem 0.5rem 1rem 0;
+			transition: all 0.5s ease-in-out;
+			height: 2rem;
+			width: 150px;
+
+			&:hover {
+				border-color: $primary;
+				background: $light;
+				color: $primary;
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+	.forgot-password {
+		color: $redish;
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+	.switch-auth {
+		color: $primary;
+		margin: 0;
+		padding: 0;
+	}
+}

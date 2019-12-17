@@ -52,7 +52,7 @@ export class SingleAccommodation extends React.Component {
           <Breadcrumbs itemsArray={['> Home', '  accommodations', post.name]} />
         </Col>
           </Row>
-          <Container className="containerA" class="container-fluid">
+          <Container className="containerA accommodation-container" class="container-fluid">
             <Row>
               <Col xs={6}>
                 <Carousel className="MyCarousel">
@@ -62,7 +62,7 @@ export class SingleAccommodation extends React.Component {
                     </Carousel.Item>
                   ))}
                 </Carousel>
-                <Container className="containerC">
+                <Container className="containerC accommodation-container">
                  <h3> Highlights & Anemities </h3>
                   <div>
                     <img src={img3} alt="icon" />
@@ -121,7 +121,7 @@ export class SingleAccommodation extends React.Component {
                   <h4>Description</h4>
                   <i>{post.description}</i>
                 </div>
-                <Container className="containerB">
+                <Container className="containerB accommodation-container">
                   <h3><b>Make a reservation</b></h3>
                   <div className="bookingContainer">
                     <i>

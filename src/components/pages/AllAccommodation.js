@@ -30,7 +30,7 @@ export class AllAccommodation extends React.Component {
     const { accommodations } = this.props;
     if (accommodations) {
       const accommodation = accommodations.map((post) => (
-        <Container key={post.id}>
+        <Container key={post.id} className="accommodation-container">
           <Row>
             <Col sm>
               <img src={(typeof (post.images) === 'string') ? post.images : post.images[0]} alt="accommodation" />

@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import NewAccommodation from '../views/accommodations/NewAccommodation';
-import CreateAccommodation from '../components/pages/CreateAccommodation';
-
+import { Redirect } from 'react-router-dom';
 
 const wrapper = shallow(<NewAccommodation  />);
 
@@ -12,7 +11,7 @@ describe('Accommodations view Test Suite', () => {
   });
 
   it('Should Find CreateAccommodation In Accommodations', () => {
-    expect(wrapper.find(CreateAccommodation)).toHaveLength(1);
+    expect(wrapper.find(Redirect)).toHaveLength(1);
   });
 
 });
