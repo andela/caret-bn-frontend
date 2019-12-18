@@ -1,10 +1,12 @@
 import {
-  GET_BOOKINGS, GET_BOOKINGS_ERROR,
+  GET_BOOKINGS, GET_BOOKINGS_ERROR, BOOK_SUCCESS, BOOK_FAILURE,
 } from '../actions/types';
 
 const initialState = {
   data: null,
   dataError: null,
+  booked: null,
+  bookedError: null,
   status: '',
 };
 
@@ -20,6 +22,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dataError: action.payload,
+        status: 'error',
+      };
+    case BOOK_SUCCESS:
+      return {
+        ...state,
+        booked: action.payload,
+        bookedError: null,
+        status: 'success',
+      };
+    case BOOK_FAILURE:
+      return {
+        ...state,
+        booked: null,
+        bookedError: action.payload,
         status: 'error',
       };
     default:

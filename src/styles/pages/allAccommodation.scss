@@ -1,3 +1,4 @@
+@import './variables.scss';
 
 .accommodation{
   width: 100%;
@@ -68,8 +69,12 @@
   text-align: right;
   margin-right: 10px;
 }
+.info-container{
+  text-align: left;
+  margin-right: 10px;
+}
 .accommodation-container{
-  border-style: groove;
+  background-color:$white;
   min-width: 500px;
   margin-bottom:35px;
   padding-left: 20px;
