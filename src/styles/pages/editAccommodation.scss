@@ -1,0 +1,68 @@
+.edit-links {
+	color: $primary;
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.blank-link {
+	&:hover {
+		text-decoration: none;
+	}
+}
+.spaced-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-right: 20px;
+
+	.edit-links {
+		padding-top: 7px;
+		a {
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+.edit-form {
+	background-color: $white;
+	padding: 15px;
+	margin: 10px 2px;
+	margin-top: 30px;
+}
+
+.accommodation-edit-images {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	img {
+		height: 160px;
+		width: 260px;
+		margin: 5px 0;
+		opacity: 0.9;
+		background-color: $primary;
+	}
+}
+
+.accommodation-edit-image-holder {
+	position: relative;
+	text-align: center;
+	svg {
+		position: absolute;
+		bottom: 16px;
+		right: 16px;
+		color: white;
+	}
+}
+
+@media (min-width: 600px) {
+	.accommodation-edit-images {
+		img {
+			margin: 0 5px;
+		}
+	}
+	.edit-form {
+		margin-top: 50px;
+	}
+}

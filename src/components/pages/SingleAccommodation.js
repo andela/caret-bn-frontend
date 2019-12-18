@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,20 +8,27 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
 import { GetSingleAccommodation } from '../../actions/accommodationActions';
 import Breadcrumbs from '../global/Breadcrumbs';
 import img3 from '../../assets/images/cocktail.png';
 import calendar from '../../assets/images/calendar.png';
+import isAuthenticated from '../../helpers/isAuthenticated';
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
+      userId: null,
     };
   }
 
-  componentDidMount= async () => {
+  componentDidMount = async () => {
+    const userInfo = isAuthenticated();
+    await this.setState({
+      userId: userInfo.payload.id,
+    });
     const { slug } = this.props;
     this.setState({ isLoading: true });
     await this.props.GetSingleAccommodation(slug);
@@ -30,7 +38,9 @@ export class SingleAccommodation extends React.Component {
 
   renderAcommodation() {
     const { accommodation } = this.props;
+    const { userId } = this.state;
     const post = accommodation;
+    const { ownerUser } = post;
     const ratingNumber = post.ratings ? post.ratings.length : 0;
     const imageArray = post.images ? post.images : [];
     const ratingArray = post.ratings ? post.ratings : [];
@@ -47,10 +57,19 @@ export class SingleAccommodation extends React.Component {
       }
       return (
         <div key={post.id} className="container-fluid border single-container">
-          <Row>
-        <Col md={5} className="breadcrumbs">
-          <Breadcrumbs itemsArray={['> Home', '  accommodations', post.name]} />
-        </Col>
+          <Row className="spaced-row">
+            <Col md={5} className="breadcrumbs">
+              <Breadcrumbs itemsArray={['> Home', '  accommodations', post.name]} />
+            </Col>
+            {
+              (ownerUser !== undefined) ? (post.ownerUser.id === this.state.userId)
+                ? (
+                  <Link to={{ pathname: `/accommodations/${post.slug}/edit` }} className="edit-links">
+                    <a>Edit</a>
+                  </Link>
+                )
+                : null : null
+            }
           </Row>
           <Container className="containerA " class="container-fluid">
             <Row>
@@ -58,12 +77,12 @@ export class SingleAccommodation extends React.Component {
                 <Carousel className="MyCarousel">
                   {images.map((image, index) => (
                     <Carousel.Item key={index}>
-                    <img className="d-block w-100" src={image} alt="accommodation" />
+                      <img className="d-block w-100" src={image} alt="accommodation" />
                     </Carousel.Item>
                   ))}
                 </Carousel>
                 <Container className="containerC container-fluid">
-                 <h3> Highlights & Anemities </h3>
+                  <h3> Highlights & Anemities </h3>
                   <div>
                     <img src={img3} alt="icon" />
                     <h3>
@@ -99,7 +118,7 @@ export class SingleAccommodation extends React.Component {
                 <h1>{post.averageRating}</h1>
                 &nbsp;
                   <i>
-                    {ratingNumber}
+                  {ratingNumber}
                   &nbsp;
                  Rating(s)
                   </i>
@@ -153,7 +172,7 @@ export class SingleAccommodation extends React.Component {
                 {ratingArray.map((rating) => (
                   <div>
                     <h3>
-                        Rating:
+                      Rating:
                         {rating.rating}
                     </h3>
                     <i>{rating.feedback}</i>
@@ -176,7 +195,7 @@ export class SingleAccommodation extends React.Component {
     const { isLoading } = this.state;
     return (
       <div className="d-flex justify-content-center">
-         {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : this.renderAcommodation()}
+        {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : this.renderAcommodation()}
       </div>
     );
   }

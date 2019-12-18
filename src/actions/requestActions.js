@@ -1,4 +1,4 @@
-import { MAKE_REQUEST_SUCCESS, MAKE_REQUEST_FAILURE } from './types';
+import { MAKE_REQUEST_SUCCESS, MAKE_REQUEST_FAILURE, SHOW_ALERT } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
 
@@ -15,6 +15,8 @@ const headers = {
 
 export const sendRequest = (request) => (dispatch) => backendCall.post('/requests', request, { headers }).then((response) => {
   dispatch(requestType(MAKE_REQUEST_SUCCESS, response.data));
+  dispatch(requestType(SHOW_ALERT));
 }).catch((error) => {
   dispatch(requestType(MAKE_REQUEST_FAILURE, error.response));
+  dispatch(requestType(SHOW_ALERT));
 });

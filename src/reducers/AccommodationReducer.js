@@ -1,5 +1,9 @@
 import {
-  ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE, SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
+  ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE,
+  ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
+  SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
+  UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
+  RESET_ACCOMMODATION_STATUS,
 } from '../actions/types';
 
 const initialState = {
@@ -10,6 +14,9 @@ const initialState = {
   getAccommodationError: {},
   singleAccommodation: {},
   singleAccommodationError: {},
+  updateSuccess: null,
+  updateError: null,
+  updateStatus: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -47,6 +54,25 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         singleAccommodationError: payload,
+      };
+
+    case UPDATE_ACCOMMODATION_SUCCESS:
+      return {
+        ...state,
+        updateSuccess: payload.data,
+        updateStatus: 'success',
+      };
+    case UPDATE_ACCOMMODATION_FAILURE:
+      return {
+        ...state,
+        updateError: payload,
+        updateStatus: 'fail',
+      };
+    case RESET_ACCOMMODATION_STATUS:
+      return {
+        ...state,
+        updateError: payload,
+        updateStatus: payload,
       };
     default:
       return {

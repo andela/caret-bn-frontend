@@ -13,6 +13,8 @@
 @import './authentication/index.scss';
 @import './pages//viewAllUsers.scss';
 @import './pages/viewSpecificUser.scss';
+@import './pages/editAccommodation.scss';
+@import './components/editor.scss';
 
 * {
 	font-family: $master-font;
@@ -26,6 +28,10 @@ body {
 
 input[disabled] {
 	cursor: default;
+}
+
+body {
+	background-color: rgb(233, 235, 238);
 }
 
 .header {
@@ -134,11 +140,11 @@ input[disabled] {
 	padding: 20px;
 }
 
-#app{
+#app {
 	background-color: $mainBackgroundColor;
 	min-height: 100vh;
 }
 
-body{
+body {
 	background-color: $mainBackgroundColor;
 }
