@@ -35,10 +35,13 @@ export class SearchBar extends Component {
   };
 
   handleDayChange = (departureDate) => {
-    // const input = dayPickerInput.getInput();
     const dateValue = moment(departureDate).format('YYYY-MM-DD');
     this.setState((state) => ({ ...state, departureDate: dateValue }));
   }
+
+  // resetDate = () => {
+  //   this.setState((state) => ({ ...state, departureDate: '' }));
+  // }
 
   hideFilter = () => {
     const { state: { openSearch } } = this;
@@ -130,6 +133,7 @@ export class SearchBar extends Component {
             <Col xs={12} sm={6} md={4} lg={4}>
               <Form.Group className="day-picker-custom">
                 <DayPickerInput inputProps={{ style: { border: 0, outline: 0 } }} placeholder="Departure Date..." value={departureDate} onDayChange={this.handleDayChange} />
+                {/* <i className="fa fa-times reset-cross" aria-hidden="true" onClick={this.resetDate} /> */}
               </Form.Group>
             </Col>
 

@@ -7,11 +7,13 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+  let reversedData;
   switch (action.type) {
     case SEARCH_REQUESTS_SUCCESS:
+      reversedData = action.payload.data;
       return {
         ...state,
-        searchData: action.payload.data,
+        searchData: reversedData,
         searchDataError: null,
         status: 'success',
       };

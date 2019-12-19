@@ -21,6 +21,8 @@ import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 import ProtectedRoute from './components/ProtectedRoute';
 
+import ViewAllUsers from './views/admin/ViewAllUsers';
+import SpecificUSer from './views/admin/SpecificUSer';
 
 export class App extends Component {
   render() {
@@ -43,6 +45,8 @@ export class App extends Component {
           <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
           <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
+          <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
+          <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

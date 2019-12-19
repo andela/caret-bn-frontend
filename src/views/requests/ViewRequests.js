@@ -9,7 +9,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { getRequestsAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import RequestItem from '../../components/pages/requests/RequestItem';
-import Alert from '../../components/global/AlertComponent';
 import SearchBar from '../../components/pages/requests/SearchBar';
 import { checkSupplier } from '../../helpers/authHelper';
 
@@ -51,10 +50,14 @@ export class ViewRequests extends Component {
     const { isLoading } = this.state;
     const { props } = this;
     const { searchRequests } = props;
-    const { status, searchData, searchDataError } = searchRequests;
+    const { status, searchDataError } = searchRequests;
+    let { searchData } = searchRequests;
 
+    if (searchData) {
+      searchData = searchData.reverse();
+    }
     if (props.data) {
-      data = props.data.data;
+      data = props.data.data.reverse();
     }
     if (props.dataError) {
       dataError = props.dataError;

@@ -11,6 +11,8 @@
 @import '~bootstrap/scss/bootstrap';
 @import './components/buttons.scss';
 @import './authentication/index.scss';
+@import './pages//viewAllUsers.scss';
+@import './pages/viewSpecificUser.scss';
 
 * {
 	font-family: $master-font;
@@ -130,4 +132,13 @@ input[disabled] {
 
 .content {
 	padding: 20px;
+}
+
+#app{
+	background-color: $mainBackgroundColor;
+	min-height: 100vh;
+}
+
+body{
+	background-color: $mainBackgroundColor;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -7,7 +7,11 @@ import {
   ExitToApp, FileCopy, HomeOutlined,
 } from '@material-ui/icons';
 import AirlineSeatFlatAngled from '@material-ui/icons/AirlineSeatFlatAngled';
+import GroupIcon from '@material-ui/icons/Group';
 import barefootLogo from '../../assets/images/foot-print.png';
+import authHelper from '../../helpers/authHelper';
+
+const { checkSupplier, checkAdmin } = authHelper;
 
 const MenuComponent = (props) => {
   const { pathname } = props;
@@ -33,19 +37,32 @@ const MenuComponent = (props) => {
                                 Home
                             </div>
                         </Link>
-                        <Link to="/requests">
-                            <div className="account-icon">
-                                <FileCopy className="icon" />
-                                Requests
-                            </div>
+                        <Link to="/admin/users">
+                    {!checkAdmin() ? null
+                      : (
+                        <div className="account-icon">
+                            <GroupIcon className="icon" />
+                            Users
+                        </div>
+                      )}
                         </Link>
+                <Link to="/requests">
+                    {checkSupplier() ? null
+                      : (
+                        <div className="account-icon">
+                            <FileCopy className="icon" />
+                            Requests
+                        </div>
+                      )}
+                </Link>
 
-                        <Link to="/accommodations">
-                            <div className="account-icon">
-                                <AirlineSeatFlatAngled className="icon" />
-                                Accommodations
-                            </div>
-                        </Link>
+
+                <Link to="/accommodations">
+                    <div className="account-icon">
+                        <AirlineSeatFlatAngled className="icon" />
+                        Accommodations
+                    </div>
+                </Link>
 
                         <Link to="#">
                             <div className="account-icon">
@@ -53,12 +70,16 @@ const MenuComponent = (props) => {
                                 Notifications
                             </div>
                         </Link>
-                        <Link to="#">
                             <div className="account-icon">
-                                <AccountCircle className="icon" />
-                                Thanos
+                                <Dropdown alignRight>
+                                    <Dropdown.Toggle id="dropdown-basic" size="sm">
+                                    <AccountCircle className="icon" />
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </div>
-                        </Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

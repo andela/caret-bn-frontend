@@ -1,0 +1,22 @@
+.view-all-users{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    min-height: 100vh;
+    .card-title{
+        color: $primary;
+        font-weight: 600;
+    }
+    div{
+        width: 40vh;
+        margin-bottom: 1rem;
+    }
+    Button{
+        padding: 0.5rem 2rem;
+    }
+    .card-header{
+        h5{
+            font-weight: 600;
+        }
+    }
+}
