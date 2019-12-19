@@ -19,6 +19,19 @@ export const checkSupplier = () => {
   return false;
 };
 
+export const checkManager = () => {
+  const user = isAuth();
+  if (user) {
+    const { payload } = user;
+    const { role } = payload;
+    if (role !== 1 && role !== 3 && role !== 5 && role !== 6) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
+
 export const checkAdmin = () => {
   const userInfo = isAuth();
   if (userInfo) {
@@ -44,5 +57,5 @@ export const checkEmail = () => {
 };
 
 export default {
-  storeToken, getToken, checkSupplier, checkEmail, checkAdmin,
+  storeToken, getToken, checkSupplier, checkEmail, checkAdmin, checkManager,
 };
