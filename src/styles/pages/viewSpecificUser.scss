@@ -1,0 +1,15 @@
+@import '../variables.scss';
+
+.view-specific-user{
+    min-height: 100vh;
+    .card-title{
+        color: $primary;
+        font-weight: 600;
+    }
+    .card-header{
+        h5{
+            font-weight: 600;
+        }
+    }
+    
+}

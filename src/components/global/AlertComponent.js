@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { hideAlert } from '../../actions/alertAction';
 
 const AlertComponent = (props) => {
-  const [show, setShow] = useState(true);
-
+  const dispatch = useDispatch();
+  const show = useSelector((state) => state.alert.isShown);
   const { variant, heading, message } = props;
-  return (
-    <Alert data-test="data-alert" onClose={() => setShow(false)} variant={variant} dismissible>
-      <Alert.Heading>{heading}</Alert.Heading>
-      <p>
-        {message}
-      </p>
-    </Alert>
-  );
+
+  if (show) {
+    return (
+      <Alert data-test="data-alert" onClose={() => dispatch(hideAlert())} variant={variant} dismissible>
+        <Alert.Heading>{heading}</Alert.Heading>
+        <p>
+          {message}
+        </p>
+      </Alert>
+    );
+  } return null;
 };
 
 AlertComponent.propTypes = {
