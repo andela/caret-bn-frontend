@@ -1,6 +1,7 @@
-import authHelper from "../../helpers/authHelper";
 import jwtDecode from "jwt-decode";
 import localStorageMock from "../mocks/localStorageMock";
+import authHelper from "../../helpers/authHelper";
+import isAuth from '../../helpers/isAuthenticated';
 
 class LocalStorageMock {
     constructor() {
@@ -12,7 +13,7 @@ class LocalStorageMock {
     }
   
     getItem(key) {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo0LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6InVzZXJAY2FyZXRibi5jb20iLCJyb2xlIjo1LCJsaW5lTWFuYWdlciI6OH0sImlhdCI6MTU3NjE2NzIxNCwiZXhwIjoxNTc2MjUzNjE0fQ.4B3L_z0jwWvF6qEzPxPHYTt4CUNhpgEPCBWEaepJPuM';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhcmV0c3VwcGxpZXJAZ21haWwuY29tIiwicm9sZSI6NSwibGluZU1hbmFnZXIiOjh9LCJpYXQiOjE1NzY3ODE3MDUsImV4cCI6MTU3Njg2ODEwNX0.p2Fz7nexRU6OXN0Qz9UoWU_YudVQidSDxlfRc4Gm5P0';
       return token;
     }
   
@@ -30,9 +31,9 @@ class LocalStorageMock {
   const { getToken, checkSupplier, checkAdmin } = authHelper;
 
   describe('Auth Helper Tests', () => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo0LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6InVzZXJAY2FyZXRibi5jb20iLCJyb2xlIjo1LCJsaW5lTWFuYWdlciI6OH0sImlhdCI6MTU3NjE2NzIxNCwiZXhwIjoxNTc2MjUzNjE0fQ.4B3L_z0jwWvF6qEzPxPHYTt4CUNhpgEPCBWEaepJPuM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhcmV0c3VwcGxpZXJAZ21haWwuY29tIiwicm9sZSI6NSwibGluZU1hbmFnZXIiOjh9LCJpYXQiOjE1NzY3ODE3MDUsImV4cCI6MTU3Njg2ODEwNX0.p2Fz7nexRU6OXN0Qz9UoWU_YudVQidSDxlfRc4Gm5P0';
 
-      it('Shpuld get the token ', () => {
+      it('Should get the token ', () => {
         expect(getToken()).toEqual(token)
       });
 

@@ -20,6 +20,7 @@ import MenuComponent from './components/global/MenuComponent';
 import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 import ProtectedRoute from './components/ProtectedRoute';
+
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
 

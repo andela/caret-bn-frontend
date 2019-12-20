@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
   Container, Row, Button, Col, Form,
 } from 'react-bootstrap';
@@ -8,6 +9,7 @@ import { singleRequestAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import Alert from '../../components/global/AlertComponent';
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
+import { checkSupplier } from '../../helpers/authHelper';
 
 export class SingleRequest extends Component {
   state = {
@@ -46,88 +48,91 @@ export class SingleRequest extends Component {
     const { singleData, dataError } = props;
 
     return (
-      <Container>
-        <Row>
-          <Col md={5} className="breadcrumbs">
-            <Breadcrumbs itemsArray={['> Home', 'Requests', `Request ${requestId}`]} />
-          </Col>
-        </Row>
+      <>
+        { checkSupplier() && <Redirect to="/" />}
+        <Container>
+          <Row>
+            <Col md={5} className="breadcrumbs">
+              <Breadcrumbs itemsArray={['> Home', 'Requests', `Request ${requestId}`]} />
+            </Col>
+          </Row>
 
-        <Row>
-          {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
-        </Row>
+          <Row>
+            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+          </Row>
 
-        <Row>
-          <Col>
-            { dataError && <Alert variant="danger" heading="Error" message={dataError.message} /> }
-          </Col>
-        </Row>
-        {
-          singleData
-          && (
-            <>
-              <Row className="section">
-                <h4>Request Information</h4>
-                <p>Details on the Trip Request.</p>
-              </Row>
-              <Row className="section">
-                <h4>
-                  Status:
-                  {' '}
-                  {this.renderStatus(singleData.data.status)}
-                </h4>
-              </Row>
-              <Row className="center-items">
-                <Form className="form-section">
-                  <Col xs={12} sm={12} md={6} lg={3}>
-                    <Form.Group>
-                      <Form.Label>Trip Type</Form.Label>
-                      <Form.Control name="typeId" as="select" defaultValue={singleData.data.type.id} disabled>
-                        <option value={singleData.data.type.id}>{singleData.data.type.name}</option>
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
+          <Row>
+            <Col>
+              { dataError && <Alert variant="danger" heading="Error" message={dataError.message} /> }
+            </Col>
+          </Row>
+          {
+            singleData
+            && (
+              <>
+                <Row className="section">
+                  <h4>Request Information</h4>
+                  <p>Details on the Trip Request.</p>
+                </Row>
+                <Row className="section">
+                  <h4>
+                    Status:
+                    {' '}
+                    {this.renderStatus(singleData.data.status)}
+                  </h4>
+                </Row>
+                <Row className="center-items">
+                  <Form className="form-section">
+                    <Col xs={12} sm={12} md={6} lg={3}>
+                      <Form.Group>
+                        <Form.Label>Trip Type</Form.Label>
+                        <Form.Control name="typeId" as="select" defaultValue={singleData.data.type.id} disabled>
+                          <option value={singleData.data.type.id}>{singleData.data.type.name}</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </Col>
 
-                  <Col xs={12} sm={12} md={6} lg={3}>
-                    <Form.Group>
-                      <Form.Label>Origin</Form.Label>
-                       <Form.Control name="locationId" as="select" defaultValue={singleData.data.origin.id} disabled>
-                          <option value={singleData.data.origin.id}>{singleData.data.origin.name}</option>
-                       </Form.Control>
-                    </Form.Group>
-                  </Col>
+                    <Col xs={12} sm={12} md={6} lg={3}>
+                      <Form.Group>
+                        <Form.Label>Origin</Form.Label>
+                        <Form.Control name="locationId" as="select" defaultValue={singleData.data.origin.id} disabled>
+                            <option value={singleData.data.origin.id}>{singleData.data.origin.name}</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </Col>
 
-                  <Col xs={12} sm={12} md={6} lg={3}>
-                    <Form.Group>
-                      <Form.Label>Departure Date</Form.Label>
-                      <Form.Control as="input" type="date" name="departureDate" defaultValue={singleData.data.departureDate} disabled />
-                    </Form.Group>
-                  </Col>
+                    <Col xs={12} sm={12} md={6} lg={3}>
+                      <Form.Group>
+                        <Form.Label>Departure Date</Form.Label>
+                        <Form.Control as="input" type="date" name="departureDate" defaultValue={singleData.data.departureDate} disabled />
+                      </Form.Group>
+                    </Col>
 
-                  <Col xs={12} sm={12} md={6} lg={3}>
-                    <Form.Group>
-                      <Form.Label>Return Date</Form.Label>
-                      <Form.Control as="input" type="date" name="returnDate" defaultValue={singleData.data.returnDate} disabled />
-                    </Form.Group>
-                  </Col>
-                  <Row className="section">
-                    <h4>Destinations</h4>
-                    <p>Details on the locations you will be visiting during your trip.</p>
-                  </Row>
+                    <Col xs={12} sm={12} md={6} lg={3}>
+                      <Form.Group>
+                        <Form.Label>Return Date</Form.Label>
+                        <Form.Control as="input" type="date" name="returnDate" defaultValue={singleData.data.returnDate} disabled />
+                      </Form.Group>
+                    </Col>
+                    <Row className="section">
+                      <h4>Destinations</h4>
+                      <p>Details on the locations you will be visiting during your trip.</p>
+                    </Row>
 
-                  <Row className="center-items">
-                    {singleData.data.destinations.map((destination, index) => (
-                      <Row key={destination.id}>
-                        <DestinationDisplay destination={destination} index={index} />
-                      </Row>
-                    ))}
-                  </Row>
-                </Form>
-              </Row>
-            </>
-          )
-        }
-      </Container>
+                    <Row className="center-items">
+                      {singleData.data.destinations.map((destination, index) => (
+                        <Row key={destination.id}>
+                          <DestinationDisplay destination={destination} index={index} />
+                        </Row>
+                      ))}
+                    </Row>
+                  </Form>
+                </Row>
+              </>
+            )
+          }
+        </Container>
+      </>
     );
   }
 }

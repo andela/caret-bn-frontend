@@ -15,7 +15,7 @@ const { checkSupplier, checkAdmin } = authHelper;
 
 const MenuComponent = (props) => {
   const { pathname } = props;
-  const urls = ['/login', '/register', '/forgotpassword'];
+  const urls = ['/login', '/register', '/forgotpassword', '/registered'];
   const displayMenu = !(urls.includes(pathname) || pathname.match(/resetpassword/) || pathname.match(/verify/));
 
   if (displayMenu) {

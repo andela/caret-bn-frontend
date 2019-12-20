@@ -17,6 +17,7 @@ export const checkSupplier = () => {
   }
   return false;
 };
+
 export const checkAdmin = () => {
   const userInfo = isAuth();
   if (userInfo) {

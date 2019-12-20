@@ -5,6 +5,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers/index';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
+import requestsMocks from '../mocks/requestsMocks';
 
 const middlewares = [thunk];
 
@@ -21,7 +22,7 @@ const props = {
     requests: {
       dataError: null,
       data: null,
-      singleData: null,
+      singleData: requestsMocks.itemPending,
     }
   },
   singleRequestAction: jest.fn(),
@@ -45,7 +46,7 @@ const setUp = (initialState =  {}) => {
 
 describe('SingleRequest Test Suite', () => { 
   it('Should Mount Successfully', () => {
-    const component = setUp(mainState); 
+    const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
 
