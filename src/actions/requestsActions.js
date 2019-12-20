@@ -18,7 +18,7 @@ const headers = {
 
 export const getRequestsAction = () => (dispatch) => backendCall.get('/requests', { headers })
   .then((response) => {
-    dispatch(requestType(GET_REQUESTS_SUCCESS, response.data));
+    dispatch(requestType(GET_REQUESTS_SUCCESS, response.data.data.reverse()));
   })
   .catch((error) => {
     dispatch(requestType(GET_REQUESTS_FAIL, error.response.data));
