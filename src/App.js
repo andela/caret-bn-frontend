@@ -19,6 +19,7 @@ import GetsingleAccommodation from './views/accommodations/SingleAccommodation';
 import MenuComponent from './components/global/MenuComponent';
 import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
+import editAccommodation from './views/accommodations/editAccommodation';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import ViewAllUsers from './views/admin/ViewAllUsers';
@@ -44,6 +45,7 @@ export class App extends Component {
           <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
           <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
           <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
+          <ProtectedRoute exact path="/accommodations/:slug/edit" component={editAccommodation} />
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
           <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
           <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />

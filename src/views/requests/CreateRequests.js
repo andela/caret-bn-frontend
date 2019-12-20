@@ -6,8 +6,7 @@ import {
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Add, Send } from '@material-ui/icons';
-import Loader from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { sendRequest } from '../../actions/requestActions';
 import { getBookings } from '../../actions/bookingActions';
 import { getLocations } from '../../actions/locationActions';
@@ -16,8 +15,6 @@ import PageLoading from '../../components/global/PageLoading';
 import Destination from '../../components/requests/Destination';
 import AlertComponent from '../../components/global/AlertComponent';
 import isEmpty from '../../utilities/EmptyFields';
-import elf from '../../assets/images/elf.png';
-import error from '../../assets/images/error.png';
 
 class CreateRequests extends Component {
   state = {
@@ -278,23 +275,12 @@ class CreateRequests extends Component {
     this.validateInput();
   }
 
-  requestMessage = (data) => {
-    const message = `Your ${data.type.name} request from ${data.origin.name} on ${data.departureDate} has successfully been placed. 
-    ${<Link to="/requests">
-        <Button>
-          View Your Request
-        </Button>
-      </Link>}`;
-    return <AlertComponent variant="success" message={message} heading="Your journey has officially begun!" dismissible data-test="success-message" />;
-  }
-
   render() {
     const { requestState, locations, bookings } = this.props;
 
     if (locations.data !== null && bookings.data !== null) {
       return (
-
-        <Container fluid>
+        <Container fluid className="edit-form">
           <Row>
             <BreadCrumbs itemsArray={['Home', 'Requests', 'Create']} />
           </Row>
@@ -305,7 +291,7 @@ class CreateRequests extends Component {
                 : (requestState.status === 'error')
                   ? <AlertComponent variant="danger" message={(requestState.dataError.data.error ? requestState.dataError.data.error : requestState.dataError.data.message)} heading="Could not place your request" />
                   : (requestState.status === 'success')
-                    ? this.requestMessage(requestState.data.data)
+                    ? <Redirect to="/requests" />
                     : ''
             }
           </Row>
@@ -385,11 +371,7 @@ class CreateRequests extends Component {
       );
     }
     return (
-      <div className="loading-componenent" data-test="loading-component">
-        <PageLoading />
-        <p>Trying to find an elf, be with you in a second!</p>
-        <img src={elf} alt="we lost the elf!" />
-      </div>
+      <PageLoading data-test="loading-component" />
     );
   }
 }

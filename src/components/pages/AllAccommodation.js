@@ -12,18 +12,23 @@ import StarRatings from 'react-star-ratings';
 import { checkSupplier } from '../../helpers/authHelper';
 import { GetAllAccommodation } from '../../actions/accommodationActions';
 import Breadcrumbs from '../global/Breadcrumbs';
-
+import isAuthenticated from '../../helpers/isAuthenticated';
 
 export class AllAccommodation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLaoding: false,
+      userId: null,
     };
   }
 
   componentDidMount = async () => {
     this.setState({ isLoading: true });
+    const userInfo = isAuthenticated();
+    await this.setState({
+      userId: userInfo.payload.id,
+    });
     await this.props.GetAllAccommodation();
     this.setState({ isLoading: false });
     this.getAllAccommodation = this.getAllAccommodation.bind(this);
@@ -55,8 +60,8 @@ export class AllAccommodation extends React.Component {
                 &nbsp;
                 &nbsp;
                   {post.ratings.length}
-                  &nbsp;
-                   Rating(s)
+                &nbsp;
+                 Rating(s)
               </h2>
               <h3 md={4}>{post.accommodationLocation.name}</h3>
               <h4 md={4}>description</h4>
@@ -76,6 +81,17 @@ export class AllAccommodation extends React.Component {
               <Button className="booking" size="lg">
                 Make Booking
               </Button>
+              {
+                (post.ownerUser.id === this.state.userId)
+                  ? (
+                    <Link to={{ pathname: `/accommodations/${post.slug}/edit` }}>
+                      <Button varian="warning" className="booking" size="lg">
+                        Edit
+                      </Button>
+                    </Link>
+                  )
+                  : null
+              }
             </Col>
           </Row>
         </Container>
@@ -83,9 +99,8 @@ export class AllAccommodation extends React.Component {
       return accommodation;
     }
     return (
-
       <div className="d-flex justify-content-center">
-      <i className="fas fa-spinner fa-pulse loader-big" />
+        <i className="fas fa-spinner fa-pulse loader-big" />
       </div>
     );
   }
@@ -94,27 +109,27 @@ export class AllAccommodation extends React.Component {
     const { isLoading } = this.state;
     return (
       <div className="accommodation">
-      <Row>
-      <Col md={5} className="breadcrumbs">
-        <Breadcrumbs itemsArray={['> Home', '  accommodations']} />
-      </Col>
-      <Col>
-      { checkSupplier() ? (
-      <Button href="/accommodations/new">
-            <Add />
-            reate new accommodation
-      </Button>
-      ) : null }
-      </Col>
-      </Row>
+        <Row>
+          <Col md={5} className="breadcrumbs">
+            <Breadcrumbs itemsArray={['> Home', '  accommodations']} />
+          </Col>
+          <Col>
+            {checkSupplier() ? (
+              <Button href="/accommodations/new">
+                <Add />
+                create new accommodation
+              </Button>
+            ) : null}
+          </Col>
+        </Row>
 
-      {isLoading
-        ? (
-        <div className="d-flex justify-content-center">
-          <i className="fas fa-spinner fa-pulse loader-big" />
-        </div>
-        )
-        : this.renderAcommodation()}
+        {isLoading
+          ? (
+            <div className="d-flex justify-content-center">
+              <i className="fas fa-spinner fa-pulse loader-big" />
+            </div>
+          )
+          : this.renderAcommodation()}
       </div>
     );
   }

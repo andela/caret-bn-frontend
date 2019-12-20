@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { compose } from 'redux';
 import { Button, Form } from 'react-bootstrap';
-import Input from '../global/Input';
 import { signupAction } from '../../actions/authActions';
 
 export class Signup extends Component {

@@ -36,15 +36,15 @@ const testStore = (state) => {
   return createStoreWithMiddleware(rootReducer, state);
 };
 
-const setUp = (initialState =  {}) => {
+const setUp = (initialState = {}) => {
   const store = testStore(initialState);
   const wrapper = shallow(
-      <SingleRequest {...props} store={store} />
+    <SingleRequest {...props} store={store} />
   );
-    return wrapper;
-} 
+  return wrapper;
+}
 
-describe('SingleRequest Test Suite', () => { 
+describe('SingleRequest Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
@@ -61,4 +61,20 @@ describe('SingleRequest Test Suite', () => {
     expect(mapStateToProps(initialState).singleData).toEqual(null);
   });
 
+  it('should switch through status', () => {
+    const component = setUp(mainState);
+    const renderStatusSpy = jest.spyOn(component.instance(), 'renderStatus');
+    component.instance().renderStatus({
+      id: 1
+    });
+
+    component.instance().renderStatus({
+      id: 3
+    });
+    component.instance().renderStatus({
+      id: 2
+    });
+
+    expect(renderStatusSpy).toBeCalled();
+  });
 });

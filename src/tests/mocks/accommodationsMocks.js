@@ -13,6 +13,10 @@ const accommodationsMocks = {
   isActivated: true,
   createdAt: '2019-11-14',
   updatedAt: '2019-11-14',
+  accommodationLocation: {
+    id: 2,
+    name: 'blantyre',
+  },
   ownerUser: {
     id: 4,
     email: 'user@caretbn.com',
