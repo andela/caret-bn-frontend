@@ -51,13 +51,10 @@ export class ViewRequests extends Component {
     const { props } = this;
     const { searchRequests } = props;
     const { status, searchDataError } = searchRequests;
-    let { searchData } = searchRequests;
+    const { searchData } = searchRequests;
 
-    if (searchData) {
-      searchData = searchData.reverse();
-    }
     if (props.data) {
-      data = props.data.data.reverse();
+      data = props.data;
     }
     if (props.dataError) {
       dataError = props.dataError;

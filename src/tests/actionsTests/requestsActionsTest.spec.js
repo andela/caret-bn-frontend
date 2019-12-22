@@ -75,16 +75,13 @@ describe('Signup Actions Test Suite', () => {
         status: 200,
         response: {
           message: 'Requests Found!',
-          data: {}
+          data: [],
       },
       });
     });
 
     const expectedActions = [{
-      payload: {
-        message: 'Requests Found!',
-        data: {}
-      },
+      payload: [],
       type: GET_REQUESTS_SUCCESS
     }];
     store = mockStore({});
