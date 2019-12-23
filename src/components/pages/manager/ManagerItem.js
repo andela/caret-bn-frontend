@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DestinationItem from '../requests/DestinationItem';
+import ProcessRequest from '../requests/ProcessRequest';
 
 const ManagerItem = ({ item, user, email }) => {
   const renderStatus = (status) => {
@@ -60,13 +61,25 @@ const ManagerItem = ({ item, user, email }) => {
             </Col>
           </Row>
           <Row>
-            <Col md={9} className="px-3 pb-3 mb-0">
+            <Col md={8} className="px-3 pb-3 mb-0">
               <span className="font-weight-bold">
                 Return Date:
               </span>
               {' '}
               {item.returnDate || 'N/A'}
             </Col>
+            {item.status.id === 1 && (
+              <>
+                <Col md={2}>
+                  <ProcessRequest action="approve" id={item.id} variant="success" />
+                </Col>
+                <Col md={2}>
+                  <ProcessRequest action="reject" id={item.id} variant="danger" />
+                </Col>
+              </>
+            ) }
+          </Row>
+          <Row>
             <Col md={9} className="px-3 mb-0">
               <span className="font-weight-bold">
                 Reasons:

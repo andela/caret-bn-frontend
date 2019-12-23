@@ -15,6 +15,7 @@ import profileReducer from './profileReducer';
 import managerRequestReducer from './managerRequestReducer';
 import managerSearchRequestReducer from './managerSearchRequestReducer';
 import allNotifsReducer from './allNotifsReducer';
+import processRequestReducer from './processRequestReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -33,4 +34,5 @@ export default combineReducers({
   managerRequest: managerRequestReducer,
   managerSearchRequest: managerSearchRequestReducer,
   allNotifs: allNotifsReducer,
+  processRequest: processRequestReducer,
 });

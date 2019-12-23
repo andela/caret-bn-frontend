@@ -9,7 +9,8 @@ import { singleRequestAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import Alert from '../../components/global/AlertComponent';
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
-import { checkSupplier } from '../../helpers/authHelper';
+import { checkSupplier, checkManager } from '../../helpers/authHelper';
+import ProcessRequest from '../../components/pages/requests/ProcessRequest';
 
 export class SingleRequest extends Component {
   state = {
@@ -69,7 +70,7 @@ export class SingleRequest extends Component {
           {
             singleData
             && (
-              <>
+              <div className="bg-white">
                 <Row className="section">
                   <h4>Request Information</h4>
                   <p>Details on the Trip Request.</p>
@@ -127,8 +128,18 @@ export class SingleRequest extends Component {
                       ))}
                     </Row>
                   </Form>
+                  {!checkManager() && singleData.data.status.id === 1 && (
+                  <Row>
+                    <Col md={6}>
+                      <ProcessRequest action="approve" id={requestId} variant="success" />
+                    </Col>
+                    <Col md={6}>
+                      <ProcessRequest action="reject" id={requestId} variant="danger" />
+                    </Col>
+                  </Row>
+                  )}
                 </Row>
-              </>
+              </div>
             )
           }
         </Container>

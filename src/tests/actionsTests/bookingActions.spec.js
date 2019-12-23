@@ -86,6 +86,31 @@ describe('Booking Actions Test Suite', () => {
             expect(state.bookings.booked).toEqual('Booking done successfully');
         });
     });
+
+    it('Should fail on book accommodation', async () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 400,
+                response:'Error'
+            });
+        });
+
+        const expectedState = {
+            data: bookings,
+            dataError: null,
+            booked: null,
+            bookedError: null,
+            status: 'success'
+        };
+
+        const store = testStore();
+        return store.dispatch(BookAccommodation()).then(() => {
+            const state = store.getState();
+            expect(state.bookings.bookedError).toEqual('Error');
+        });
+    });
+
     it('Should dispatch error', async () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();

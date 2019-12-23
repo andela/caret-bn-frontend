@@ -67,7 +67,6 @@ describe('SingleRequest Test Suite', () => {
     component.instance().renderStatus({
       id: 1
     });
-
     component.instance().renderStatus({
       id: 3
     });
