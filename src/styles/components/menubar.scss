@@ -11,9 +11,32 @@
 	}
 }
 
+.nav-drop {
+	margin-top: -15px;
+	color: $white;
+}
+
+.navbar-nav {
+	.dropdown-menu {
+    position: static;
+    float: left;
+    margin-left: -7rem;
+    margin-top: .5rem;
+}
+}
+
 .navbar-logo {
 	height: 25px;
 	width: 25px;
+}
+.dropdown-menu.pull-left {
+	left: 0;
+}
+.menu-photo {
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	background-color: $light;
 }
 
 @media (min-width: 1024px) {

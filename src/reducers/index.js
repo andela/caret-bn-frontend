@@ -11,6 +11,7 @@ import searchRequestsReducer from './searchRequestsReducer';
 import userReducer from './userReducer';
 import roleReducer from './roleReducer';
 import alertReducer from './alertReducer';
+import profileReducer from './profileReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
   user: userReducer,
   role: roleReducer,
   alert: alertReducer,
+  profile: profileReducer,
 });
