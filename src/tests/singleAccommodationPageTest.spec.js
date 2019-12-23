@@ -34,7 +34,6 @@ const testStore = state => {
 
 const setUp = (initialState = {}) => {
   const store = testStore(initialState);
-  console.log('store', store.getState());
   const wrapper = shallow(<SingleAccommodation {...props} />);
   wrapper.setState({ isLoading: false });
   return wrapper;

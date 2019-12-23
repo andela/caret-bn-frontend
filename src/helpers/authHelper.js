@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import jwtDecode from 'jsonwebtoken';
 import isAuth from './isAuthenticated';
 
 export const storeToken = (token) => localStorage.setItem('token', token);
@@ -31,6 +32,17 @@ export const checkAdmin = () => {
   return false;
 };
 
+
+export const checkEmail = () => {
+  try {
+    const decodedToken = jwtDecode.decode(getToken());
+    const { email } = decodedToken.payload;
+    return email;
+  } catch (err) {
+    return false;
+  }
+};
+
 export default {
-  storeToken, getToken, checkSupplier, checkAdmin,
+  storeToken, getToken, checkSupplier, checkEmail, checkAdmin,
 };

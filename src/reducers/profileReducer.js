@@ -1,53 +1,38 @@
 import {
-  GET_BOOKINGS, GET_BOOKINGS_ERROR,
-  GET_PENDING_BOOKINGS, GET_PENDING_BOOKINGS_ERROR, APPROVE_BOOKING, APPROVE_BOOKING_ERROR,
+  GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL,
 } from '../actions/types';
 
 const initialState = {
   data: null,
   dataError: null,
   status: '',
-  pending: null,
-  approvalStatus: null,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_BOOKINGS:
+    case GET_PROFILE:
       return {
         ...state,
         data: action.payload,
         status: 'success',
       };
-    case GET_BOOKINGS_ERROR:
+    case PROFILE_ERROR:
       return {
         ...state,
         dataError: action.payload,
         status: 'error',
       };
-    case APPROVE_BOOKING:
+    case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
         data: action.payload,
-        approvalStatus: 'success',
-      };
-    case GET_PENDING_BOOKINGS:
-      return {
-        ...state,
-        pending: action.payload,
         status: 'success',
       };
-    case APPROVE_BOOKING_ERROR:
+    case UPDATE_PROFILE_FAIL:
       return {
         ...state,
         dataError: action.payload,
-        approvalStatus: 'fail',
-      };
-    case GET_PENDING_BOOKINGS_ERROR:
-      return {
-        ...state,
-        dataError: action.payload,
-        status: 'fail',
+        status: 'error',
       };
     default:
       return {

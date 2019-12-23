@@ -1,25 +1,60 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { MenuComponent, mapStateToProps } from '../../components/global/MenuComponent';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from '../../reducers/index';
+import Breadcrumbs from '../../components/global/Breadcrumbs';
+import requestsMocks from '../mocks/requestsMocks';
 
-import MenuComponent from '../../components/global/MenuComponent';
+const middlewares = [thunk];
+
+const mainState = {
+  requests: {
+    dataError: null,
+    data: null,
+    singleData: null,
+  }
+}
 
 const props = {
-  pathname: '/requests',
+  props: {
+    profile: {
+      dataError: null,
+      data: null,
+    }
+  },
+  GetUserProfile: jest.fn(),
+ pathname: '/requests'
+}
+
+const testStore = (state) => {
+  const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
+  return createStoreWithMiddleware(rootReducer, state);
 };
 
-const wrapper = shallow(<MenuComponent {...props} />);
+const setUp = (initialState =  {}) => {
+  const store = testStore(initialState);
+  const wrapper = shallow(
+      <MenuComponent {...props} store={store} />
+  );
+    return wrapper;
+} 
 
-describe('MenuComponent Test Suite', () => {
-  it('Should Render MenuComponent Component', () => {
-    expect(wrapper.exists()).toBe(true);
+describe('MenuComponent Test Suite', () => { 
+  it('Should Mount Successfully', () => {
+    const component = setUp(mainState);
+    expect(component.exists()).toBe(true);
   });
 
-  it('Should Return Menubar from react-bootstrap ', () => {
-    expect(wrapper.find('[data-test="menu-test"]')).toHaveLength(1);
+  it('Should return initial data', () => {
+    const initialState = {
+      profile: {
+        dataError: null,
+        data: null,
+      }
+    };
+    expect(mapStateToProps(initialState).data).toEqual(null);
   });
 
-  it('Should not Return Menubar from react-bootstrap ', () => {
-    wrapper.setProps({ pathname: '/login' })
-    expect(wrapper.find('[data-test="menu-test"]')).toHaveLength(0);
-  });
 });
