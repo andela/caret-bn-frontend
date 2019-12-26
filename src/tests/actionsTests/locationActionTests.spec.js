@@ -1,5 +1,5 @@
 import moxios from 'moxios';
-import { getLocations } from '../../actions/locationActions';
+import { getLocations, getTopDestinations } from '../../actions/locationActions';
 import backendCall from '../../helpers/backendCall';
 import testStore from '../../utilities/tests/mockStore';
 
@@ -45,7 +45,10 @@ describe('Location Actions Test Suite', () => {
         const expectedState = {
             data: locations,
             dataError: null,
-            status: 'success'
+            status: 'success',
+            topData: null,
+            topError: null,
+            topStatus: "",
         };
 
         const store = testStore();
@@ -68,6 +71,31 @@ describe('Location Actions Test Suite', () => {
         return store.dispatch(getLocations()).then(() => {
             const state = store.getState();
             expect(state.locations.status).toEqual('error');
+        });
+    });
+
+    it('Should return top destinations', async () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 200,
+                response: locations
+            });
+        });
+
+        const expectedState = {
+            data: null,
+            dataError: null,
+            status: '',
+            topData: locations,
+            topError: null,
+            topStatus: "success",
+        };
+
+        const store = testStore();
+        return store.dispatch(getTopDestinations()).then(() => {
+            const state = store.getState();
+            expect(state.locations).toEqual(expectedState);
         });
     });
 

@@ -63,7 +63,6 @@ describe('Test Request Component', () => {
     }
 
     const component = setUp(initialState, {});
-    console.log(component.debug())
     component.instance().setState(returnRequest)
     component.setProps(requestProps)
 
@@ -116,7 +115,6 @@ describe('Test Request Component', () => {
     const component = setUp(initialState, {});
     component.setProps(validProps);
     component.setProps(successData);
-    console.log();
     expect(component.instance().props.requestState.status).toBe('success');
 
 
