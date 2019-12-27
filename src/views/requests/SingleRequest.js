@@ -82,7 +82,6 @@ export class SingleRequest extends Component {
     const { target } = e;
     const { value } = target;
     const { name } = target;
-
     this.setState({
       [name]: value,
     });
