@@ -26,29 +26,30 @@ export class AllAccommodation extends React.Component {
   componentDidMount = async () => {
     this.setState({ isLoading: true });
     const userInfo = isAuthenticated();
+    await this.props.GetAllAccommodation();
+    this.setState({ isLoading: false });
+    this.renderAcommodation = this.renderAcommodation.bind(this);
     await this.setState({
       userId: userInfo.payload.id,
     });
-    await this.props.GetAllAccommodation();
-    this.setState({ isLoading: false });
-    this.getAllAccommodation = this.getAllAccommodation.bind(this);
   }
 
   renderAcommodation() {
     const { accommodations } = this.props;
     if (accommodations) {
       const accommodation = accommodations.map((post) => (
-        <Container key={post.id} className="accommodation-container">
-          <Row>
+        <Container key={post.id} className="accommodation-container container-fluid">
+          <Row className="p-3">
             <Col sm>
               <img src={(typeof (post.images) === 'string') ? post.images : post.images[0]} alt="accommodation" />
             </Col>
-            <Col sm>
-              <Link to={`/accommodations/${post.slug}`}>
-                <h1 md={4}>{post.name}</h1>
-              </Link>
-              <h2 md={4}>{post.averageRating}</h2>
-              <h2 md={4}>
+            <Col className="info-container" sm>
+            <Link to={`/accommodations/${post.slug}`}>
+                            <h1>{post.name}</h1>
+            </Link>
+              <div><h2>{post.averageRating}</h2></div>
+             <div>
+               <h2>
                 <StarRatings
                   rating={post.averageRating}
                   starRatedColor="#e99434"
@@ -62,10 +63,13 @@ export class AllAccommodation extends React.Component {
                   {post.ratings.length}
                 &nbsp;
                  Rating(s)
-              </h2>
-              <h3 md={4}>{post.accommodationLocation.name}</h3>
-              <h4 md={4}>description</h4>
-              <h2 md={4}>{post.description}</h2>
+               </h2>
+             </div>
+             <div>
+              <h3>{post.accommodationLocation.name}</h3>
+             </div>
+              <div><h4>description</h4></div>
+              <div><h2>{post.description}</h2></div>
             </Col>
             <Col className="info" sm>
               <h5 md={4}>
@@ -78,9 +82,11 @@ export class AllAccommodation extends React.Component {
               {post.cost}
               </h6>
               <h2 md={4}>per night</h2>
+              <Link to={`/accommodations/${post.slug}`}>
               <Button className="booking" size="lg">
                 Make Booking
               </Button>
+              </Link>
               {
                 (post.ownerUser.id === this.state.userId)
                   ? (
@@ -117,12 +123,11 @@ export class AllAccommodation extends React.Component {
             {checkSupplier() ? (
               <Button href="/accommodations/new">
                 <Add />
-                create new accommodation
+                Create new accommodation
               </Button>
             ) : null}
           </Col>
         </Row>
-
         {isLoading
           ? (
             <div className="d-flex justify-content-center">
@@ -134,7 +139,10 @@ export class AllAccommodation extends React.Component {
     );
   }
 }
-
+AllAccommodation.propTypes = {
+  GetAllAccommodation: PropTypes.func.isRequired,
+  accommodations: PropTypes.array.isRequired,
+};
 export const mapStateToProps = (state) => ({
   accommodations: state.accommodation.getAccommodation,
 });

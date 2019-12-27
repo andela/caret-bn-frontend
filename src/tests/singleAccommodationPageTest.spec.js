@@ -17,15 +17,19 @@ const mainState = {
     getAccommodationError: {},
     singleAccommodation: {},
     singleAccommodationError: {},
+    isLoading:false,
   },
 };
 
 const props = {
+  slug: 'Hello',
+  GetSingleAccommodation: jest.fn(),
   accommodation: {
     ratings: [],
     images: [],
   },
 };
+
 
 const testStore = state => {
   const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
@@ -34,17 +38,17 @@ const testStore = state => {
 
 const setUp = (initialState = {}) => {
   const store = testStore(initialState);
-  const wrapper = shallow(<SingleAccommodation {...props} />);
+  const wrapper = shallow(<SingleAccommodation {...props} store={store}/>);
   wrapper.setState({ isLoading: false });
   return wrapper;
 };
 
-describe('ViewSingleAccommodation Test Suite', () => {
+describe('Make booking Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
-
+ 
   it('Should return initial data', () => {
     const initialState = {
       accommodation: {
@@ -55,7 +59,8 @@ describe('ViewSingleAccommodation Test Suite', () => {
         getAccommodationError: {},
         singleAccommodation: {},
         singleAccommodationError: {},
-      }
+      },
+      bookings: {}
     };
     expect(mapStateToProps(initialState).accommodation).toEqual({});
   });

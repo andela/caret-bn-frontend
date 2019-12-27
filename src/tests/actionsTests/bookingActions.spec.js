@@ -1,5 +1,5 @@
 import moxios from 'moxios';
-import { getBookings } from '../../actions/bookingActions';
+import { getBookings, BookAccommodation } from '../../actions/bookingActions';
 import backendCall from '../../helpers/backendCall';
 import testStore from '../../utilities/tests/mockStore';
 
@@ -22,6 +22,13 @@ const bookings = [
     }
 
 ];
+const BookedData = {
+    checkInDate: '2019-12-21',
+	checkOutDate: '2020-01-01',
+	accomodationId: 6,
+	roomsNumber: 1
+    
+  }
 
 describe('Booking Actions Test Suite', () => {
 
@@ -45,6 +52,8 @@ describe('Booking Actions Test Suite', () => {
         const expectedState = {
             data: bookings,
             dataError: null,
+            booked: null,
+            bookedError: null,
             status: 'success'
         };
 
@@ -52,6 +61,30 @@ describe('Booking Actions Test Suite', () => {
         return store.dispatch(getBookings()).then(() => {
             const state = store.getState();
             expect(state.bookings).toEqual(expectedState);
+        });
+    });
+    it('Should return book accommodation', async () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 200,
+                response:'Booking done successfully'
+            });
+        });
+
+        const expectedState = {
+            data: bookings,
+            dataError: null,
+            booked: null,
+            bookedError: null,
+            status: 'success'
+        };
+
+        const store = testStore();
+        return store.dispatch(BookAccommodation()).then(() => {
+            const state = store.getState();
+            console.log(store.getState());
+            expect(state.bookings.booked).toEqual('Booking done successfully');
         });
     });
     it('Should dispatch error', async () => {

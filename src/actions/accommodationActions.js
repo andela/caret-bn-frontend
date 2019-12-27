@@ -4,9 +4,7 @@ import {
   RESET_ACCOMMODATION_STATUS, SHOW_ALERT,
 } from './types';
 import backendCall from '../helpers/backendCall';
-import authHelper from '../helpers/authHelper';
-
-const { getToken } = authHelper;
+import { getToken } from '../helpers/authHelper';
 
 const accommodationType = (type, payload) => ({
   type,

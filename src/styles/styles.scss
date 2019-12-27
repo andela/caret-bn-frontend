@@ -23,19 +23,18 @@
 	padding: 0;
 }
 body {
-	background-color: rgb(233, 235, 238);
-}
-
-body {
-	background-color: rgb(233, 235, 238);
+	background-color: $mainBackgroundColor;
 }
 
 input[disabled] {
 	cursor: default;
 }
+body {
+	background-color: $mainBackgroundColor;
+}
 
 body {
-	background-color: rgb(233, 235, 238);
+	background-color: $mainBackgroundColor;
 }
 
 .header {
