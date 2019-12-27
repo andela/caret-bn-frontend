@@ -85,7 +85,7 @@ export class MenuComponent extends Component {
                 <Link to="/profile">
                     <div className="account-icon dropdown">
                         <img src={(data && data.profile) && (data.profile.image)} className="icon menu-photo"  />
-                <NavDropdown className="nav-drop mr-3" title={(data && data.profile) && (data.profile.username)} id="basic-nav-dropdown">
+                <NavDropdown className="nav-drop mr-3" title={(data && data.profile) && (data.profile.username)} id="basic-nav-dropdown" alignRight>
                     <NavDropdown.Item class="dropdown-item" href="/profile">Profile</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</NavDropdown.Item>

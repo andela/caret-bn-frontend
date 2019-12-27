@@ -1,23 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import AllAccommodation from '../components/pages/AllAccommodation'
+/* eslint-disable react/prefer-stateless-function */
+import React, { Component } from 'react';
+import AllDestinations from '../components/pages/landingPage/AllDestinations';
 
-const Home = () => (
-  <>
-  </>
-);
+export class Home extends Component {
+  render() {
+    return (
+      <div>
+        <AllDestinations />
+      </div>
+    );
+  }
+}
 
-Home.defaultProps = {
-  user: null,
-};
-
-Home.propTypes = {
-  user: PropTypes.object,
-};
-
-const mapStateToProps = (state) => ({
-  user: state.auth.data,
-});
-
-export default connect(mapStateToProps, {})(Home);
+export default Home;
