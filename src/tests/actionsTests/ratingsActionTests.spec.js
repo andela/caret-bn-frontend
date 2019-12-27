@@ -38,7 +38,6 @@ describe('Profile Actions Test Suite', () => {
     await store.dispatch(rateAccommodation({}, jest.fn()))
       .then(async () => {
         const calledActions = store.getActions();
-        console.log(calledActions)
         expect(calledActions).toEqual(expectedActions);
       });
   });
@@ -60,7 +59,6 @@ describe('Profile Actions Test Suite', () => {
     await store.dispatch(rateAccommodation({}, jest.fn()))
       .then(async () => {
         const calledActions = store.getActions();
-        console.log(calledActions);
         expect(calledActions[0].type).toEqual(RATE_ACCOMMODATION_ERROR);
       });
   });

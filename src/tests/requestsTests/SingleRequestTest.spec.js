@@ -49,6 +49,7 @@ const setUp = (initialState = {}) => {
 describe('SingleRequest Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
+    component.instance().processAction();
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
 
