@@ -63,6 +63,11 @@ const mainState = {
       component.find('[data-test="comment"]').simulate('change', comment);
        component.find('form').simulate('submit'); 
        component.instance().handleSubmit();
+       component.instance().editButton({ target: { comment: {}, id: 1 }, preventDefault: jest.fn()});
+       component.instance().sendCommentEdit({  preventDefault: jest.fn()});
+       component.instance().dispatchDeleteComment();
+       component.instance().closeEditMode({  preventDefault: jest.fn()});
+       component.instance().actionSwitch();
     });
 
     it('Should return initial data', () => {
@@ -84,3 +89,4 @@ const mainState = {
       expect(mapStateToProps(initialState).data).toEqual(null);
     });
   });
+  
