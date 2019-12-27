@@ -12,6 +12,7 @@ import userReducer from './userReducer';
 import roleReducer from './roleReducer';
 import alertReducer from './alertReducer';
 import profileReducer from './profileReducer';
+import managerReducer from './managerReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -27,4 +28,5 @@ export default combineReducers({
   role: roleReducer,
   alert: alertReducer,
   profile: profileReducer,
+  manager: managerReducer,
 });

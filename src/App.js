@@ -22,7 +22,7 @@ import NewAccommodation from './views/accommodations/NewAccommodation';
 import editAccommodation from './views/accommodations/editAccommodation';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserProfile from './components/pages/profiles/UserProfile';
-
+import ManagerRequests from './views/manager/ManagerRequests';
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
 
@@ -41,6 +41,7 @@ export class App extends Component {
           <Route path="/verify/:token" component={Verify} />
           <Route path="/forgotpassword" component={AuthPage} />
           <Route path="/resetpassword/:token" component={AuthPage} />
+          <ProtectedRoute exact path="/manager/requests/applications" component={ManagerRequests} />
           <ProtectedRoute exact path="/requests/create" component={CreateRequest} />
           <ProtectedRoute exact path="/requests" component={ViewRequests} />
           <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
