@@ -5,6 +5,8 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers/index';
 import requestsMocks from '../mocks/requestsMocks';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+
 
 const middlewares = [thunk];
 
@@ -48,6 +50,14 @@ describe('SearchBar Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
     expect(component.exists()).toBe(true);
+  });
+
+  it('Should handleDayChange', () => {
+    const component = setUp(mainState);
+    component.find('.full-width-buttons').first().simulate('click')
+    component.find('.day-picker').first().simulate('dayChange')
+    expect(component).toMatchSnapshot();
+
   });
 
   it('Should search for pending requests', () => {

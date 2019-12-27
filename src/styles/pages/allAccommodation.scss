@@ -80,3 +80,20 @@
   padding-left: 20px;
 }
 
+.like{
+  font-weight: bolder;
+  color: $primary;
+}
+
+.dislike{
+  font-weight: bolder;
+  color: $redish;
+}
+
+.like-button:hover{
+  cursor: pointer;
+}
+
+.dislike-button:hover{
+  cursor: pointer;
+}

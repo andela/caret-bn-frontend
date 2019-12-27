@@ -7,7 +7,8 @@
 		"!src/**/*.stories.js",
 		"!src/index.js",
 		"!src/App.js",
-		"!src/config/*.{js,jsx}"
+		"!src/config/*.{js,jsx}",
+		"!src/utilities/APIConstants.js"
 	],
 	"moduleNameMapper": {
 		"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",

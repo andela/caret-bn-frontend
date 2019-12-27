@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -9,8 +10,12 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { Add } from '@material-ui/icons';
 import StarRatings from 'react-star-ratings';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import { checkSupplier } from '../../helpers/authHelper';
-import { GetAllAccommodation } from '../../actions/accommodationActions';
+import { GetAllAccommodation, likeUnlikeAccommodation } from '../../actions/accommodationActions';
 import Breadcrumbs from '../global/Breadcrumbs';
 import isAuthenticated from '../../helpers/isAuthenticated';
 
@@ -18,7 +23,7 @@ export class AllAccommodation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLaoding: false,
+      isLoading: false,
       userId: null,
     };
   }
@@ -34,8 +39,21 @@ export class AllAccommodation extends React.Component {
     });
   }
 
+  async handleLike(slug, action) {
+    const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await GetAllAccommodation();
+  }
+
+  async handleDislike(slug, action) {
+    const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await GetAllAccommodation();
+  }
+
   renderAcommodation() {
     const { accommodations } = this.props;
+
     if (accommodations) {
       const accommodation = accommodations.map((post) => (
         <Container key={post.id} className="accommodation-container container-fluid">
@@ -82,6 +100,16 @@ export class AllAccommodation extends React.Component {
               {post.cost}
               </h6>
               <h2 md={4}>per night</h2>
+              <h2 md={4} className="like">
+                {post.hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon className="like-button" onClick={() => this.handleLike(post.slug, 'like')} />}
+                {' '}
+                {`${post.Likes} Likes`}
+              </h2>
+              <h2 md={4} className="dislike">
+                {post.hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" onClick={() => this.handleDislike(post.slug, 'unlike')} />}
+                {' '}
+                {`${post.Unlikes} Dislikes`}
+              </h2>
               <Link to={`/accommodations/${post.slug}`}>
               <Button className="booking" size="lg">
                 Make Booking
@@ -141,10 +169,11 @@ export class AllAccommodation extends React.Component {
 }
 AllAccommodation.propTypes = {
   GetAllAccommodation: PropTypes.func.isRequired,
+  likeUnlikeAccommodation: PropTypes.func.isRequired,
   accommodations: PropTypes.array.isRequired,
 };
 export const mapStateToProps = (state) => ({
   accommodations: state.accommodation.getAccommodation,
 });
 
-export default connect(mapStateToProps, { GetAllAccommodation })(AllAccommodation);
+export default connect(mapStateToProps, { GetAllAccommodation, likeUnlikeAccommodation })(AllAccommodation);
