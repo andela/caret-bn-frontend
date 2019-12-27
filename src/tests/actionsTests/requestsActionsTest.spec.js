@@ -1,13 +1,43 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL } from '../../actions/types';
+import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL, EDIT_REQUEST_SUCCESS, EDIT_REQUEST_FAIL, } from '../../actions/types';
 import { getRequestsAction, singleRequestAction, searchRequestAction } from '../../actions/requestsActions';
+import { editRequestAction } from '../../actions/requestActions'
 import backendCall from '../../helpers/backendCall';
 
 let store;
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+
+
+const itemPending= {
+  id: 1,
+  reasons: 'Partner Company Meeting',
+  departureDate: '2019-11-21',
+  returnDate: '2019-11-21',
+  type: {
+    id: 5,
+    name: 'Lagos Office',
+  },
+  status: {
+    id: 1,
+    name: 'Pending',
+  },
+  destinations: [
+    {
+      id: 1,
+      reasons: 'Partner Company Meeting',
+      arrivalDate: '2019-11-21',
+      departureDate: null,
+      location: {
+        country: 'Nigeria',
+        id: 5,
+        name: 'Lagos Office',
+      },
+    },
+  ],
+}
 
 describe('Requests Actions Test Suite', () => {
   beforeEach(() => {
@@ -223,4 +253,5 @@ it('Should trigger SEARCH_REQUESTS_FAIL', async () => {
       expect(calledActions).toEqual(expectedActions);
     });
 });
+
 });

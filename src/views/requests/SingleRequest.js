@@ -1,30 +1,57 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import {
   Container, Row, Button, Col, Form,
 } from 'react-bootstrap';
 import { CheckCircleOutlineOutlined, HighlightOffOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { singleRequestAction, processRequestAction } from '../../actions/requestsActions';
+import { editRequestAction } from '../../actions/requestActions';
+import { getLocations } from '../../actions/locationActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import Alert from '../../components/global/AlertComponent';
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
-import { checkSupplier, checkManager } from '../../helpers/authHelper';
+import { checkSupplier, checkManager, checkManagerRequest } from '../../helpers/authHelper';
+import ProcessRequest from '../../components/pages/requests/ProcessRequest';
 import Confirm from '../../components/global/Confirm';
 import CommentDisplay from '../../components/pages/requests/CommentDisplay';
+import { hideAlert } from '../../actions/alertAction';
 
 export class SingleRequest extends Component {
-  state = {
-    isLoading: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      status: false,
+      isDisabled: true,
+      departureDate: '',
+      returnDate: '',
+      locationId: '',
+      destinations: [],
+    };
   }
 
   async componentDidMount() {
     const { props } = this;
+    const { getLocations, singleData } = props;
     const { requestId } = props.match.params;
     this.setState({ isLoading: true });
     await props.singleRequestAction(requestId);
-    this.setState({ isLoading: false });
+    await getLocations();
+    this.setState({
+      isLoading: false,
+      departureDate: this.props.singleData.departureDate,
+      returnDate: this.props.singleData.returnDate,
+      locationId: this.props.singleData.origin.id,
+      isDisabled: true,
+      destinations: this.props.singleData.destinations,
+    });
+  }
+
+  async componentWillUnmount() {
+    const { hideAlert } = this.props;
+    await hideAlert();
   }
 
   processAction = async (action, id) => {
@@ -32,6 +59,71 @@ export class SingleRequest extends Component {
     await props.processRequestAction(action, id);
     await props.singleRequestAction(id);
   };
+
+  handleEdit = (e) => {
+    e.preventDefault();
+    this.setState({ isDisabled: false });
+  }
+
+  handleDestinationChange(e) {
+    e.preventDefault();
+    const keys = e.target.id.split('-');
+    const temp = this.state.destinations;
+    temp[parseInt(keys[1])][keys[0]] = e.target.value;
+    this.setState({ destinations: temp });
+  }
+
+  handleCancel = (e) => {
+    e.preventDefault();
+    this.componentDidMount();
+  }
+
+  handleChange = (e) => {
+    const { target } = e;
+    const { value } = target;
+    const { name } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+handleSubmit = async (e) => {
+  e.preventDefault();
+  const { props, state } = this;
+  const { singleData } = props;
+  const { requestId } = props.match.params;
+
+  const OneWayRequestData = {
+    departureDate: state.departureDate,
+    locationId: state.locationId,
+    destinations: [
+      {
+        id: state.id,
+        reasons: state.reasons,
+        arrivalDate: state.arrivalDate,
+      },
+    ],
+  };
+
+  const destinations = state.destinations.map((data) => ({
+    id: data.id,
+    arrivalDate: data.arrivalDate,
+    departureDate: data.departureDate,
+    reasons: data.reasons,
+  }));
+
+  const MultiCityRequestData = {
+    departureDate: state.departureDate,
+    returnDate: state.returnDate,
+    locationId: state.locationId,
+    destinations,
+  };
+
+  this.setState({ isLoading: true });
+  await props.editRequestAction(requestId, singleData.type.id === 1 ? OneWayRequestData : MultiCityRequestData);
+  this.setState({ isLoading: false, isDisabled: true });
+};
 
   renderStatus = (status) => {
     switch (status.id) {
@@ -51,11 +143,13 @@ export class SingleRequest extends Component {
   };
 
   render() {
-    const { props } = this;
+    const { props, state } = this;
     const { requestId } = props.match.params;
-    const { isLoading } = this.state;
-    const { singleData, dataError } = props;
-
+    const {
+      singleData, dataError, locations, editData, editError,
+    } = props;
+    const { isLoading, isDisabled } = this.state;
+    const id = singleData && singleData.requester.id;
     return (
       <>
         { checkSupplier() && <Redirect to="/" />}
@@ -67,12 +161,14 @@ export class SingleRequest extends Component {
           </Row>
 
           <Row>
-            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+            {isDisabled ? isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' : null}
           </Row>
 
           <Row>
             <Col>
               { dataError && <Alert variant="danger" heading="Error" message={dataError.message} /> }
+              { editData && <Alert variant="success" heading="success" message={editData.message} /> }
+              { editError && <Alert variant="danger" heading="Error" message={(Array.isArray(editError.error)) ? editError.error[0] : editError.message} /> }
             </Col>
           </Row>
           {
@@ -89,14 +185,14 @@ export class SingleRequest extends Component {
                       <h4>
                         Requester:
                         {' '}
-                        {singleData.data.requester.username}
+                        {singleData.requester.username}
                       </h4>
                     </Row>
                     <Row className="section">
                       <h4>
                         Email:
                         {' '}
-                        {singleData.data.requester.email}
+                        {singleData.requester.email}
                       </h4>
                     </Row>
                   </>
@@ -105,16 +201,16 @@ export class SingleRequest extends Component {
                   <h4>
                     Status:
                     {' '}
-                    {this.renderStatus(singleData.data.status)}
+                    {this.renderStatus(singleData.status)}
                   </h4>
                 </Row>
                 <Row className="center-items">
-                  <Form className="form-section">
+                  <Form className="form-section" onSubmit={this.handleSubmit}>
                     <Col xs={12} sm={12} md={6} lg={3}>
                       <Form.Group>
                         <Form.Label>Trip Type</Form.Label>
-                        <Form.Control name="typeId" as="select" defaultValue={singleData.data.type.id} disabled>
-                          <option value={singleData.data.type.id}>{singleData.data.type.name}</option>
+                        <Form.Control name="typeId" as="select" defaultValue={singleData.type.id} disabled>
+                          <option value={singleData.type.id}>{singleData.type.name}</option>
                         </Form.Control>
                       </Form.Group>
                     </Col>
@@ -122,8 +218,9 @@ export class SingleRequest extends Component {
                     <Col xs={12} sm={12} md={6} lg={3}>
                       <Form.Group>
                         <Form.Label>Origin</Form.Label>
-                        <Form.Control name="locationId" as="select" defaultValue={singleData.data.origin.id} disabled>
-                            <option value={singleData.data.origin.id}>{singleData.data.origin.name}</option>
+                        <Form.Control name="locationId" data-test="location-field" as="select" defaultValue={singleData.origin.id} onChange={(e) => this.handleChange(e)} disabled={isDisabled}>
+                            <option value={state.locationId}>{singleData.origin.name}</option>
+                            {locations.data && locations.data.data.map((location) => (<option value={location.id} key={location.id}>{location.name}</option>))}
                         </Form.Control>
                       </Form.Group>
                     </Col>
@@ -131,38 +228,61 @@ export class SingleRequest extends Component {
                     <Col xs={12} sm={12} md={6} lg={3}>
                       <Form.Group>
                         <Form.Label>Departure Date</Form.Label>
-                        <Form.Control as="input" type="date" name="departureDate" defaultValue={singleData.data.departureDate} disabled />
+                        <Form.Control as="input" data-test="departureDate-field" type="date" name="departureDate" defaultValue={singleData.departureDate} value={state.departureDate} onChange={(e) => this.handleChange(e)} disabled={isDisabled} />
                       </Form.Group>
                     </Col>
 
                     <Col xs={12} sm={12} md={6} lg={3}>
                       <Form.Group>
                         <Form.Label>Return Date</Form.Label>
-                        <Form.Control as="input" type="date" name="returnDate" defaultValue={singleData.data.returnDate} disabled />
+                        <Form.Control id="qwert" data-test="returnDate-field" as="input" type="date" name="returnDate" defaultValue={singleData.returnDate} value={state.returnDate} onChange={(e) => this.handleChange(e)} disabled={locations && locations.data && singleData.type.name === 'One Way' ? true : isDisabled} />
                       </Form.Group>
                     </Col>
                     <Row className="section">
                       <h4>Destinations</h4>
                       <p>Details on the locations you will be visiting during your trip.</p>
                     </Row>
-
                     <Row className="center-items">
-                      {singleData.data.destinations.map((destination, index) => (
+                      {state.destinations.map((destination, index) => (
                         <Row key={destination.id}>
-                          <DestinationDisplay destination={destination} index={index} />
+                          <DestinationDisplay
+                            destination={destination}
+                            index={index}
+                            disabled={isDisabled}
+                            departureDisable={locations && locations.data && singleData.type.name === 'One Way' ? true : isDisabled}
+                            location={locations.data && locations.data.data.map((location) => (<option value={location.id} key={location.id}>{location.name}</option>))}
+                            onChange={(e) => this.handleDestinationChange(e)}
+                            id={destination.id}
+                            arrivalDate={destination.arrivalDate}
+                            departureDate={destination.departureDate}
+                            reasons={destination.reasons}
+                          />
                         </Row>
                       ))}
+                {singleData && singleData.status.name === 'Pending' ? (
+                  checkManagerRequest(id) ? (
+                  <Button data-test="edit-Button" className="full-width-buttons" id="save-button" variant="primary" onClick={isDisabled ? (e) => this.handleEdit(e) : (e) => this.handleSubmit(e)} disabled={!(singleData && singleData.status.name === 'Pending')}>
+                  {isDisabled ? 'EDIT REQUEST' : isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'SAVE CHANGES'}
+                  </Button>
+                  ) : null
+                ) : null}
+                {isDisabled || isLoading ? null
+                  : (
+                <Button className="full-width-buttons" variant="primary" onClick={(e) => this.handleCancel(e)}>
+                    {isDisabled ? null : 'CANCEL' }
+                </Button>
+                  )}
                     </Row>
                   </Form>
                 </Row>
-                {!checkManager() && (
+                {!checkManager() && singleData.status.id === 1 && (
                 <Row className="mb-3">
                   <Col md={2} />
                   <Col md={4}>
-                <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" disabled={singleData.data.status.id === 3} icon={<CheckCircleOutlineOutlined />} />
+                <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" disabled={singleData.status.id === 3} icon={<CheckCircleOutlineOutlined />} />
                   </Col>
                   <Col md={4}>
-                    <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" disabled={singleData.data.status.id === 2} icon={<HighlightOffOutlined />} />
+                    <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" disabled={singleData.status.id === 2} icon={<HighlightOffOutlined />} />
                   </Col>
                 </Row>
                 )}
@@ -179,6 +299,9 @@ export class SingleRequest extends Component {
 export const mapStateToProps = (state) => ({
   singleData: state.requests.singleData,
   dataError: state.requests.dataError,
+  editData: state.requests.editData,
+  editError: state.requests.editError,
+  locations: state.locations,
 });
 
 SingleRequest.propTypes = {
@@ -188,6 +311,11 @@ SingleRequest.propTypes = {
   message: PropTypes.string,
   singleData: PropTypes.any,
   dataError: PropTypes.any,
+  locations: PropTypes.any,
+  editData: PropTypes.any,
+  editError: PropTypes.any,
 };
 
-export default connect(mapStateToProps, { singleRequestAction, processRequestAction })(SingleRequest);
+export default connect(mapStateToProps, {
+  singleRequestAction, processRequestAction, getLocations, editRequestAction, hideAlert,
+})(SingleRequest);
