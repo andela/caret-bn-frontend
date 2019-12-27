@@ -83,7 +83,6 @@ describe('Booking Actions Test Suite', () => {
         const store = testStore();
         return store.dispatch(BookAccommodation()).then(() => {
             const state = store.getState();
-            console.log(store.getState());
             expect(state.bookings.booked).toEqual('Booking done successfully');
         });
     });

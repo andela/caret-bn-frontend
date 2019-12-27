@@ -25,6 +25,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import UserProfile from './components/pages/profiles/UserProfile';
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
+import AllNotifications from './views/notifications/AllNotifications';
 
 export class App extends Component {
   render() {
@@ -52,6 +53,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
           <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />
           <ProtectedRoute exact path="/profile" component={UserProfile} />
+          <ProtectedRoute exact path="/notifications" component={AllNotifications} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
