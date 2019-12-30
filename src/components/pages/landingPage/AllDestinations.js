@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 import { getLocations, getTopDestinations } from '../../../actions/locationActions';
+import HighRatedAccommodation from './HighRatedAccommodations';
 
 export class AllDestinations extends Component {
     state= {
@@ -59,7 +60,8 @@ export class AllDestinations extends Component {
             </Row>
           </Col>
           <Col xs={12} md={4} className="top-rated">
-            Top rated
+          <h1 className="pt-3 pb-0">High Rated</h1>
+          <HighRatedAccommodation />
           </Col>
         </Row>
       </div>
@@ -78,6 +80,7 @@ const mapStateToProps = (state) => ({
   locations: state.locations.data,
   status: state.locations.status,
   topDestinations: state.locations.topData,
+  highRated: state.accommodation.highRated,
 });
 
 export default compose(withRouter, connect(mapStateToProps, { getLocations, getTopDestinations }))(AllDestinations);

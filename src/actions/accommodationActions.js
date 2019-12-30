@@ -1,7 +1,7 @@
 import {
   ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE, UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
-  RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR,
+  RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR, HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -82,3 +82,14 @@ export const likeUnlikeAccommodation = (slug, action) => async (dispatch) => {
     dispatch(accommodationType(LIKE_ACCOMMODATION_ERROR, error.response));
   }
 };
+export const getHighRatedAccommodation = () => (dispatch) => backendCall.get('/accommodations/ratings/top-rated', { headers })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      accommodationType(HIGH_RATED_SUCCESS, response),
+    );
+  }).catch((error) => {
+    dispatch(
+      accommodationType(HIGH_RATED_FAILURE, error.response.data),
+    );
+  });

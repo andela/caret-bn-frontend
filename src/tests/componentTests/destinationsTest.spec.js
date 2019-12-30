@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import axios from "axios";
 import sinon from "sinon";
 import AllDestinations from '../../components/pages/landingPage/AllDestinations';
+import accommodationsMocks from '../mocks/accommodationsMocks'
 
 const mockStore = configureStore([thunk]);
 jest.mock('axios');
@@ -16,7 +17,10 @@ const makeWrapper = () => {
     locations: {
       data: {data:[{id:1, name: 'Office'}]},
       topData: {data:[{id:1, name: 'Office1'}]},
-      status: "success"
+      status: "success",
+    },
+    accommodation: {
+      highRated: {data:[{id: 1, name: 'isimbi', images: []}]},
     }
   });
   return  mount(

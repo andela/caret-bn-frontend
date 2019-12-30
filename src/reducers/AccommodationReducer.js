@@ -4,6 +4,7 @@ import {
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
   UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
   RESET_ACCOMMODATION_STATUS, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR,
+ HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
   like: null,
   dislike: null,
   likeStatus: '',
+  highRated: null,
+  hihRatedError: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -90,6 +93,16 @@ export default (state = initialState, { type, payload }) => {
         dislike: payload,
         like: null,
         likeStatus: 'Failure',
+      };
+    case HIGH_RATED_SUCCESS:
+      return {
+        ...state,
+        highRated: payload,
+      };
+    case HIGH_RATED_FAILURE:
+      return {
+        ...state,
+        hihRatedError: payload,
       };
     default:
       return {

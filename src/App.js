@@ -30,7 +30,6 @@ import AllNotifications from './views/notifications/AllNotifications';
 export class App extends Component {
   render() {
     const { location: { pathname } } = this.props;
-    // console.log('this.props.location ===>>>', this.props.location);
     return (
       <Router>
         <MenuComponent pathname={pathname} />
