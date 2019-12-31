@@ -1,8 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL } from '../../actions/types';
-import { getRequestsAction, singleRequestAction } from '../../actions/requestsActions';
+import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL } from '../../actions/types';
+import { getRequestsAction, singleRequestAction, searchRequestAction } from '../../actions/requestsActions';
 import backendCall from '../../helpers/backendCall';
 
 let store;
@@ -118,4 +118,57 @@ describe('Signup Actions Test Suite', () => {
         expect(calledActions).toEqual(expectedActions);
       });
  });
+
+ it('Should trigger SEARCH_REQUESTS_SUCCESS', async () => {
+  moxios.wait(() => {
+    const request = moxios.requests.mostRecent();
+    request.respondWith({
+      status: 200,
+      response: {
+        message: 'Request Found!',
+        data: {}
+    },
+    });
+  });
+
+  const expectedActions = [{
+    payload: {
+      message: 'Request Found!',
+      data: {}
+    },
+    type: SEARCH_REQUESTS_SUCCESS
+  }];
+  store = mockStore({});
+  await store.dispatch(searchRequestAction())
+    .then(async () => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+});
+
+
+it('Should trigger SEARCH_REQUESTS_FAIL', async () => {
+  moxios.wait(() => {
+    const request = moxios.requests.mostRecent();
+    request.respondWith({
+      status: 404,
+      response: {
+        message: "No Request Found!",
+    },
+    });
+  });
+
+  const expectedActions = [{
+    payload: {
+      message: "No Request Found!",
+    },
+    type: SEARCH_REQUESTS_FAIL
+  }];
+  store = mockStore({});
+  await store.dispatch(searchRequestAction())
+    .then(async () => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+});
 });
