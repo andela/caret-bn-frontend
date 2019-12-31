@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import {
   Row, Button, Col,
 } from 'react-bootstrap';
+import Switch from 'react-switch';
 import PropTypes from 'prop-types';
 import Breadcrumbs from '../../global/Breadcrumbs';
 import AlertComponent from '../../global/AlertComponent';
 import { GetUserProfile, UpdateUserProfile } from '../../../actions/profileAction';
+import { switchNotifAction } from '../../../actions/notificationsActions';
 
 export class UserProfile extends Component {
   constructor(props) {
@@ -26,6 +28,8 @@ export class UserProfile extends Component {
       isLoading: false,
       selectedFile: '',
       status: 'display',
+      emailNotif: false,
+      appNotif: false,
     };
     this.changeEditMode = this.changeEditMode.bind(this);
   }
@@ -36,7 +40,7 @@ export class UserProfile extends Component {
     await props.GetUserProfile();
     const { data } = this.props;
     const {
-      username, email, gender, phone, language, country, company, department, image,
+      username, email, gender, phone, language, country, company, department, image, emailNotif, appNotif,
     } = data.profile;
 
     this.setState({
@@ -50,6 +54,8 @@ export class UserProfile extends Component {
       department,
       image,
       isLoading: false,
+      emailNotif,
+      appNotif,
     });
   }
 
@@ -112,10 +118,30 @@ export class UserProfile extends Component {
     await props.UpdateUserProfile(form);
   };
 
+  switchNotif = async (switchParam) => {
+    const { props } = this;
+    const { data } = props;
+
+    this.setState({ isLoading: true });
+
+    await props.switchNotifAction(switchParam);
+    await props.GetUserProfile();
+
+    const {
+      emailNotif, appNotif,
+    } = data.profile;
+
+    this.setState({
+      isLoading: false,
+      emailNotif,
+      appNotif,
+    });
+  };
+
   render() {
     const { props } = this;
     const {
-      isLoading, image, email, username, gender, phone, language, country, company, department, selectedFile, isReadOnly, isDisabled, status,
+      isLoading, image, email, username, gender, phone, language, country, company, department, selectedFile, isReadOnly, isDisabled, status, emailNotif, appNotif,
     } = this.state;
 
     const { data, dataError, statesss } = props;
@@ -198,6 +224,18 @@ export class UserProfile extends Component {
                 <input type="text" className="form-control mb-2" name="department" placeholder="department" value={department} onChange={this.handleChange} readOnly={isReadOnly} />
               </div>
             </div>
+            <Row>
+              <Col xs={12} sm={12} md={6} lg={6}>
+                Email Notifications:
+                {' '}
+                <Switch onChange={() => this.switchNotif('email-notification')} checked={emailNotif} />
+              </Col>
+              <Col xs={12} sm={12} md={6} lg={6}>
+                In-app Notifications:
+                {' '}
+                <Switch onChange={() => this.switchNotif('app-notification')} checked={appNotif} />
+              </Col>
+            </Row>
             </div>
             {status === 'display'
               ? (
@@ -208,7 +246,7 @@ export class UserProfile extends Component {
               : (
                 <div>
                   <Button variant="primary" type="submit" className="style-btn-update mx-1">
-            {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Update'}
+                    {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Update'}
                   </Button>
                   {!isLoading ? <Button variant="primary" type="reset" className="style-btn-update mx-1" onClick={this.handleCancel} id="buttonCancel"> Cancel </Button> : null }
                 </div>
@@ -224,6 +262,7 @@ export class UserProfile extends Component {
 UserProfile.propTypes = {
   GetUserProfile: PropTypes.func.isRequired,
   UpdateUserProfile: PropTypes.func.isRequired,
+  switchNotifAction: PropTypes.func.isRequired,
   data: PropTypes.any,
   dataError: PropTypes.any,
 };
@@ -234,4 +273,4 @@ export const mapStateToProps = (state) => ({
   statesss: state,
 });
 
-export default connect(mapStateToProps, { GetUserProfile, UpdateUserProfile })(UserProfile);
+export default connect(mapStateToProps, { GetUserProfile, UpdateUserProfile, switchNotifAction })(UserProfile);

@@ -4,8 +4,7 @@ import { MenuComponent, mapStateToProps } from '../../components/global/MenuComp
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers/index';
-import Breadcrumbs from '../../components/global/Breadcrumbs';
-import requestsMocks from '../mocks/requestsMocks';
+import notificationsMocks from '../mocks/notificationsMocks';
 
 const middlewares = [thunk];
 
@@ -22,9 +21,17 @@ const props = {
     profile: {
       dataError: null,
       data: null,
-    }
+    },
+    allNotifs: {
+      notifsData: [notificationsMocks.itemUnread],
+      notifsDataError: null,
+    },
   },
+  notifsData: [notificationsMocks.itemUnread],
+  notifsDataError: null,
   GetUserProfile: jest.fn(),
+  getNotifsAction: jest.fn(),
+  markOneNotifAction: jest.fn(),
  pathname: '/requests'
 }
 
@@ -47,11 +54,23 @@ describe('MenuComponent Test Suite', () => {
     expect(component.exists()).toBe(true);
   });
 
+  it('Should click on notifications', () => {
+    const component = setUp(mainState);
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'markAllNotifs');
+    component.find('[data-test="link-click"]').simulate('click');
+    component.find('[data-test="mark-all-click"]').simulate('click');
+    expect(handleSubmitSpy).toReturn();
+  });
+
   it('Should return initial data', () => {
     const initialState = {
       profile: {
         dataError: null,
         data: null,
+      },
+      allNotifs: {
+        notifsData: null,
+        notifsDataError: null,
       }
     };
     expect(mapStateToProps(initialState).data).toEqual(null);

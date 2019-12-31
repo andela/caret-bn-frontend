@@ -3,7 +3,7 @@
 	flex-direction: row;
 	align-items: center;
 	font-size: 12px;
-	justify-content: space-between;
+	justify-content: flex-end;
 	text-transform: uppercase;
 	color: $white;
 	&:hover {
@@ -16,13 +16,18 @@
 	color: $white;
 }
 
+.nav-drop-notif {
+	margin-top: -9px;
+	color: $white;
+}
+
 .navbar-nav {
 	.dropdown-menu {
     position: static;
     float: left;
     margin-left: -7rem;
     margin-top: .5rem;
-}
+	}
 }
 
 .navbar-logo {
