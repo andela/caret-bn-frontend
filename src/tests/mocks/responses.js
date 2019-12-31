@@ -168,6 +168,31 @@ const assignedRoleError = {
   },
 };
 
+const liked = {
+  status: 200,
+  response: {
+    status: 200,
+    message: 'Liked Successfully',
+  },
+};
+
+const likeFailed = {
+  status: 400,
+  response: {
+    status: 400,
+    message: 'You have already disliked this before',
+  },
+};
+
+const bookingsError = {
+  status: 400,
+  response: {
+    status: 400,
+    message: 'booking failed',
+  },
+};
+
+
 export default {
   loginSuccess,
   loginFailure,
@@ -183,4 +208,7 @@ export default {
   rolesError,
   assignedRole,
   assignedRoleError,
+  liked,
+  likeFailed,
+  bookingsError,
 };

@@ -32,6 +32,9 @@ describe('Request Actions Test Suite', () => {
       updateError: null,
       updateStatus: "success",
       updateSuccess: undefined,
+      like: null,
+      dislike: null,
+      likeStatus: '',
     }
 
     const store = testStore();

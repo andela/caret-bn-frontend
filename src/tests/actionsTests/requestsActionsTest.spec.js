@@ -91,6 +91,58 @@ describe('Signup Actions Test Suite', () => {
         expect(calledActions).toEqual(expectedActions);
       });
  });
+  it('Should trigger SEARCH_REQUESTS_SUCCESS', async () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: {
+          message: "Results",
+          data: []
+      },
+      });
+    });
+
+    const expectedActions = [{
+      payload: {
+        message: "Results",
+        data: []
+      },
+      type: SEARCH_REQUESTS_SUCCESS
+    }];
+    store = mockStore({});
+    await store.dispatch(searchRequestAction())
+      .then(async () => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('Should trigger SEARCH_REQUESTS_FAIL', async () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 404,
+        response: {
+          message: "No Requests found",
+      },
+      });
+    });
+
+    const expectedActions = [{
+      payload: {
+        message: "No Requests found",
+      },
+      type: SEARCH_REQUESTS_FAIL
+    }];
+    store = mockStore({});
+    await store.dispatch(searchRequestAction())
+      .then(async () => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
 
   it('Should trigger SINGLE_REQUEST_SUCCESS', async () => {
     moxios.wait(() => {

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar Test Suite Should handleDayChange 1`] = `ShallowWrapper {}`;
