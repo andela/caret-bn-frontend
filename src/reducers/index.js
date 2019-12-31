@@ -16,6 +16,7 @@ import managerRequestReducer from './managerRequestReducer';
 import managerSearchRequestReducer from './managerSearchRequestReducer';
 import allNotifsReducer from './allNotifsReducer';
 import processRequestReducer from './processRequestReducer';
+import ratingsReducer from './ratingsReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -35,4 +36,5 @@ export default combineReducers({
   managerSearchRequest: managerSearchRequestReducer,
   allNotifs: allNotifsReducer,
   processRequest: processRequestReducer,
+  ratings: ratingsReducer,
 });

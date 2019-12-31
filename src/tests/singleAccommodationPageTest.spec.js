@@ -18,7 +18,7 @@ const mainState = {
     getAccommodationError: {},
     singleAccommodation: {},
     singleAccommodationError: {},
-    isLoading:false,
+    isLoading: false,
   },
 };
 
@@ -39,8 +39,13 @@ const testStore = state => {
 
 const setUp = (initialState = {}) => {
   const store = testStore(initialState);
-  const wrapper = shallow(<SingleAccommodation {...props} store={store}/>);
+  const wrapper = shallow(<SingleAccommodation {...props} store={store} />);
   wrapper.setState({ isLoading: false });
+  wrapper.setProps({
+    ratings: {
+      status: '',
+    }
+  });
   return wrapper;
 };
 
@@ -49,7 +54,7 @@ describe('Make booking Test Suite', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
- 
+
   it('Should return initial data', () => {
     const initialState = {
       accommodation: {

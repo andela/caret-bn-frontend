@@ -62,30 +62,30 @@ export class AllAccommodation extends React.Component {
               <img src={(typeof (post.images) === 'string') ? post.images : post.images[0]} alt="accommodation" />
             </Col>
             <Col className="info-container" sm>
-            <Link to={`/accommodations/${post.slug}`}>
-                            <h1>{post.name}</h1>
-            </Link>
+              <Link to={`/accommodations/${post.slug}`}>
+                <h1>{post.name}</h1>
+              </Link>
               <div><h2>{post.averageRating}</h2></div>
-             <div>
-               <h2>
-                <StarRatings
-                  rating={post.averageRating}
-                  starRatedColor="#e99434"
-                  numberOfStars={5}
-                  name="rating"
-                  starEmptyColor="F5F1F1"
-                  starDimension="30px"
-                />
-                &nbsp;
-                &nbsp;
+              <div>
+                <h2>
+                  <StarRatings
+                    rating={post.averageRating}
+                    starRatedColor="#e99434"
+                    numberOfStars={5}
+                    name="rating"
+                    starEmptyColor="F5F1F1"
+                    starDimension="30px"
+                  />
+                  &nbsp;
+                  &nbsp;
                   {post.ratings.length}
-                &nbsp;
-                 Rating(s)
+                  &nbsp;
+                   Rating(s)
                </h2>
-             </div>
-             <div>
-              <h3>{post.accommodationLocation.name}</h3>
-             </div>
+              </div>
+              <div>
+                <h3>{post.accommodationLocation.name}</h3>
+              </div>
               <div><h4>description</h4></div>
               <div><h2>{post.description}</h2></div>
             </Col>
@@ -111,8 +111,8 @@ export class AllAccommodation extends React.Component {
                 {`${post.Unlikes} Dislikes`}
               </h2>
               <Link to={`/accommodations/${post.slug}`}>
-              <Button className="booking" size="lg">
-                Make Booking
+                <Button className="booking" size="lg">
+                  Make Booking
               </Button>
               </Link>
               {
