@@ -58,4 +58,11 @@ describe('View specific user Test Suite', () => {
         expect(spying.calledOnce);
     });
 
+    it('Should handle componentWillUnmount', () => {
+      const willUnmount = sinon.spy();
+        let wrapper = makeWrapper();
+        wrapper.unmount();
+      expect(willUnmount.calledOnce)
+    });
+
 });    

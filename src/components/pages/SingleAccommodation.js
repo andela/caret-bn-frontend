@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,7 +9,11 @@ import { Link } from 'react-router-dom';
 import {
   Container, Row, Col, Button,
 } from 'react-bootstrap';
-import { GetSingleAccommodation } from '../../actions/accommodationActions';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
+import { GetSingleAccommodation, likeUnlikeAccommodation } from '../../actions/accommodationActions';
 import { BookAccommodation, getBookings } from '../../actions/bookingActions';
 import Breadcrumbs from '../global/Breadcrumbs';
 import 'react-day-picker/lib/style.css';
@@ -25,13 +30,15 @@ export class SingleAccommodation extends React.Component {
       isLoading: false,
       userId: null,
     };
+    this.handleLike = this.handleLike.bind(this);
+    this.handleDislike = this.handleDislike.bind(this);
   }
 
   componentDidMount = async () => {
     const userInfo = isAuthenticated();
-    const { slug } = this.props;
+    const { slug, GetSingleAccommodation } = this.props;
     this.setState({ isLoading: true });
-    await this.props.GetSingleAccommodation(slug);
+    await GetSingleAccommodation(slug);
     this.setState({ isLoading: false });
     this.single = this.renderAcommodation.bind(this);
     await this.setState({
@@ -44,12 +51,23 @@ export class SingleAccommodation extends React.Component {
     await hideAlert();
   }
 
+  async handleLike() {
+    const { accommodation, likeUnlikeAccommodation, GetSingleAccommodation } = this.props;
+    await likeUnlikeAccommodation(accommodation.slug, 'like');
+    await GetSingleAccommodation(accommodation.slug);
+  }
+
+  async handleDislike() {
+    const { accommodation, likeUnlikeAccommodation, GetSingleAccommodation } = this.props;
+    await likeUnlikeAccommodation(accommodation.slug, 'unlike');
+    await GetSingleAccommodation(accommodation.slug);
+  }
+
   renderAcommodation() {
     const {
       accommodation, booked, bookedError,
     } = this.props;
-    const { userId } = this.state;
-    const { ownerUser } = accommodation;
+    const { ownerUser, hasLiked, hasUnliked } = accommodation;
     const ratingNumber = accommodation.ratings ? accommodation.ratings.length : 0;
     const imageArray = accommodation.images ? accommodation.images : [];
     const location = accommodation.accommodationLocation ? accommodation.accommodationLocation.name : null;
@@ -69,10 +87,10 @@ export class SingleAccommodation extends React.Component {
       return (
         <div key={accommodation.id} className="container-fluid single-container ">
           <Row>
-        <Col md={5} className="breadcrumbs">
-          <Breadcrumbs itemsArray={['> Home', '  Accommodations', accommodation.name]} />
-        </Col>
-        {
+            <Col md={5} className="breadcrumbs">
+              <Breadcrumbs itemsArray={['> Home', '  Accommodations', accommodation.name]} />
+            </Col>
+            {
               (ownerUser !== undefined) ? (accommodation.ownerUser.id === this.state.userId)
                 ? (
                   <Link to={{ pathname: `/accommodations/${accommodation.slug}/edit` }} className="edit-links">
@@ -81,10 +99,10 @@ export class SingleAccommodation extends React.Component {
                 )
                 : null : null
             }
-          <Col>
-                {bookedError && <AlertComponent variant="danger" heading="Error" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />}
-                {booked && <AlertComponent variant="success" heading="success" message={booked.message} />}
-          </Col>
+            <Col>
+              {bookedError && <AlertComponent variant="danger" heading="Error" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />}
+              {booked && <AlertComponent variant="success" heading="success" message={booked.message} />}
+            </Col>
           </Row>
           <Container className="containerA container-fluid">
             <Row>
@@ -97,31 +115,31 @@ export class SingleAccommodation extends React.Component {
                   ))}
                 </Carousel>
                 <Container className="containerC container-fluid  small-container">
-                <div className="small-container">
-                <Row>
-                  <Col>
-                  <h3> Highlights </h3>
-                    <div className="highlights">
-                        <i>
-                          <h6>{accommodation.highlights}</h6>
-                        </i>
-                    </div>
-                  </Col>
-                  <div>
-                    <img src={img3} alt="icon" />
-                  </div>
-                  <Col>
-
-                    <h3 className="amenities"> Anemities </h3>
+                  <div className="small-container">
+                    <Row>
+                      <Col>
+                        <h3> Highlights </h3>
+                        <div className="highlights">
+                          <i>
+                            <h6>{accommodation.highlights}</h6>
+                          </i>
+                        </div>
+                      </Col>
                       <div>
-                        <i>
-                          <h6 className="highlights">{accommodation.amenities}</h6>
-                        </i>
+                        <img src={img3} alt="icon" />
                       </div>
+                      <Col>
 
-                  </Col>
-                </Row>
-                </div>
+                        <h3 className="amenities"> Anemities </h3>
+                        <div>
+                          <i>
+                            <h6 className="highlights">{accommodation.amenities}</h6>
+                          </i>
+                        </div>
+
+                      </Col>
+                    </Row>
+                  </div>
                 </Container>
               </Col>
               <Col xs={6} className="single-column container-fluid col-lg-6 col-md-6 col-12">
@@ -146,7 +164,7 @@ export class SingleAccommodation extends React.Component {
                   &nbsp;
                  Rating(s)
                   </i>
-                  <i className="amenities">{location}</i>
+                <i className="amenities">{location}</i>
                 <h3>
                   <StarRatings
                     rating={accommodation.averageRating}
@@ -166,6 +184,16 @@ export class SingleAccommodation extends React.Component {
                   <i>{accommodation.description}</i>
                 </div>
                 <Booking />
+                <Row>
+                  <Col className="like">
+                    {hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon data-test="like-button" className="like-button" onClick={() => this.handleLike()} />}
+                    {` Total Likes: ${accommodation.Likes}`}
+                  </Col>
+                  <Col className="dislike">
+                    {hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon data-test="dislike-button" className="dislike-button" onClick={() => this.handleDislike()} />}
+                    {` Total Dislikes: ${accommodation.Unlikes}`}
+                  </Col>
+                </Row>
                 <h4>Ratings</h4>
                 {ratingArray.map((rating) => (
                   <div>
@@ -196,7 +224,7 @@ export class SingleAccommodation extends React.Component {
 
     return (
       <div className="d-flex justify-content-center single-container">
-         {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : this.renderAcommodation()}
+        {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : this.renderAcommodation()}
       </div>
     );
   }
@@ -206,6 +234,9 @@ SingleAccommodation.propTypes = {
   bookedError: PropTypes.object,
   accommodation: PropTypes.object.isRequired,
   slug: PropTypes.string,
+  GetSingleAccommodation: PropTypes.func,
+  hideAlert: PropTypes.func,
+  likeUnlikeAccommodation: PropTypes.func,
 };
 
 export const mapStateToProps = (state) => ({
@@ -213,8 +244,10 @@ export const mapStateToProps = (state) => ({
   booked: state.bookings.booked,
   bookings: state.bookings.data,
   bookedError: state.bookings.bookedError,
+  like: state.accommodation.like,
+  dislike: state.accommodation.dislike,
 });
 
 export default connect(mapStateToProps, {
-  GetSingleAccommodation, BookAccommodation, getBookings, hideAlert,
+  GetSingleAccommodation, BookAccommodation, getBookings, hideAlert, likeUnlikeAccommodation,
 })(SingleAccommodation);

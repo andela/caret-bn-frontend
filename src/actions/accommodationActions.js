@@ -1,7 +1,7 @@
 import {
   ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE, UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
-  RESET_ACCOMMODATION_STATUS, SHOW_ALERT,
+  RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR, SEARCH_ACCOMMODATIONS, SEARCH_ACCOMMODATIONS_ERROR,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -73,3 +73,25 @@ export const updateAccommodation = (updates, accommodationId) => async (dispatch
 export const resetAccommodationState = () => (dispatch) => {
   dispatch(accommodationType(RESET_ACCOMMODATION_STATUS, null));
 };
+
+export const likeUnlikeAccommodation = (slug, action) => async (dispatch) => {
+  try {
+    const res = await backendCall.post(`/accommodations/${slug}/${action}`, {}, { headers });
+    dispatch(accommodationType(LIKE_ACCOMMODATION, res.data));
+  } catch (error) {
+    dispatch(accommodationType(LIKE_ACCOMMODATION_ERROR, error.response));
+  }
+};
+
+export const accommodationSearch = (params) => (dispatch) => backendCall.get(`/accommodations/search${params}`, { headers })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      accommodationType(SEARCH_ACCOMMODATIONS, response),
+    );
+  }).catch((error) => {
+    dispatch(
+      accommodationType(SEARCH_ACCOMMODATIONS_ERROR, error.response.data),
+    );
+    dispatch(accommodationType(SHOW_ALERT));
+  });

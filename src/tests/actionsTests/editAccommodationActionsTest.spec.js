@@ -26,12 +26,17 @@ describe('Request Actions Test Suite', () => {
       accommodationError: null,
       getAccommodation: [],
       getAccommodationError: {},
+      searchError: null,
+      searchResults: null,
       singleAccommodation: {},
       singleAccommodationError: {},
       status: "",
       updateError: null,
       updateStatus: "success",
       updateSuccess: undefined,
+      like: null,
+      dislike: null,
+      likeStatus: '',
     }
 
     const store = testStore();

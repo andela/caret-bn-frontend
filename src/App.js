@@ -23,6 +23,7 @@ import editAccommodation from './views/accommodations/editAccommodation';
 import ManagerView from './views/manager/ManagerView';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserProfile from './components/pages/profiles/UserProfile';
+import SearchResults from './views/accommodations/SearchResults';
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
 import AllNotifications from './views/notifications/AllNotifications';
@@ -47,6 +48,7 @@ export class App extends Component {
           <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
           <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
           <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
+          <ProtectedRoute exact path="/accommodations/search/results" component={SearchResults} />
           <ProtectedRoute exact path="/accommodations/:slug/edit" component={editAccommodation} />
           <ProtectedRoute exact path="/user-manager" component={ManagerView} />
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />

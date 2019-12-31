@@ -1,5 +1,5 @@
 import AccommodationReducer from '../../reducers/AccommodationReducer';
-import { ADD_ACCOMMODATION_FAILURE, ADD_ACCOMMODATION_SUCESS, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE, SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE } from '../../actions/types';
+import { ADD_ACCOMMODATION_FAILURE, ADD_ACCOMMODATION_SUCESS, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE, SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR } from '../../actions/types';
 
 describe('Create accommodation Reducer Tests ', () => {
   it('Should return default state', () => {
@@ -13,8 +13,13 @@ describe('Create accommodation Reducer Tests ', () => {
       "status": '',
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
     });
   });
 
@@ -35,8 +40,13 @@ describe('Create accommodation Reducer Tests ', () => {
       "accommodationData": successAction.payload,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
-      "singleAccommodationError": {}
+      "singleAccommodationError": {},
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
     })
   });
 
@@ -59,8 +69,69 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
-      "singleAccommodationError": {}
+      "singleAccommodationError": {},
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
+    })
+  });
+
+  it('Should handle LIKE_ACCOMMODATION ', () => {
+    const successAction = {
+      type: LIKE_ACCOMMODATION,
+      payload: {
+        message: 'Liked successfully!'
+      }
+    }
+    const returnedSate = AccommodationReducer(undefined, successAction);
+    expect(returnedSate).toEqual({
+      "status": '',
+      "accommodationError": null,
+      "updateError": null,
+      "updateStatus": null,
+      "updateSuccess": null,
+      "accommodationData": null,
+      "getAccommodation": [],
+      "getAccommodationError": {},
+      "singleAccommodation": {},
+      "singleAccommodationError": {},
+      "like": successAction.payload,
+      "dislike": null,
+      "likeStatus": 'Success',
+      "searchError": null,
+      "searchResults": null
+    })
+  });
+
+  it('Should handle LIKE_ACCOMMODATION_ERROR ', () => {
+    const failureAction = {
+      type: LIKE_ACCOMMODATION_ERROR,
+      payload: {
+        data: {
+          message: "This accommodation already exists!"
+        }
+      }
+    }
+    const returnedSate = AccommodationReducer(undefined, failureAction);
+    expect(returnedSate).toEqual({
+      "status": '',
+      "accommodationError": null,
+      "accommodationData": null,
+      "updateError": null,
+      "updateStatus": null,
+      "updateSuccess": null,
+      "getAccommodation": [],
+      "getAccommodationError": {},
+      "singleAccommodation": {},
+      "singleAccommodationError": {},
+      "like": null,
+      "dislike": failureAction.payload,
+      "likeStatus": 'Failure',
+      "searchError": null,
+      "searchResults": null
     })
   });
 
@@ -83,8 +154,13 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": action.payload.data,
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
-      "singleAccommodationError": {}
+      "singleAccommodationError": {},
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
 
     })
   });
@@ -109,8 +185,13 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": action.payload,
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
-      "singleAccommodationError": {}
+      "singleAccommodationError": {},
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
     });
   });
 
@@ -134,8 +215,13 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": action.payload.data,
-      "singleAccommodationError": {}
+      "singleAccommodationError": {},
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
     })
   });
 
@@ -159,8 +245,13 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": action.payload,
+      "like": null,
+      "dislike": null,
+      "likeStatus": '',
     });
   });
 

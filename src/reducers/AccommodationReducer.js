@@ -3,7 +3,8 @@ import {
   ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
   UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
-  RESET_ACCOMMODATION_STATUS,
+  RESET_ACCOMMODATION_STATUS, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR,
+  SEARCH_ACCOMMODATIONS_ERROR, SEARCH_ACCOMMODATIONS,
 } from '../actions/types';
 
 const initialState = {
@@ -17,6 +18,11 @@ const initialState = {
   updateSuccess: null,
   updateError: null,
   updateStatus: null,
+  like: null,
+  dislike: null,
+  likeStatus: '',
+  searchResults: null,
+  searchError: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -73,6 +79,34 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         updateError: payload,
         updateStatus: payload,
+      };
+    case LIKE_ACCOMMODATION:
+      return {
+        ...state,
+        like: payload,
+        dislike: null,
+        likeStatus: 'Success',
+      };
+    case LIKE_ACCOMMODATION_ERROR:
+      return {
+        ...state,
+        dislike: payload,
+        like: null,
+        likeStatus: 'Failure',
+      };
+    case SEARCH_ACCOMMODATIONS:
+      return {
+        ...state,
+        searchResults: payload,
+        searchError: null,
+        status: 'success',
+      };
+    case SEARCH_ACCOMMODATIONS_ERROR:
+      return {
+        ...state,
+        searchError: payload,
+        status: 'error',
+        searchResults: null,
       };
     default:
       return {
