@@ -53,14 +53,14 @@ export class SingleAccommodation extends React.Component {
 
   async handleLike() {
     const { accommodation, likeUnlikeAccommodation, GetSingleAccommodation } = this.props;
-    await likeUnlikeAccommodation(accommodation.slug, 'like');
     await GetSingleAccommodation(accommodation.slug);
+    await likeUnlikeAccommodation(accommodation.slug, 'like');
   }
 
   async handleDislike() {
     const { accommodation, likeUnlikeAccommodation, GetSingleAccommodation } = this.props;
-    await likeUnlikeAccommodation(accommodation.slug, 'unlike');
     await GetSingleAccommodation(accommodation.slug);
+    await likeUnlikeAccommodation(accommodation.slug, 'unlike');
   }
 
   renderAcommodation() {
@@ -186,11 +186,11 @@ export class SingleAccommodation extends React.Component {
                 <Booking />
                 <Row>
                 <Col className="like">
-                  {hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon className="like-button" onClick={this.handleLike} />}
+                  {hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon data-test="like-button" className="like-button" onClick={() => this.handleLike()} />}
                   {` Total Likes: ${accommodation.Likes}`}
                 </Col>
                 <Col className="dislike">
-                  {hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" onClick={this.handleDislike} />}
+                  {hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon data-test="dislike-button" className="dislike-button" onClick={() => this.handleDislike()} />}
                   {` Total Dislikes: ${accommodation.Unlikes}`}
                 </Col>
                 </Row>

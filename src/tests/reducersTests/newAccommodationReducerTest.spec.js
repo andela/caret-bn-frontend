@@ -18,6 +18,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "highRated": null,
+      "hihRatedError": null,
     });
   });
 
@@ -38,6 +40,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "accommodationData": successAction.payload,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "highRated": null,
+      "hihRatedError": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
       "like": null,
@@ -70,6 +74,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "highRated": null,
+      "hihRatedError": null,
     })
   });
 
@@ -95,6 +101,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": successAction.payload,
       "dislike": null,
       "likeStatus": 'Success',
+      "highRated": null,
+      "hihRatedError": null,
     })
   });
 
@@ -122,6 +130,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": failureAction.payload,
       "likeStatus": 'Failure',
+      "highRated": null,
+      "hihRatedError": null,
     })
   });
 
@@ -149,6 +159,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "highRated": null,
+      "hihRatedError": null,
 
     })
   });
@@ -178,6 +190,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "highRated": null,
+      "hihRatedError": null,
     });
   });
 
@@ -206,6 +220,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "highRated": null,
+      "hihRatedError": null,
     })
   });
 
@@ -234,6 +250,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "highRated": null,
+      "hihRatedError": null,
     });
   });
 

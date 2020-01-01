@@ -41,14 +41,14 @@ export class AllAccommodation extends React.Component {
 
   async handleLike(slug, action) {
     const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
-    await likeUnlikeAccommodation(slug, action);
     await GetAllAccommodation();
+    await likeUnlikeAccommodation(slug, action);
   }
 
   async handleDislike(slug, action) {
     const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
-    await likeUnlikeAccommodation(slug, action);
     await GetAllAccommodation();
+    await likeUnlikeAccommodation(slug, action);
   }
 
   renderAcommodation() {
