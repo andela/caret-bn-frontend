@@ -20,6 +20,8 @@ const initialState = {
     status: '',
     getAccommodation: [],
     getAccommodationError: {},
+    searchError: null,
+    searchResults: null,
     singleAccommodation: {},
     singleAccommodationError: {},
   },

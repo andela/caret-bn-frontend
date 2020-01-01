@@ -13,6 +13,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "status": '',
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
       "like": null,
@@ -42,6 +44,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "getAccommodationError": {},
       "highRated": null,
       "hihRatedError": null,
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
       "like": null,
@@ -69,6 +73,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
       "like": null,
@@ -103,6 +109,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": 'Success',
       "highRated": null,
       "hihRatedError": null,
+      "searchError": null,
+      "searchResults": null
     })
   });
 
@@ -132,6 +140,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": 'Failure',
       "highRated": null,
       "hihRatedError": null,
+      "searchError": null,
+      "searchResults": null
     })
   });
 
@@ -154,6 +164,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": action.payload.data,
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
       "like": null,
@@ -185,6 +197,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": action.payload,
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": {},
       "like": null,
@@ -215,6 +229,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": action.payload.data,
       "singleAccommodationError": {},
       "like": null,
@@ -245,6 +261,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "updateSuccess": null,
       "getAccommodation": [],
       "getAccommodationError": {},
+      "searchError": null,
+      "searchResults": null,
       "singleAccommodation": {},
       "singleAccommodationError": action.payload,
       "like": null,

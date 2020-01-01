@@ -87,10 +87,10 @@ export class SingleAccommodation extends React.Component {
       return (
         <div key={accommodation.id} className="container-fluid single-container ">
           <Row>
-        <Col md={5} className="breadcrumbs">
-          <Breadcrumbs itemsArray={['> Home', '  Accommodations', accommodation.name]} />
-        </Col>
-        {
+            <Col md={5} className="breadcrumbs">
+              <Breadcrumbs itemsArray={['> Home', '  Accommodations', accommodation.name]} />
+            </Col>
+            {
               (ownerUser !== undefined) ? (accommodation.ownerUser.id === this.state.userId)
                 ? (
                   <Link to={{ pathname: `/accommodations/${accommodation.slug}/edit` }} className="edit-links">
@@ -99,10 +99,10 @@ export class SingleAccommodation extends React.Component {
                 )
                 : null : null
             }
-          <Col>
-                {bookedError && <AlertComponent variant="danger" heading="Error" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />}
-                {booked && <AlertComponent variant="success" heading="success" message={booked.message} />}
-          </Col>
+            <Col>
+              {bookedError && <AlertComponent variant="danger" heading="Error" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />}
+              {booked && <AlertComponent variant="success" heading="success" message={booked.message} />}
+            </Col>
           </Row>
           <Container className="containerA container-fluid">
             <Row>
@@ -115,31 +115,31 @@ export class SingleAccommodation extends React.Component {
                   ))}
                 </Carousel>
                 <Container className="containerC container-fluid  small-container">
-                <div className="small-container">
-                <Row>
-                  <Col>
-                  <h3> Highlights </h3>
-                    <div className="highlights">
-                        <i>
-                          <h6>{accommodation.highlights}</h6>
-                        </i>
-                    </div>
-                  </Col>
-                  <div>
-                    <img src={img3} alt="icon" />
-                  </div>
-                  <Col>
-
-                    <h3 className="amenities"> Anemities </h3>
+                  <div className="small-container">
+                    <Row>
+                      <Col>
+                        <h3> Highlights </h3>
+                        <div className="highlights">
+                          <i>
+                            <h6>{accommodation.highlights}</h6>
+                          </i>
+                        </div>
+                      </Col>
                       <div>
-                        <i>
-                          <h6 className="highlights">{accommodation.amenities}</h6>
-                        </i>
+                        <img src={img3} alt="icon" />
                       </div>
+                      <Col>
 
-                  </Col>
-                </Row>
-                </div>
+                        <h3 className="amenities"> Anemities </h3>
+                        <div>
+                          <i>
+                            <h6 className="highlights">{accommodation.amenities}</h6>
+                          </i>
+                        </div>
+
+                      </Col>
+                    </Row>
+                  </div>
                 </Container>
               </Col>
               <Col xs={6} className="single-column container-fluid col-lg-6 col-md-6 col-12">
@@ -164,7 +164,7 @@ export class SingleAccommodation extends React.Component {
                   &nbsp;
                  Rating(s)
                   </i>
-                  <i className="amenities">{location}</i>
+                <i className="amenities">{location}</i>
                 <h3>
                   <StarRatings
                     rating={accommodation.averageRating}
@@ -185,14 +185,14 @@ export class SingleAccommodation extends React.Component {
                 </div>
                 <Booking />
                 <Row>
-                <Col className="like">
-                  {hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon data-test="like-button" className="like-button" onClick={() => this.handleLike()} />}
-                  {` Total Likes: ${accommodation.Likes}`}
-                </Col>
-                <Col className="dislike">
-                  {hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon data-test="dislike-button" className="dislike-button" onClick={() => this.handleDislike()} />}
-                  {` Total Dislikes: ${accommodation.Unlikes}`}
-                </Col>
+                  <Col className="like">
+                    {hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon data-test="like-button" className="like-button" onClick={() => this.handleLike()} />}
+                    {` Total Likes: ${accommodation.Likes}`}
+                  </Col>
+                  <Col className="dislike">
+                    {hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon data-test="dislike-button" className="dislike-button" onClick={() => this.handleDislike()} />}
+                    {` Total Dislikes: ${accommodation.Unlikes}`}
+                  </Col>
                 </Row>
                 <h4>Ratings</h4>
                 {ratingArray.map((rating) => (
@@ -224,7 +224,7 @@ export class SingleAccommodation extends React.Component {
 
     return (
       <div className="d-flex justify-content-center single-container">
-         {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : this.renderAcommodation()}
+        {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : this.renderAcommodation()}
       </div>
     );
   }

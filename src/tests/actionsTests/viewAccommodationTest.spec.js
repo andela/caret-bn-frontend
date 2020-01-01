@@ -1,9 +1,10 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import { ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE, SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
+import {
+  ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE, SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
 } from '../../actions/types';
-import { GetAllAccommodation, GetSingleAccommodation} from '../../actions/accommodationActions';
+import { GetAllAccommodation, GetSingleAccommodation } from '../../actions/accommodationActions';
 import backendCall from '../../helpers/backendCall';
 
 let store;
@@ -26,7 +27,7 @@ describe('Accommodations Actions Test Suite', () => {
         status: 400,
         response: {
           message: "Invalid token please sign again",
-      },
+        },
       });
     });
 
@@ -51,7 +52,7 @@ describe('Accommodations Actions Test Suite', () => {
         status: 404,
         response: {
           message: "Accommodation caret-hotelefd does not exist",
-      },
+        },
       });
     });
 
@@ -77,24 +78,26 @@ describe('Accommodations Actions Test Suite', () => {
         response: {
           message: 'Accommodation facilities are retrieved successfully!',
           data: {}
-      },
+        },
       });
     });
 
     const expectedActions = [{
-      payload: {
+      type: 'ALL_ACCOMMODATION_SUCCESS',
+      payload:
+      {
         message: 'Accommodation facilities are retrieved successfully!',
         data: {}
-      },
-      type:  ALL_ACCOMMODATION_SUCCESS
-    }];
+      }
+    },
+    { type: 'CLEAR_SEARCH_ERROR', payload: undefined }];
     store = mockStore({});
     await store.dispatch(GetAllAccommodation())
       .then(async () => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
       });
- });
+  });
 
   it('Should trigger SINGLE_ACCOMMODATION_SUCCESS', async () => {
     moxios.wait(() => {
@@ -104,7 +107,7 @@ describe('Accommodations Actions Test Suite', () => {
         response: {
           message: 'Accommodation retrieved successfully!',
           data: {}
-      },
+        },
       });
     });
 
@@ -121,5 +124,5 @@ describe('Accommodations Actions Test Suite', () => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
       });
- });
+  });
 });

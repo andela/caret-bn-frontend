@@ -18,16 +18,19 @@ const mainState = {
     getAccommodationError: {},
     singleAccommodation: {},
     singleAccommodationError: {},
-    isLoading:false,
+    isLoading: false,
   },
 };
 
 const props = {
   slug: 'Hello',
   GetSingleAccommodation: jest.fn(),
+  likeUnlikeAccommodation: jest.fn(),
   accommodation: {
     ratings: [],
     images: [],
+    slug: 'isimbi-hotel',
+    id: 1
   },
 };
 
@@ -39,7 +42,7 @@ const testStore = state => {
 
 const setUp = (initialState = {}) => {
   const store = testStore(initialState);
-  const wrapper = shallow(<SingleAccommodation {...props} store={store}/>);
+  const wrapper = shallow(<SingleAccommodation {...props} store={store} />);
   wrapper.setState({ isLoading: false });
   return wrapper;
 };
@@ -49,7 +52,7 @@ describe('Make booking Test Suite', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
- 
+
   it('Should return initial data', () => {
     const initialState = {
       accommodation: {
