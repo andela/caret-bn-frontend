@@ -1,8 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import { SET_COMMENT_SUCCESS, SET_COMMENT_ERROR, GET_COMMENTS, GET_COMMENTS_FAIL, SET_COMMENT_DELETE, } from '../../actions/types';
-import {  setComment, getComment } from '../../actions/commentAction';
+import { SET_COMMENT_SUCCESS, SET_COMMENT_ERROR, GET_COMMENTS, GET_COMMENTS_FAIL, COMMENT_DELETE_SUCCESS,
+  COMMENT_DELETE_ERROR, COMMENT_EDIT_ERROR, COMMENT_EDIT_SUCCESS, } from '../../actions/types';
+import {  setComment, getComment, editComment, deleteComment } from '../../actions/commentAction';
 import backendCall from '../../helpers/backendCall';
 
 let store;
@@ -96,6 +97,56 @@ it('Should trigger GET_COMMENTS', async () => {
       });
   });
 
+  it('Should trigger COMMENT_DELETE_SUCCESS', async () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: {
+          message: "No Data Found!",
+      },
+      });
+    });
+
+    const expectedActions = [{
+      payload: {
+        message: "No Data Found!",
+      },
+      type: COMMENT_DELETE_SUCCESS
+    }];
+    store = mockStore({});
+    await store.dispatch(deleteComment())
+      .then(async () => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('Should trigger COMMENT_EDIT_SUCCESS', async () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: {
+          message: "No Data Found!",
+      },
+      });
+    });
+
+    const expectedActions = [{
+      payload: {
+        message: "No Data Found!",
+      },
+      type: COMMENT_EDIT_SUCCESS
+    }];
+    store = mockStore({});
+    await store.dispatch(editComment())
+      .then(async () => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
   it('Should trigger GET_COMMENTS_FAIL,', async () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -115,6 +166,56 @@ it('Should trigger GET_COMMENTS', async () => {
     }];
     store = mockStore({});
     await store.dispatch(getComment())
+      .then(async () => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('Should trigger COMMENT_DELETE_ERROR,', async () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 400,
+        response: {
+          message: "Invalid token please sign again",
+      },
+      });
+    });
+
+    const expectedActions = [{
+      payload: {
+        message: "Invalid token please sign again",
+      },
+      type: COMMENT_DELETE_ERROR
+    }];
+    store = mockStore({});
+    await store.dispatch(deleteComment())
+      .then(async () => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('Should trigger COMMENT_EDIT_ERROR,', async () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 400,
+        response: {
+          message: "Invalid token please sign again",
+      },
+      });
+    });
+
+    const expectedActions = [{
+      payload: {
+        message: "Invalid token please sign again",
+      },
+      type: COMMENT_EDIT_ERROR
+    }];
+    store = mockStore({});
+    await store.dispatch(editComment())
       .then(async () => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);

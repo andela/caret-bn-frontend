@@ -6,10 +6,7 @@
 /* eslint-disable eqeqeq */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import { confirmAlert } from 'react-confirm-alert';
 import { sortArrayDesd as sortComments } from 'tesla-error-handler';
-import { CloseIcon } from '@material-ui/icons/Close';
 import {
   Container, Row, Col, Button, Form,
 } from 'react-bootstrap';
@@ -25,6 +22,7 @@ import cancel from '../../../assets/images/cancel.jpg';
 import isAuthenticated from '../../../helpers/isAuthenticated';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Confirm from '../../global/Confirm';
+import { CommentItem } from './CommentItem';
 
 export class CommentDisplay extends Component {
   state = {
@@ -36,6 +34,8 @@ export class CommentDisplay extends Component {
     commentId: null,
     draftComment: null,
     loadingButton: false,
+    loadingButtonEdit: false,
+    deleteLoading: false,
   };
 
   // eslint-disable-next-line react/sort-comp
@@ -77,71 +77,15 @@ export class CommentDisplay extends Component {
     await this.props.getComment(requestId);
   };
 
-  actionSwitch = async (action, commentId) => {
-    this.setState({
-      isProcessing: true,
-    });
-
-    switch (action) {
-      case 'delete':
-        this.dispatchDeleteComment(commentId);
-        break;
-      default:
-        this.dispatchRejectBooking(commentId);
-    }
-  }
-
-  dispatchDeleteComment = async (commentId) => {
-    const { requestId, deleteComment, getComment } = this.props;
-
-    this.setState({
-      operation: 'delete',
-    });
-    await deleteComment(commentId);
-    await getComment(requestId);
-    this.setState({
-      isProcessing: false,
-    });
-  }
-
-  editButton = (e) => {
-    e.preventDefault();
-    const { comment, id } = e.target;
-    this.setState({ draftComment: comment, commentId: id }, () => {
-      this.setState({ editMode: true });
-    });
-  }
-
-  sendCommentEdit = async (e) => {
-    e.preventDefault();
-    const { requestId, getComment } = this.props;
-    const { commentId, draftComment } = this.state;
-    const comment = { comment: draftComment };
-    await this.props.editComment(comment, commentId);
-    await getComment(requestId);
-    this.setState({ editMode: false });
-  };
-
-  closeEditMode = (e) => {
-    e.preventDefault();
-    this.setState({ draftComment: null, comment: '', editMode: false });
-  };
-
-  UNSAFE_componentWillReceiveProps(prevProps) {
-    const { editData } = prevProps;
-    if (editData === true) {
-      this.setState({ draftComment: null, comment: '', editMode: false });
-    }
-  }
-
   render() {
     const {
-      isLoading, openComment, comment, commentId, editMode, draftComment, loadingButton,
+      isLoading, openComment, comment, commentId, editMode, draftComment, loadingButton, loadingButtonEdit, deleteLoading,
     } = this.state;
     const {
-      data, commentData, editData, profile,
+      data, commentData, editData, profile, requestId,
     } = this.props;
     const userInfo = isAuthenticated();
+
     return (
       <>
         <div className="search-box py-3">
@@ -172,73 +116,7 @@ export class CommentDisplay extends Component {
           <Row />
           <div className="request-item mb-3 p-3">
           {data && sortComments(data && data.data).map((element) => (
-           <div data-test="commentcard" className="commentCard p-2" key={element.id}>
-             <div className="d-flex mb-1">
-             <img src={element.user.image} className="icon menu-photo" />
-             <div className="d-flex flex-column ml-3">
-              <p className="small py-0 mb-0 ">{element.user.username}</p>
-              <p className="small py-0 mb-0 text-secondary"><small>{moment(element.updatedAt).fromNow()}</small></p>
-             </div>
-             </div>
-             <div className="d-flex justify-content-between align-items-center">
-              {editMode && commentId == element.id ? (
-              <form className="w-100" onSubmit={this.sendCommentEdit}>
-                <input type="text" className="form-control" name="draftComment" value={draftComment} onChange={this.handleChange} required />
-              </form>
-              ) : (
-              <p className="font-weight-light w-100 m-0 p-0">{element.comment}</p>
-              )}
-              <div className="commentTrash d-flex m-0 p-1">
-              { element.user.email === userInfo.payload.email
-                ? (
-                  <>
-                  {editMode === true && commentId == element.id ? (
-                    <button className="btn">
-                    <img
-                      onClick={(e) => {
-                        this.closeEditMode(e);
-                      }}
-                      src={cancel}
-                      alt=""
-                      className="bodyIcons text-danger footerIconsRight edit"
-                    />
-                    </button>
-                  ) : (
-                    <button className="btn">
-                    <img
-                      onClick={(e) => {
-                        e.target.comment = element.comment;
-                        e.target.id = element.id;
-                        this.editButton(e);
-                      }}
-                      src={edit}
-                      alt=""
-                      className="bodyIcons footerIconsRight edit"
-                    />
-                    </button>
-                  )}
-              <Confirm
-                data-test="approve"
-                variant="danger-outline"
-                action="delete"
-                id={element.id}
-                processAction={this.actionSwitch}
-                title={(
-              <img
-                src={trash}
-                alt=""
-                className="bodyIcons footerIconsRight trash"
-              />
-            )}
-                size="sm"
-                buttonClass="process-request-button btn-block"
-              />
-                  </>
-                )
-                : ''}
-              </div>
-             </div>
-           </div>
+            <CommentItem userInfo={userInfo} requestId={requestId} element={element} editComment={this.props.editComment} deleteComment={this.props.deleteComment} getComment={this.props.getComment} />
           ))}
           </div>
         </div>
