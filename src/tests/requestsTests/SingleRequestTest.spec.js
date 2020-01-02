@@ -49,6 +49,13 @@ describe('SingleRequest Test Suite', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
+  
+  // it('Should Click on Confirm Button', () => {
+  //   const component = setUp(mainState);
+  //   console.log('component.debug() ===> ', component.debug());
+  //   component.find('[data-test="single-confirm"]').simulate('click');
+    
+  // });
 
   it('Should return initial data', () => {
     const initialState = {
@@ -67,7 +74,6 @@ describe('SingleRequest Test Suite', () => {
     component.instance().renderStatus({
       id: 1
     });
-
     component.instance().renderStatus({
       id: 3
     });

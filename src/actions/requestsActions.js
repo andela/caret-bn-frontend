@@ -1,5 +1,5 @@
 import {
-  GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL,
+  GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL, PROCESS_REQUEST_SUCCESS, PROCESS_REQUEST_ERROR,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -38,4 +38,12 @@ export const searchRequestAction = (searchParams) => (dispatch) => backendCall.g
   })
   .catch((error) => {
     dispatch(requestType(SEARCH_REQUESTS_FAIL, error.response.data));
+  });
+
+export const processRequestAction = (action, id) => (dispatch) => backendCall.patch(`/requests/manager/${action}/${id}`, {}, { headers })
+  .then((response) => {
+    dispatch(requestType(PROCESS_REQUEST_SUCCESS, response.data));
+  })
+  .catch((error) => {
+    dispatch(requestType(PROCESS_REQUEST_ERROR, error.response.data));
   });

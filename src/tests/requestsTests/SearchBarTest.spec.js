@@ -80,5 +80,4 @@ describe('SearchBar Test Suite', () => {
     };
     expect(mapStateToProps(initialState).locations).toEqual(null);
   });
-
 });

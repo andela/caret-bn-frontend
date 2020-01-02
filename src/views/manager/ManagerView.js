@@ -2,14 +2,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Container, Row, Button, Col,
+  Container, Row, Col,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { getManagerRequestAction } from '../../actions/managerRequestAction';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import ManagerItem from '../../components/pages/manager/ManagerItem';
 import Alert from '../../components/global/AlertComponent';
 import SearchBar from '../../components/pages/requests/SearchBar';
+import { checkManager } from '../../helpers/authHelper';
+
 
 export class ManagerView extends Component {
   state = {
@@ -19,7 +22,6 @@ export class ManagerView extends Component {
   async componentDidMount() {
     const { props } = this;
     this.setState({ isLoading: true });
-
 
     await props.getManagerRequestAction();
 
@@ -57,33 +59,35 @@ export class ManagerView extends Component {
 
     return (
       <>
-      <Container>
-        <Row>
-          <Col md={4} className="breadcrumbs">
-            <Breadcrumbs itemsArray={['> Home', 'Management']} />
-          </Col>
-          <Col md={5} />
-        </Row>
+      {checkManager() ? <Redirect to="/" /> : (
+        <Container>
+          <Row>
+            <Col md={4} className="breadcrumbs">
+              <Breadcrumbs itemsArray={['> Home', 'Management']} />
+            </Col>
+            <Col md={5} />
+          </Row>
 
-        <Row className="text-center mx-auto">
-          {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
-        </Row>
-        <Row />
-        <SearchBar />
-        {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
-        {status === '' && data && data.map((user) => (
-          user.requests.map((item) => (
-            <Row key={item.id}>
-              <ManagerItem item={item} user={user.username} email={user.email} />
-            </Row>
-          ))
-        ))}
-        <Row>
-          {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
-        </Row>
-        <Row />
-          { status !== '' && this.renderResults(managerSearchData, managerSearchDataError)}
-      </Container>
+          <Row className="text-center mx-auto">
+            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+          </Row>
+          <Row />
+          <SearchBar />
+          {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
+          {status === '' && data && data.map((user) => (
+            user.requests.map((item) => (
+              <Row key={item.id}>
+                <ManagerItem item={item} user={user.username} email={user.email} />
+              </Row>
+            ))
+          ))}
+          <Row>
+            {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
+          </Row>
+          <Row />
+            { status !== '' && this.renderResults(managerSearchData, managerSearchDataError)}
+        </Container>
+      ) }
       </>
     );
   }

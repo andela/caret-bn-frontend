@@ -59,7 +59,7 @@ describe('Signup Test Suite', () => {
     component.find('form').simulate('submit', {
       preventDefault() {},
     });
-  expect(handleSubmitSpy).toReturn();
+    expect(handleSubmitSpy).toReturn();
   });
 
   it('Should Simulate Successfull Signup', () => {
