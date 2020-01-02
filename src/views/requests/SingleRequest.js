@@ -5,16 +5,20 @@ import {
   Container, Row, Button, Col, Form,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { singleRequestAction } from '../../actions/requestsActions';
+import { singleRequestAction, processRequestAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import Alert from '../../components/global/AlertComponent';
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
 import { checkSupplier, checkManager } from '../../helpers/authHelper';
 import ProcessRequest from '../../components/pages/requests/ProcessRequest';
+import Confirm from '../../components/global/Confirm';
 
 export class SingleRequest extends Component {
   state = {
     isLoading: false,
+    // processLoading: false,
+    // displayConfirm: false,
+    // action: '',
   }
 
   async componentDidMount() {
@@ -24,6 +28,12 @@ export class SingleRequest extends Component {
     await props.singleRequestAction(requestId);
     this.setState({ isLoading: false });
   }
+
+  processAction = async (action, id) => {
+    const { props } = this;
+    await props.processRequestAction(action, id);
+    await props.singleRequestAction(id);
+  };
 
   renderStatus = (status) => {
     switch (status.id) {
@@ -128,17 +138,18 @@ export class SingleRequest extends Component {
                       ))}
                     </Row>
                   </Form>
-                  {!checkManager() && singleData.data.status.id === 1 && (
-                  <Row>
-                    <Col md={6}>
-                      <ProcessRequest action="approve" id={requestId} variant="success" />
-                    </Col>
-                    <Col md={6}>
-                      <ProcessRequest action="reject" id={requestId} variant="danger" />
-                    </Col>
-                  </Row>
-                  )}
                 </Row>
+                {!checkManager() && singleData.data.status.id === 1 && (
+                <Row className="mb-3">
+                  <Col md={2} />
+                  <Col md={4}>
+                    <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" />
+                  </Col>
+                  <Col md={4}>
+                    <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" />
+                  </Col>
+                </Row>
+                )}
               </div>
             )
           }
@@ -156,9 +167,10 @@ export const mapStateToProps = (state) => ({
 SingleRequest.propTypes = {
   match: PropTypes.object.isRequired,
   singleRequestAction: PropTypes.func.isRequired,
+  processRequestAction: PropTypes.func.isRequired,
   message: PropTypes.string,
   singleData: PropTypes.any,
   dataError: PropTypes.any,
 };
 
-export default connect(mapStateToProps, { singleRequestAction })(SingleRequest);
+export default connect(mapStateToProps, { singleRequestAction, processRequestAction })(SingleRequest);
