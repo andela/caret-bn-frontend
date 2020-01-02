@@ -13,7 +13,7 @@ class LocalStorageMock {
     }
   
     getItem(key) {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhcmV0c3VwcGxpZXJAZ21haWwuY29tIiwicm9sZSI6NSwibGluZU1hbmFnZXIiOjh9LCJpYXQiOjE1NzY3ODE3MDUsImV4cCI6MTU3Njg2ODEwNX0.p2Fz7nexRU6OXN0Qz9UoWU_YudVQidSDxlfRc4Gm5P0';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhcmV0c3VwcGxpZXJAZ21haWwuY29tIiwicm9sZSI6NSwibGluZU1hbmFnZXIiOjh9LCJpYXQiOjE1Nzc5ODY4NzQsImV4cCI6MTU3ODA3MzI3NH0.DU_6gAV2wfhtGguTlvB-gJvcQUqnf-W2S3_YfjYN3RQ';
       return token;
     }
   
@@ -31,7 +31,7 @@ class LocalStorageMock {
   const { getToken, checkSupplier, checkEmail, checkAdmin  } = authHelper;
 
   describe('Auth Helper Tests', () => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhcmV0c3VwcGxpZXJAZ21haWwuY29tIiwicm9sZSI6NSwibGluZU1hbmFnZXIiOjh9LCJpYXQiOjE1NzY3ODE3MDUsImV4cCI6MTU3Njg2ODEwNX0.p2Fz7nexRU6OXN0Qz9UoWU_YudVQidSDxlfRc4Gm5P0';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo3LCJpc1ZlcmlmaWVkIjp0cnVlLCJlbWFpbCI6ImNhcmV0c3VwcGxpZXJAZ21haWwuY29tIiwicm9sZSI6NSwibGluZU1hbmFnZXIiOjh9LCJpYXQiOjE1Nzc5ODY4NzQsImV4cCI6MTU3ODA3MzI3NH0.DU_6gAV2wfhtGguTlvB-gJvcQUqnf-W2S3_YfjYN3RQ';
 
       it('Should get the token ', () => {
         expect(getToken()).toEqual(token)

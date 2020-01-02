@@ -9,7 +9,7 @@ let store;
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Signup Actions Test Suite', () => {
+describe('Requests Actions Test Suite', () => {
   beforeEach(() => {
     moxios.install(backendCall);
   });

@@ -130,6 +130,9 @@ describe('Like Dislike tests', () => {
 describe('Modal Tests', () => {
   it('should call handleChange', () => {
     const component = searchSetup(mainState);
+    component.setState({
+      showSearch: true
+    });
     const handleChangeSpy = jest.spyOn(component.instance(), 'handleChange');
     const amenities = findByTestAttribute(component, 'amenities');
     amenities.simulate('change', { target: { name: 'amenities', value: 'test amenities' } })

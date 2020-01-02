@@ -29,7 +29,15 @@ export class AllAccommodation extends React.Component {
       isLoading: false,
       isSearching: false,
       userId: null,
+      showSearch: false,
     };
+  }
+
+  showSearch = () => {
+    const currentSearchState = this.state.showSearch;
+    this.setState({
+      showSearch: !currentSearchState,
+    });
   }
 
   stopLoader = () => {
@@ -175,7 +183,7 @@ export class AllAccommodation extends React.Component {
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, showSearch } = this.state;
     return (
       <div className="accommodation">
         <Row>
@@ -193,7 +201,12 @@ export class AllAccommodation extends React.Component {
         </Row>
         <Row>
           <Container className="accommodation-container">
-            <SearchBar history={this.props.history} startSearch={this.startSearch} endSearch={this.endSearch} stopLoader={this.stopLoader} data-test="search-acc" />
+            <Row>
+              <Button className="full-width-button" onClick={() => this.showSearch()}>Search accommodation</Button>
+            </Row>
+            {(showSearch)
+              ? <SearchBar history={this.props.history} startSearch={this.startSearch} endSearch={this.endSearch} stopLoader={this.stopLoader} data-test="search-acc" />
+              : ''}
           </Container>
         </Row>
         {isLoading
