@@ -151,8 +151,16 @@ describe('Modal Tests', () => {
     const component = searchSetup(mainState);
     const submitSearchSpy = jest.spyOn(component.instance(), 'submitSearch');
     const amenities = findByTestAttribute(component, 'amenities');
+    const description = findByTestAttribute(component, 'description');
+    const highlights = findByTestAttribute(component, 'highlights');
+    const name = findByTestAttribute(component, 'name');
+    const rating = findByTestAttribute(component, 'rating');
     const submitButton = findByTestAttribute(component, 'submit-button');
     amenities.simulate('change', { target: { name: 'amenities', value: 'test amenities' } })
+    description.simulate('change', { target: { name: 'description', value: 'My Desc' } })
+    highlights.simulate('change', { target: { name: 'highlights', value: 'test highlights' } })
+    rating.simulate('change', { target: { name: 'rating', value: 'Rating' } })
+    name.simulate('change', { target: { name: 'name', value: 'name' } })
     await submitButton.simulate('click')
     expect(submitSearchSpy).toHaveBeenCalled();
   });

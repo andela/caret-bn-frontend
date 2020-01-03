@@ -44,6 +44,11 @@ const setUp = (initialState = {}) => {
   const store = testStore(initialState);
   const wrapper = shallow(<SingleAccommodation {...props} store={store} />);
   wrapper.setState({ isLoading: false });
+  wrapper.setProps({
+    ratings: {
+      status: '',
+    }
+  });
   return wrapper;
 };
 

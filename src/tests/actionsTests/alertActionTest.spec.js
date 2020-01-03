@@ -22,6 +22,7 @@ describe('Alert Action Tests ', () => {
   it('Should successfully show the alert component ', async () => {
     store.dispatch(showAlert());
     const calledAction = store.getActions();
+
     expect(calledAction[0].type).toEqual(SHOW_ALERT)
   });
 

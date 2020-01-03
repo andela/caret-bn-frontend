@@ -5,7 +5,5 @@ export const hideAlert = () => async (dispatch) => {
 };
 
 export const showAlert = () => async (dispatch) => {
-  dispatch({
-    type: SHOW_ALERT,
-  });
+  dispatch({ type: SHOW_ALERT });
 };

@@ -25,17 +25,21 @@ const testStore = (state) => {
   return createStoreWithMiddleware(rootReducer, state);
 };
 
-const setUp = (initialState =  {}) => {
+const setUp = (initialState = {}) => {
   const store = testStore(initialState);
   const wrapper = shallow(
-      <Notifications {...props} store={store} />
+    <Notifications {...props} store={store} />
   );
-    return wrapper;
-} 
+  return wrapper;
+}
 
-describe('Notifications Test Suite', () => { 
+describe('Notifications Test Suite', () => {
   it('Should Mount Successfully', () => {
-    const component = setUp(mainState); 
+    const component = setUp(mainState);
+    component.setProps({
+      getNotifsAction: jest.fn()
+    })
+    component.instance().markAllUnread()
     expect(component.exists()).toBe(true);
   });
 
