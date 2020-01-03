@@ -26,6 +26,8 @@ describe('Request Actions Test Suite', () => {
       accommodationError: null,
       getAccommodation: [],
       getAccommodationError: {},
+      searchError: null,
+      searchResults: null,
       singleAccommodation: {},
       singleAccommodationError: {},
       status: "",

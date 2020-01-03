@@ -1,7 +1,8 @@
 import {
   ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE, UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
-  RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR, HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE,
+  RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR, HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE, SEARCH_ACCOMMODATIONS,
+  SEARCH_ACCOMMODATIONS_ERROR, CLEAR_SEARCH_ERROR,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -36,6 +37,9 @@ export const GetAllAccommodation = () => (dispatch) => {
       const response = res.data;
       dispatch(
         accommodationType(ALL_ACCOMMODATION_SUCCESS, response),
+      );
+      dispatch(
+        accommodationType(CLEAR_SEARCH_ERROR),
       );
     }).catch((error) => {
       dispatch(
@@ -82,6 +86,7 @@ export const likeUnlikeAccommodation = (slug, action) => async (dispatch) => {
     dispatch(accommodationType(LIKE_ACCOMMODATION_ERROR, error.response));
   }
 };
+
 export const getHighRatedAccommodation = () => (dispatch) => backendCall.get('/accommodations/ratings/top-rated', { headers })
   .then((res) => {
     const response = res.data;
@@ -91,5 +96,18 @@ export const getHighRatedAccommodation = () => (dispatch) => backendCall.get('/a
   }).catch((error) => {
     dispatch(
       accommodationType(HIGH_RATED_FAILURE, error.response.data),
+    );
+  });
+
+export const accommodationSearch = (params) => (dispatch) => backendCall.get(`/accommodations/search${params}`, { headers })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      accommodationType(SEARCH_ACCOMMODATIONS, response),
+    );
+    dispatch(accommodationType(CLEAR_SEARCH_ERROR));
+  }).catch((error) => {
+    dispatch(
+      accommodationType(SEARCH_ACCOMMODATIONS_ERROR, error.response.data),
     );
   });

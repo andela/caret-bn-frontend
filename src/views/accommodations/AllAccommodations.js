@@ -5,9 +5,9 @@ import AllAccommodation from '../../components/pages/AllAccommodation';
 export class GetAllAccommodations extends Component {
   render() {
     return (
-             <div>
-                <AllAccommodation data-test="AllAccommodation" />
-             </div>
+      <div>
+        <AllAccommodation data-test="AllAccommodation" />
+      </div>
     );
   }
 }

@@ -25,9 +25,12 @@ const mainState = {
 const props = {
   slug: 'Hello',
   GetSingleAccommodation: jest.fn(),
+  likeUnlikeAccommodation: jest.fn(),
   accommodation: {
     ratings: [],
     images: [],
+    slug: 'isimbi-hotel',
+    id: 1
   },
 };
 
