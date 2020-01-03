@@ -51,11 +51,29 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
 	p {
 		font-size: 15px;
 		justify-content: center;
 		text-align: center;
+	}
+}
+
+@media (min-width: 768px) {
+	.center-items {
+		button {
+			width: 150px;
+			font-size: 11px;
+		}
+	}
+}
+
+@media (min-width: 1024px) {
+	.center-items {
+		button {
+			width: 180px;
+			font-size: 13px;
+			font-weight: 400;
+		}
 	}
 }
 

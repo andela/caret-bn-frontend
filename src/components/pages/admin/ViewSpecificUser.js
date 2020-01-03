@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Card, Button, Row, Container, Col, Form,
+  Card, Button, Row, Container, Form,
 } from 'react-bootstrap';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { getSpecificUser } from '../../../actions/userActions';
@@ -31,7 +31,6 @@ export class ViewSpecificUser extends Component {
 
   async componentWillUnmount() {
     const { hideAlert } = this.props;
-    console.log('componenent unmounted');
     await hideAlert();
   }
 
@@ -65,38 +64,27 @@ export class ViewSpecificUser extends Component {
           <Row>
             {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
           </Row>
-          <Row>
-            <Col>
+          {data && (
+            <Card border="light" text="black" className="user-card">
               {assignedRoleError && <AlertComponent variant="danger" heading="Error" message={(assignedRoleError.data.error) ? 'Please select the new role to assign to the user' : assignedRoleError.data.message} />}
               {assignedRoleData && <AlertComponent variant="success" heading="Success" message={assignedRoleData.message} />}
-            </Col>
-          </Row>
-          {data && (
-            <Card border="light" text="black">
               <Card.Header className="card-header"><h5>{`Username: ${data.username}`}</h5></Card.Header>
               <Card.Body>
                 <Card.Title className="card-title">{`Role: ${data.Role.name}`}</Card.Title>
                 <Card.Text>
-                  <Row>
-                    <Col>
                       <p>{`email: ${data.email}`}</p>
                       <p>{`Firstname: ${data.firstName}`}</p>
                       <p>{`Lastname: ${data.lastName}`}</p>
                       <p>{`Genger: ${data.gender}`}</p>
                       <p>{`Phone number: ${data.phone}`}</p>
-                    </Col>
-                    <Col>
                       <p>{`Date of birth: ${data.dob}`}</p>
                       <p>{`Country: ${data.country}`}</p>
                       <p>{`Company: ${data.company}`}</p>
                       <p>{`Department: ${data.department}`}</p>
                       <p>{`Currency: ${data.currency}`}</p>
-                    </Col>
-                  </Row>
                 </Card.Text>
                 <Form onSubmit={this.handleSubmit}>
                   <Row>
-                    <Col>
                       <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Control id="select-role" as="select" name="Role" onChange={this.handleChange} required>
                           <option selected disabled>Select new role</option>
@@ -106,16 +94,14 @@ export class ViewSpecificUser extends Component {
 
                         </Form.Control>
                       </Form.Group>
-                    </Col>
-
-                    <Col>
+                  </Row>
+                          <Row>
                       <Button type="submit">
                         <AssignmentTurnedInIcon />
                         {' '}
                         {isLoadingButton ? <i className="fas fa-spinner fa-pulse loader-small" /> : 'Assign new Role'}
                       </Button>
-                    </Col>
-                  </Row>
+                          </Row>
                 </Form>
 
               </Card.Body>
@@ -137,6 +123,7 @@ ViewSpecificUser.propTypes = {
   getRoles: PropTypes.func,
   assignedRoleError: PropTypes.object,
   assignedRoleData: PropTypes.object,
+  hideAlert: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

@@ -34,7 +34,7 @@
 
 .accommodation-edit-images {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	padding: 0;
 	img {
 		height: 160px;
@@ -64,5 +64,11 @@
 	}
 	.edit-form {
 		margin-top: 50px;
+	}
+}
+
+@media (min-width: 768px) {
+	.accommodation-edit-images {
+		flex-direction: row;
 	}
 }

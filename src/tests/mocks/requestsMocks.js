@@ -108,6 +108,19 @@ const requestsMocks = {
     },
   },
 
+  managerViewRequestsProps: {
+    requests: {
+      dataError: {},
+      data: {},
+      singleData: {},
+    },
+    managerSearchRequest: {
+      status: '',
+      managerSearchData: null,
+      managerSearchDataError: null,
+    },
+  },
+
   getLocationsProps: {
     locations: {
       data: null,
@@ -116,6 +129,33 @@ const requestsMocks = {
   },
 
 
+  data: [
+    {
+      requester: {
+        email: 'example@gmail.com',
+        id: 2,
+        username: 'john',
+      },
+    },
+    {
+      requester: {
+        email: 'example2@gmail.com',
+        id: 3,
+        username: 'johny',
+      },
+    },
+    {
+      requester: {
+        email: 'example5@gmail.com',
+        id: 5,
+        username: 'paulin',
+      },
+    },
+  ],
+
+  dataEror: {
+    message: 'this is an error',
+  },
 };
 
 export default requestsMocks;

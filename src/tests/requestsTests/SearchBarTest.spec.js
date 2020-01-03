@@ -5,6 +5,8 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers/index';
 import requestsMocks from '../mocks/requestsMocks';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+
 
 const middlewares = [thunk];
 
@@ -36,13 +38,13 @@ const testStore = (state) => {
   return createStoreWithMiddleware(rootReducer, state);
 };
 
-const setUp = (initialState =  {}) => {
+const setUp = (initialState = {}) => {
   const store = testStore(initialState);
   const wrapper = shallow(
-      <SearchBar {...props} store={store} />
+    <SearchBar {...props} store={store} />
   );
-    return wrapper;
-} 
+  return wrapper;
+}
 
 describe('SearchBar Test Suite', () => {
   it('Should Mount Successfully', () => {
@@ -50,8 +52,16 @@ describe('SearchBar Test Suite', () => {
     expect(component.exists()).toBe(true);
   });
 
+  it('Should handleDayChange', () => {
+    const component = setUp(mainState);
+    component.find('.full-width-buttons').first().simulate('click')
+    component.find('.day-picker').first().simulate('dayChange')
+    expect(component).toMatchSnapshot();
+
+  });
+
   it('Should search for pending requests', () => {
-    const component = setUp(mainState); 
+    const component = setUp(mainState);
     const handleSubmitSpy = jest.spyOn(component.instance(), 'searchRequest');
     component.find('[data-test="filter-request"]').simulate('click');
 
@@ -70,5 +80,4 @@ describe('SearchBar Test Suite', () => {
     };
     expect(mapStateToProps(initialState).locations).toEqual(null);
   });
-
 });

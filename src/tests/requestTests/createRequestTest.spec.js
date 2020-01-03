@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow, render, mount } from 'enzyme';
 import mockStore from '../../utilities/tests/mockStore';
 import findByTestAttribute from './../../utilities/tests/findByTestAttribute';
-import { oneWayRequest, returnRequest, validProps } from '../mocks/createRequestMocks'
+import { oneWayRequest, returnRequest, validProps, multiCityRequest } from '../mocks/createRequestMocks'
 const initialState = {}
 
 const setUp = (initialState = {}, props) => {
@@ -63,11 +63,25 @@ describe('Test Request Component', () => {
     }
 
     const component = setUp(initialState, {});
-    console.log(component.debug())
     component.instance().setState(returnRequest)
     component.setProps(requestProps)
 
     expect(findByTestAttribute(component, 'loading-component').length).toBe(1);
+  });
+
+  it('Should simulate destination Change', async () => {
+    const component = setUp(initialState, {});
+    await component.setState({
+      request: multiCityRequest.request
+    });
+    console.log(component.instance());
+    component.instance().handleDestinationChange({
+      target: {
+        name: 'place',
+        value: '2',
+        getAttribute: jest.fn()
+      }
+    });
   });
 
   it('Should display success alert', () => {
@@ -116,7 +130,6 @@ describe('Test Request Component', () => {
     const component = setUp(initialState, {});
     component.setProps(validProps);
     component.setProps(successData);
-    console.log();
     expect(component.instance().props.requestState.status).toBe('success');
 
 

@@ -20,17 +20,17 @@ import MenuComponent from './components/global/MenuComponent';
 import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 import editAccommodation from './views/accommodations/editAccommodation';
+import ManagerView from './views/manager/ManagerView';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserProfile from './components/pages/profiles/UserProfile';
 import PendingBookings from './views/bookings/PendingBookings';
-
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
+import AllNotifications from './views/notifications/AllNotifications';
 
 export class App extends Component {
   render() {
     const { location: { pathname } } = this.props;
-
     return (
       <Router>
         <MenuComponent pathname={pathname} />
@@ -48,11 +48,13 @@ export class App extends Component {
           <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
           <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
           <ProtectedRoute exact path="/accommodations/:slug/edit" component={editAccommodation} />
+          <ProtectedRoute exact path="/user-manager" component={ManagerView} />
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />
           <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
           <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />
           <ProtectedRoute exact path="/profile" component={UserProfile} />
           <ProtectedRoute exact path="/bookings/pending" component={PendingBookings} />
+          <ProtectedRoute exact path="/notifications" component={AllNotifications} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

@@ -3,7 +3,9 @@ import {
   ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE,
   UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
-  RESET_ACCOMMODATION_STATUS,
+  RESET_ACCOMMODATION_STATUS, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR,
+  HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE,
+  SEARCH_ACCOMMODATIONS_ERROR, SEARCH_ACCOMMODATIONS, CLEAR_SEARCH_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -17,6 +19,13 @@ const initialState = {
   updateSuccess: null,
   updateError: null,
   updateStatus: null,
+  like: null,
+  dislike: null,
+  likeStatus: '',
+  highRated: null,
+  hihRatedError: null,
+  searchResults: null,
+  searchError: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -74,6 +83,50 @@ export default (state = initialState, { type, payload }) => {
         updateError: payload,
         updateStatus: payload,
       };
+    case LIKE_ACCOMMODATION:
+      return {
+        ...state,
+        like: payload,
+        dislike: null,
+        likeStatus: 'Success',
+      };
+    case LIKE_ACCOMMODATION_ERROR:
+      return {
+        ...state,
+        dislike: payload,
+        like: null,
+        likeStatus: 'Failure',
+      };
+    case HIGH_RATED_SUCCESS:
+      return {
+        ...state,
+        highRated: payload,
+      };
+    case HIGH_RATED_FAILURE:
+      return {
+        ...state,
+        hihRatedError: payload,
+      };
+    case SEARCH_ACCOMMODATIONS:
+      return {
+        ...state,
+        searchResults: payload,
+        searchError: null,
+        status: 'success',
+      };
+    case SEARCH_ACCOMMODATIONS_ERROR:
+      return {
+        ...state,
+        searchError: payload,
+        status: 'error',
+        searchResults: null,
+      };
+    case CLEAR_SEARCH_ERROR: {
+      return {
+        ...state,
+        searchError: null,
+      };
+    }
     default:
       return {
         ...state,

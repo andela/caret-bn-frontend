@@ -1,100 +1,98 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { Add } from '@material-ui/icons';
-import StarRatings from 'react-star-ratings';
+import { Link, withRouter } from 'react-router-dom';
+import {
+  Col, Container, Button, Row, Card, Spinner,
+} from 'react-bootstrap';
+import { Add, SearchOutlined } from '@material-ui/icons';
 import { checkSupplier } from '../../helpers/authHelper';
-import { GetAllAccommodation } from '../../actions/accommodationActions';
+import { GetAllAccommodation, likeUnlikeAccommodation } from '../../actions/accommodationActions';
+import { getLocations } from '../../actions/locationActions';
 import Breadcrumbs from '../global/Breadcrumbs';
 import isAuthenticated from '../../helpers/isAuthenticated';
+import { showAlert } from '../../actions/alertAction';
+import SearchBar from './accommodations/SearchBar';
+import AlertComponent from '../global/AlertComponent';
+import AccommodationListItem from './accommodations/AccommodationListItem';
 
 export class AllAccommodation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLaoding: false,
-      userId: null,
-    };
+  state = {
+    isLoading: false,
+    isSearching: false,
+    userId: null,
+    showSearch: false,
+  };
+
+  showSearch = () => {
+    const currentSearchState = this.state.showSearch;
+    this.setState({
+      showSearch: !currentSearchState,
+    });
+  }
+
+  stopLoader = () => {
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  startSearch = () => {
+    this.setState({
+      isLoading: true,
+      isSearching: true,
+    });
+  }
+
+  endSearch = () => {
+    this.setState({
+      isSearching: false,
+    });
+    this.componentDidMount();
   }
 
   componentDidMount = async () => {
     this.setState({ isLoading: true });
     const userInfo = isAuthenticated();
+    await this.props.GetAllAccommodation();
+    this.setState({ isLoading: false });
+    this.renderAcommodation = this.renderAcommodation.bind(this);
     await this.setState({
       userId: userInfo.payload.id,
     });
-    await this.props.GetAllAccommodation();
-    this.setState({ isLoading: false });
-    this.getAllAccommodation = this.getAllAccommodation.bind(this);
+  }
+
+  handleLike = async (slug, action) => {
+    const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await GetAllAccommodation();
+  }
+
+  handleDislike = async (slug, action) => {
+    const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await GetAllAccommodation();
   }
 
   renderAcommodation() {
-    const { accommodations } = this.props;
-    if (accommodations) {
-      const accommodation = accommodations.map((post) => (
-        <Container key={post.id} className="accommodation-container">
-          <Row>
-            <Col sm>
-              <img src={(typeof (post.images) === 'string') ? post.images : post.images[0]} alt="accommodation" />
-            </Col>
-            <Col sm>
-              <Link to={`/accommodations/${post.slug}`}>
-                <h1 md={4}>{post.name}</h1>
-              </Link>
-              <h2 md={4}>{post.averageRating}</h2>
-              <h2 md={4}>
-                <StarRatings
-                  rating={post.averageRating}
-                  starRatedColor="#e99434"
-                  numberOfStars={5}
-                  name="rating"
-                  starEmptyColor="F5F1F1"
-                  starDimension="30px"
-                />
-                &nbsp;
-                &nbsp;
-                  {post.ratings.length}
-                &nbsp;
-                 Rating(s)
-              </h2>
-              <h3 md={4}>{post.accommodationLocation.name}</h3>
-              <h4 md={4}>description</h4>
-              <h2 md={4}>{post.description}</h2>
-            </Col>
-            <Col className="info" sm>
-              <h5 md={4}>
-                {post.availableSpace}
-                &nbsp;
-                Rooms available
-              </h5>
-              <h6 md={4}>
-                $
-              {post.cost}
-              </h6>
-              <h2 md={4}>per night</h2>
-              <Button className="booking" size="lg">
-                Make Booking
-              </Button>
-              {
-                (post.ownerUser.id === this.state.userId)
-                  ? (
-                    <Link to={{ pathname: `/accommodations/${post.slug}/edit` }}>
-                      <Button varian="warning" className="booking" size="lg">
-                        Edit
-                      </Button>
-                    </Link>
-                  )
-                  : null
-              }
-            </Col>
-          </Row>
+    const {
+      accommodations, searchResults, searchError, showAlert,
+    } = this.props;
+    let displayItems = {};
+    if (searchError) {
+      showAlert();
+      return (
+        <Container className="container-fluid">
+          <AlertComponent message={searchError.message} heading="" variant="danger" />
         </Container>
+      );
+    }
+    (!this.state.isSearching) ? displayItems = accommodations : displayItems = searchResults.data;
+    if (displayItems) {
+      const accommodation = displayItems.map((post) => (
+        <AccommodationListItem post={post} handleLike={this.handleLike} handleDislike={this.handleDislike} userId={this.state.userId} data-test="accommodation-item" />
       ));
       return accommodation;
     }
@@ -106,7 +104,7 @@ export class AllAccommodation extends React.Component {
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, showSearch } = this.state;
     return (
       <div className="accommodation">
         <Row>
@@ -117,16 +115,32 @@ export class AllAccommodation extends React.Component {
             {checkSupplier() ? (
               <Button href="/accommodations/new">
                 <Add />
-                create new accommodation
+                Create new accommodation
               </Button>
             ) : null}
           </Col>
         </Row>
-
+        <Row className="center-items">
+          <Card className="acc-searchBar">
+            <Row className="center-items">
+              <Button className="full-width-button" onClick={() => this.showSearch()}>
+                <SearchOutlined />
+                {' '}
+                {(showSearch) ? 'Close' : 'Open'}
+                {' '}
+                search panel
+              </Button>
+            </Row>
+            {(showSearch)
+              ? <SearchBar history={this.props.history} startSearch={this.startSearch} endSearch={this.endSearch} stopLoader={this.stopLoader} data-test="search-acc" />
+              : ''}
+          </Card>
+        </Row>
         {isLoading
           ? (
+
             <div className="d-flex justify-content-center">
-              <i className="fas fa-spinner fa-pulse loader-big" />
+              <Spinner animation="border" animation="grow" size="lg" variant="primary" />
             </div>
           )
           : this.renderAcommodation()}
@@ -134,9 +148,17 @@ export class AllAccommodation extends React.Component {
     );
   }
 }
-
+AllAccommodation.propTypes = {
+  GetAllAccommodation: PropTypes.func.isRequired,
+  likeUnlikeAccommodation: PropTypes.func.isRequired,
+  accommodations: PropTypes.array.isRequired,
+};
 export const mapStateToProps = (state) => ({
   accommodations: state.accommodation.getAccommodation,
+  searchResults: state.accommodation.searchResults,
+  searchError: state.accommodation.searchError,
 });
 
-export default connect(mapStateToProps, { GetAllAccommodation })(AllAccommodation);
+export default withRouter(connect(mapStateToProps, {
+  GetAllAccommodation, likeUnlikeAccommodation, showAlert, getLocations,
+})(AllAccommodation));

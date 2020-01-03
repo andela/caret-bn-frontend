@@ -26,6 +26,8 @@ const props = {
     }
   },
   singleRequestAction: jest.fn(),
+  processRequestAction: jest.fn(),
+  singleRequestAction: jest.fn(),
   match: {
     params: 2,
   }
@@ -61,20 +63,19 @@ describe('SingleRequest Test Suite', () => {
     expect(mapStateToProps(initialState).singleData).toEqual(null);
   });
 
-  it('should switch through status', () => {
+  it('should switch through status', async () => {
     const component = setUp(mainState);
     const renderStatusSpy = jest.spyOn(component.instance(), 'renderStatus');
+    await component.instance().processAction('myActions', 1);
     component.instance().renderStatus({
       id: 1
     });
-
     component.instance().renderStatus({
       id: 3
     });
     component.instance().renderStatus({
       id: 2
     });
-
     expect(renderStatusSpy).toBeCalled();
   });
 });

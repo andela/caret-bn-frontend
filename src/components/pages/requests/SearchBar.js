@@ -9,7 +9,10 @@ import 'react-day-picker/lib/style.css';
 import moment from 'moment';
 import { getLocations } from '../../../actions/locationActions';
 import { searchRequestAction } from '../../../actions/requestsActions';
+import { managerSearchRequestAction } from '../../../actions/managerRequestAction';
+import authHelper from '../../../helpers/authHelper';
 
+const { checkManager } = authHelper;
 export class SearchBar extends Component {
   state = {
     origin: '',
@@ -39,10 +42,6 @@ export class SearchBar extends Component {
     this.setState((state) => ({ ...state, departureDate: dateValue }));
   }
 
-  // resetDate = () => {
-  //   this.setState((state) => ({ ...state, departureDate: '' }));
-  // }
-
   hideFilter = () => {
     const { state: { openSearch } } = this;
     this.setState((state) => ({ ...state, openSearch: !openSearch }));
@@ -65,7 +64,11 @@ export class SearchBar extends Component {
     }
 
     this.setState((state) => ({ ...state, isLoading: true }));
-    await props.searchRequestAction(searchParams);
+    if (!checkManager()) {
+      await props.managerSearchRequestAction(searchParams);
+    } else {
+      await props.searchRequestAction(searchParams);
+    }
     this.setState((state) => ({ ...state, isLoading: false }));
   }
 
@@ -73,7 +76,6 @@ export class SearchBar extends Component {
     const { props, state } = this;
     const { isLoading, openSearch, departureDate } = state;
     const { locations } = props;
-
     return (
       <>
         <div className="search-box py-3">
@@ -88,7 +90,15 @@ export class SearchBar extends Component {
       { openSearch && (
         <Container className="search-bar">
           <Row className="center-items">
-            <Col xs={12} sm={6} md={6} lg={6}>
+            { (!checkManager() && window.location.pathname !== '/requests') && (
+              <Col xs={12} sm={6} md={4} lg={4}>
+                <Form.Group>
+                  <Form.Control type="text" name="username" onChange={this.handleChange} placeholder="Username..." minLength="10" maxLength="100" />
+                </Form.Group>
+              </Col>
+            )}
+            {(!checkManager() && window.location.pathname !== '/requests') ? (
+            <Col xs={12} sm={6} md={4} lg={4}>
             <Form.Group>
               <Form.Control as="select" name="origin" onChange={this.handleChange}>
                 <option selected disabled>Select Origin...</option>
@@ -99,18 +109,45 @@ export class SearchBar extends Component {
               </Form.Control>
             </Form.Group>
             </Col>
+            ) : (
+              <Col xs={12} sm={6} md={6} lg={6}>
+            <Form.Group>
+              <Form.Control as="select" name="origin" onChange={this.handleChange}>
+                <option selected disabled>Select Origin...</option>
+                <option value="">None</option>
+                {
+                  locations ? locations.data.map((location) => <option key={location.id} value={location.name}>{location.name}</option>) : null
+                }
+              </Form.Control>
+            </Form.Group>
+              </Col>
+            )}
 
-            <Col xs={12} sm={6} md={6} lg={6}>
-              <Form.Group>
-                <Form.Control as="select" name="destination" onChange={this.handleChange}>
-                  <option selected disabled>Select Destination...</option>
-                  <option value="">None</option>
-                  {
-                    locations ? locations.data.map((location) => <option key={location.id} value={location.name}>{location.name}</option>) : null
-                  }
-                </Form.Control>
-              </Form.Group>
+          {(!checkManager() && window.location.pathname !== '/requests') ? (
+            <Col xs={12} sm={6} md={4} lg={4}>
+            <Form.Group>
+              <Form.Control as="select" name="destination" onChange={this.handleChange}>
+                <option selected disabled>Select Destination...</option>
+                <option value="">None</option>
+                {
+                  locations ? locations.data.map((location) => <option key={location.id} value={location.name}>{location.name}</option>) : null
+                }
+              </Form.Control>
+            </Form.Group>
             </Col>
+          ) : (
+              <Col xs={12} sm={6} md={6} lg={6}>
+            <Form.Group>
+              <Form.Control as="select" name="destination" onChange={this.handleChange}>
+                <option selected disabled>Select Destination...</option>
+                <option value="">None</option>
+                {
+                  locations ? locations.data.map((location) => <option key={location.id} value={location.name}>{location.name}</option>) : null
+                }
+              </Form.Control>
+            </Form.Group>
+              </Col>
+          )}
 
             <Col xs={12} sm={6} md={4} lg={4}>
               <Form.Group>
@@ -132,7 +169,7 @@ export class SearchBar extends Component {
 
             <Col xs={12} sm={6} md={4} lg={4}>
               <Form.Group className="day-picker-custom">
-                <DayPickerInput inputProps={{ style: { border: 0, outline: 0 } }} placeholder="Departure Date..." value={departureDate} onDayChange={this.handleDayChange} />
+                <DayPickerInput className="day-picker" inputProps={{ style: { border: 0, outline: 0 } }} placeholder="Departure Date..." value={departureDate} onDayChange={this.handleDayChange} />
                 {/* <i className="fa fa-times reset-cross" aria-hidden="true" onClick={this.resetDate} /> */}
               </Form.Group>
             </Col>
@@ -152,9 +189,15 @@ export class SearchBar extends Component {
 
           <Row>
           <Col xs={12} sm={6} md={4} lg={4}>
-            <Button className="full-width-buttons" style={{ width: '100%' }} onClick={() => window.location.replace('/requests')} data-test="all-requests-button">
+            {!checkManager() ? (
+              <Button className="full-width-buttons" style={{ width: '100%' }} onClick={() => window.location.replace('/user-manager')} data-test="all-requests-button">
               All requests
-            </Button>
+              </Button>
+            ) : (
+              <Button className="full-width-buttons" style={{ width: '100%' }} onClick={() => window.location.replace('/requests')} data-test="all-requests-button">
+              All requests
+              </Button>
+            )}
           </Col>
           </Row>
         </Container>
@@ -174,6 +217,7 @@ export class SearchBar extends Component {
 SearchBar.propTypes = {
   getLocations: PropTypes.func.isRequired,
   searchRequestAction: PropTypes.func.isRequired,
+  managerSearchRequestAction: PropTypes.func.isRequired,
   locations: PropTypes.any,
 };
 
@@ -181,4 +225,4 @@ export const mapStateToProps = (state) => ({
   locations: state.locations.data,
 });
 
-export default connect(mapStateToProps, { getLocations, searchRequestAction })(SearchBar);
+export default connect(mapStateToProps, { getLocations, searchRequestAction, managerSearchRequestAction })(SearchBar);

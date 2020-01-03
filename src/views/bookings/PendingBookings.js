@@ -8,11 +8,13 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 import { getPendingBookings, approveBooking, rejectBooking } from '../../actions/bookingActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import PageLoading from '../../components/global/PageLoading';
 import isAuthenticated from '../../helpers/isAuthenticated';
 import AlertComponent from '../../components/global/AlertComponent';
+import Confirm from '../../components/global/Confirm';
 
 class PendingBookings extends React.Component {
   constructor(props) {
@@ -21,41 +23,81 @@ class PendingBookings extends React.Component {
       isLoading: true,
       userId: null,
       operation: null,
+      isProcessing: false,
     };
   }
 
   componentDidMount = async () => {
     const { getPendingBookings } = this.props;
+
     const userInfo = isAuthenticated();
-    console.log(userInfo);
-    await this.setState({
+
+    this.setState({
       userId: userInfo.payload.id,
     });
+
     await getPendingBookings();
+
     this.setState({
       isLoading: false,
     });
   }
 
-  dispatchRejectBooking = (id) => {
+  actionSwitch = async (action, id) => {
+    this.setState({
+      isProcessing: true,
+    });
+
+    switch (action) {
+      case 'approve':
+        this.dispatchApproveBooking(id);
+        break;
+      default:
+        this.dispatchRejectBooking(id);
+    }
+  }
+
+  dispatchRejectBooking = async (id) => {
+    const { getPendingBookings } = this.props;
+
     this.setState({
       operation: 'rejected',
     });
+
     const { rejectBooking } = this.props;
-    rejectBooking(id);
+
+    await rejectBooking(id);
+
+    await getPendingBookings();
+
+    this.setState({
+      isProcessing: false,
+    });
   }
 
-  dispatchApproveBooking = (id) => {
+  dispatchApproveBooking = async (id) => {
+    const { getPendingBookings } = this.props;
+
     this.setState({
       operation: 'approved',
     });
+
     const { approveBooking } = this.props;
-    approveBooking(id);
+
+    await approveBooking(id);
+
+    await getPendingBookings();
+
+    this.setState({
+      isProcessing: false,
+    });
   }
 
   showBookings = () => {
     const { bookings, errorMessage, status } = this.props;
-    const { operation } = this.state;
+
+    const { operation, isProcessing } = this.state;
+
     return (
       <Container fluid>
         <Row>
@@ -64,7 +106,12 @@ class PendingBookings extends React.Component {
           </Col>
         </Row>
         <Row className="center-items">
-          <h1>Your Pending Bookings</h1>
+          <h1>
+            Your Pending Bookings
+          </h1>
+        </Row>
+        <Row className="center-items">
+          {(isProcessing) ? <i className="fas fa-spinner fa-pulse" /> : ''}
         </Row>
         <Row className="error-holder">
           {
@@ -76,58 +123,73 @@ class PendingBookings extends React.Component {
           }
         </Row>
 
-        <Row>
+        <Row className="centered-flex">
           {bookings.data.map((booking, index) => (
-            <Col sm={12} md={6} lg={4} key={index}>
-              <div className="booking-tile">
-                <Row>
-                  Accommodation:
+            <Card className="booking-card" data-test="booking-card">
+              <Card.Header>
+                Accommodation:
                   {' '}
-                  {booking.accommodation.name}
-                </Row>
-                <Row>
-                  Space Required:
+                {booking.accommodation.name}
+              </Card.Header>
+              <Card.Body>
+                <Card.Title>
+                  <Row>
+                    Space Required:
                   {' '}
-                  {booking.bookedSpace}
+                    {booking.bookedSpace}
+                    {' '}
+                    rooms
+                  </Row>
+                </Card.Title>
+                <Card.Text>
+                  <Row>
+                    Booking made by:
                   {' '}
-                  rooms
-                </Row>
-                <Row>
-                  Booking made by:
+                    {booking.user.username}
+                    {' '}
+                    {booking.user.email}
+                  </Row>
+                  <Row>
+                    Check In:
                   {' '}
-                  {booking.user.username}
+                    {booking.checkIn}
+                  </Row>
+                  <Row>
+                    Check Out:
                   {' '}
-                  {booking.user.email}
-                </Row>
-                <Row>
-                  Check In:
-                  {' '}
-                  {booking.checkIn}
-                </Row>
-                <Row>
-                  Check Out:
-                  {' '}
-                  {booking.checkOut}
-                </Row>
+                    {booking.checkOut}
+                  </Row>
+                </Card.Text>
                 <Row className="btn-holder">
-                  <Button variant="outline-success" className="full-width-buttons" onClick={() => this.dispatchApproveBooking(booking.id)}>Accept</Button>
-                  <Button variant="outline-danger" className="full-width-buttons" onClick={() => this.dispatchRejectBooking(booking.id)}>Reject</Button>
+                  <Confirm data-test="approve" variant="success" action="approve" id={booking.id} processAction={this.actionSwitch} title="Accept" size="md" buttonClass="process-request-button btn-block" />
+                  <Confirm data-test="reject" variant="danger" action="reject" id={booking.id} processAction={this.actionSwitch} title="Reject" size="md" buttonClass="process-request-button btn-block" />
                 </Row>
-              </div>
-            </Col>
+              </Card.Body>
+            </Card>
           ))}
         </Row>
       </Container>
     );
   }
 
+  noBookings = () => (
+    <Container fluid>
+      <Row className="center-items">
+        <h1 data-test="noBookingsTest">You have no pending bookings</h1>
+      </Row>
+    </Container>
+  )
+
   render() {
     const { isLoading, userId } = this.state;
+
+    const { bookings, status } = this.props;
+
     return (
       <div className="d-flex justify-content-center">
-        {isLoading ? <PageLoading /> : (
-          <this.showBookings />
-        )}
+        {(isLoading) ? <PageLoading data-test="loading" />
+          : (status === 'success') ? <this.showBookings data-test="show-bookings" />
+            : <this.noBookings data-test="no-bookings" />}
       </div>
     );
   }

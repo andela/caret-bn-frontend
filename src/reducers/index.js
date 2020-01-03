@@ -12,6 +12,11 @@ import userReducer from './userReducer';
 import roleReducer from './roleReducer';
 import alertReducer from './alertReducer';
 import profileReducer from './profileReducer';
+import managerRequestReducer from './managerRequestReducer';
+import managerSearchRequestReducer from './managerSearchRequestReducer';
+import allNotifsReducer from './allNotifsReducer';
+import processRequestReducer from './processRequestReducer';
+import ratingsReducer from './ratingsReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -27,4 +32,9 @@ export default combineReducers({
   role: roleReducer,
   alert: alertReducer,
   profile: profileReducer,
+  managerRequest: managerRequestReducer,
+  managerSearchRequest: managerSearchRequestReducer,
+  allNotifs: allNotifsReducer,
+  processRequest: processRequestReducer,
+  ratings: ratingsReducer,
 });
