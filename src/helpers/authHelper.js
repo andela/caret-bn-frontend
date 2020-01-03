@@ -19,6 +19,19 @@ export const checkSupplier = () => {
   return false;
 };
 
+export const checkHost = () => {
+  const userInfo = isAuth();
+  if (userInfo) {
+    const { payload } = userInfo;
+    const { role } = payload;
+    if (role !== 5) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
+
 export const checkManager = () => {
   const user = isAuth();
   if (user) {

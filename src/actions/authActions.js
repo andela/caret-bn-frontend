@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import {
   SIGNUP_SUCCESS, SIGNUP_FAIL, VERIFY_SUCCESS, VERIFY_ERROR, LOGIN_SUCCESS, LOGIN_FAILURE, SOCIAL_AUTH_ERROR,
-  SOCIAL_AUTH_SUCCESS, RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
+  SOCIAL_AUTH_SUCCESS, RESET_PASSWORD_REQUEST_SUCESS, RESET_PASSWORD_REQUEST_FAILURE, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE, SHOW_ALERT,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import 'regenerator-runtime';
@@ -27,8 +27,10 @@ const userLogin = ({ email, password }) => async (dispatch) => {
     const res = await backendCall.post('/users/login', { email, password });
     storeToken(res.data.data.token);
     dispatch(authType(LOGIN_SUCCESS, res.data));
+    dispatch(authType(SHOW_ALERT));
   } catch (error) {
     dispatch(authType(LOGIN_FAILURE, error.response));
+    dispatch(authType(SHOW_ALERT));
   }
 };
 

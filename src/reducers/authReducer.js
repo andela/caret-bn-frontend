@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+        dataError: null,
         status: 'Success',
       };
     case LOGIN_FAILURE:

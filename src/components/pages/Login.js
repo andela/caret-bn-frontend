@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/prefer-stateless-function */
@@ -5,10 +6,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
 import { compose } from 'redux';
 import { Button, Form } from 'react-bootstrap';
 import userLogin from '../../actions/authActions';
+import AlertComponent from '../global/AlertComponent';
+import { hideAlert } from '../../actions/alertAction';
 
 export class Login extends Component {
   // eslint-disable-next-line react/state-in-constructor
@@ -20,7 +22,7 @@ export class Login extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {
-      dataError, status, history,
+      status,
     } = nextProps;
     switch (status) {
       case 'Success':
@@ -28,12 +30,16 @@ export class Login extends Component {
         this.setState({ isLoading: false });
         break;
       case 'Failure':
-        toast.error(dataError.data.message);
         this.setState({ isLoading: false });
         break;
       default:
         break;
     }
+  }
+
+  async componentWillUnmount() {
+    const { hideAlert } = this.props;
+    await hideAlert();
   }
 
   submitForm = (e) => {
@@ -60,6 +66,7 @@ export class Login extends Component {
 
   render() {
     const { isLoading, email, password } = this.state;
+    const { dataError } = this.props || {};
 
     return (
       <div className="login-form">
@@ -68,6 +75,7 @@ export class Login extends Component {
           <Form.Control type="password" name="password" id="password" placeholder="Password..." onChange={this.handleChange} data="password" value={password} title="Enter your password" required />
           <Button type="submit" variant="primary">{isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'login'}</Button>
         </form>
+        {dataError && <AlertComponent variant="danger" message={dataError.data.message} />}
         <Link to="/forgotpassword">
           <p className="forgot-password">Forgot password?</p>
         </Link>
@@ -80,12 +88,13 @@ export class Login extends Component {
 }
 
 Login.propTypes = {
-  userLogin: PropTypes.func.isRequired,
+  userLogin: PropTypes.func,
   data: PropTypes.object,
   dataError: PropTypes.object,
   history: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
+  hideAlert: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -94,4 +103,4 @@ const mapStateToProps = (state) => ({
   status: state.auth.status,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { userLogin }))(Login);
+export default compose(withRouter, connect(mapStateToProps, { userLogin, hideAlert }))(Login);

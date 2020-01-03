@@ -34,7 +34,7 @@ const makeWrapper = () => {
 describe('View top travelled and all destinations Test Suite', () => {
   it('Should display location', () => {
     let wrapper = makeWrapper();
-    expect(wrapper.find('.top-heading').text()).toBe('Top destinations');
+    expect(wrapper.find('.home-heading').first().text()).toBe('Top destinations');
 });
 
   it('should fetch top destinations' , () => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
@@ -17,6 +18,7 @@ import { showAlert } from '../../actions/alertAction';
 import SearchBar from './accommodations/SearchBar';
 import AlertComponent from '../global/AlertComponent';
 import AccommodationListItem from './accommodations/AccommodationListItem';
+
 
 export class AllAccommodation extends React.Component {
   state = {

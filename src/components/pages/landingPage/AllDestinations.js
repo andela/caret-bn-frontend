@@ -32,21 +32,27 @@ export class AllDestinations extends Component {
         <Row>{ isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' }</Row>
         <Row>
           <Col xs={12} md={8} className="destinations">
-            <Row>
-              <h1 className="top-heading">Top destinations</h1>
+            {topDestinationData && (
+              <Row>
+              <h1 className="home-heading">Top destinations</h1>
               <div className="top-destinations">
               {
                 topDestinationData ? topDestinationData.map((topLocation) => (
                   <div className="one-destination">
                         <img src={topLocation.images} alt="topLocation" />
-                        <p className="location-name">{topLocation.name}</p>
+                        <p className="location-name">
+                          {topLocation.name}
+                          <br />
+                          {`${topLocation.numberOfVisits} Recent visits`}
+                        </p>
                   </div>
                 )) : null
               }
               </div>
-            </Row>
+              </Row>
+            )}
             <Row>
-                <h1>All destinations</h1>
+                <h1 className="home-heading">All destinations</h1>
                 <div className="all-destinations">
               {
                  data ? data.map((location) => (
@@ -60,7 +66,6 @@ export class AllDestinations extends Component {
             </Row>
           </Col>
           <Col xs={12} md={4} className="top-rated">
-          <h1 className="pt-3 pb-0">High Rated</h1>
           <HighRatedAccommodation />
           </Col>
         </Row>
