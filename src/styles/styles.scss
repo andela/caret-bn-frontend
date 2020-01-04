@@ -34,13 +34,6 @@ body {
 input[disabled] {
   cursor: default;
 }
-body {
-  background-color: $mainBackgroundColor;
-}
-
-body {
-  background-color: $mainBackgroundColor;
-}
 
 .header {
   background-color: $primary;
@@ -141,6 +134,11 @@ body {
     margin-bottom: 1rem;
     height: 2rem;
     font-size: 0.8rem;
+  }
+
+  .manager-buttons-abs {
+    position: absolute;
+    bottom: 0;
   }
 }
 

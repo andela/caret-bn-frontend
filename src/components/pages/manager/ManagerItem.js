@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Container, Button, Row, Col,
+  Container, Button, Row, Col, Card,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { RemoveRedEyeOutlined, CheckCircleOutlineOutlined, HighlightOffOutlined } from '@material-ui/icons';
 import DestinationItem from '../requests/DestinationItem';
 import { processRequestAction } from '../../../actions/requestsActions';
 import { getManagerRequestAction } from '../../../actions/managerRequestAction';
@@ -26,15 +27,15 @@ export class ManagerItem extends Component {
     switch (status.id) {
       case 1:
         return (
-          <Col className="request-status font-weight-bold pl-5" style={{ color: '#C2A90F' }}>{status.name}</Col>
+          <Col className="request-status font-weight-bold" style={{ color: '#C2A90F' }}>{status.name}</Col>
         );
       case 2:
         return (
-          <Col className="request-status font-weight-bold pl-5 text-danger">{status.name}</Col>
+          <Col className="request-status font-weight-bold text-danger">{status.name}</Col>
         );
       default:
         return (
-          <Col className="request-status font-weight-bold pl-5 text-success">{status.name}</Col>
+          <Col className="request-status font-weight-bold text-success">{status.name}</Col>
         );
     }
   };
@@ -44,8 +45,21 @@ export class ManagerItem extends Component {
     const { item, user, email } = props;
 
     return (
-      <Container data-test="request-item">
-        <Container className="request-item mb-3 p-3">
+      <Card className="booking-card" data-test="request-item">
+        <Card.Header className="text-primary">
+          {item.departureDate}
+          {' | '}
+          {item.type.name}
+          {' Trip'}
+        </Card.Header>
+        <Card.Body style={{ position: 'relative' }}>
+          <Card.Text>
+            <Row className="px-4 py-1 mb-0">
+              <span className="font-weight-bold">Status:</span>
+              {' '}
+              {' '}
+              {this.renderStatus(item.status)}
+            </Row>
             <Row className="px-4 py-1 mb-0">
               <span className="font-weight-bold">
               Requester:
@@ -62,59 +76,46 @@ export class ManagerItem extends Component {
               {email}
               </span>
             </Row>
-            <Row className="px-2 py-1 mb-0">
-              <Col md={9} className="text-primary">
-                {item.departureDate}
-                {' | '}
-                {item.type.name}
-                {' Trip'}
-              </Col>
-              {this.renderStatus(item.status)}
+            <Row className="px-4 py-1 mb-0">
+              {item.destinations.map((destination, i) => (
+                <DestinationItem destination={destination} key={destination.id} index={i} />
+              ))}
             </Row>
-            <Row className="px-2 py-1 mb-0">
-              <Col>
-                {item.destinations.map((destination, i) => (
-                  <DestinationItem destination={destination} key={destination.id} index={i} />
-                ))}
-              </Col>
+            <Row className="px-4 py-1 mb-0">
+              <span className="font-weight-bold">
+                Return Date:
+              </span>
+              {' '}
+              {' '}
+              {item.returnDate || 'N/A'}
             </Row>
-            <Row>
-              <Col md={8} className="px-3 pb-3 mb-0">
-                <span className="font-weight-bold">
-                  Return Date:
-                </span>
-                {' '}
-                {item.returnDate || 'N/A'}
-              </Col>
+            <Row className="px-4 py-1 mb-5">
+              <span className="font-weight-bold">
+                Reasons:
+              </span>
+              {' '}
+              {' '}
+              {item.reasons || 'N/A'}
             </Row>
-            <Row>
-              <Col md={9} className="px-3 mb-0">
-                <span className="font-weight-bold">
-                  Reasons:
-                </span>
-                {item.reasons || 'N/A'}
+            <Row className="mb-0 mx-auto manager-buttons-abs">
+              <Col md={6}>
+                <Confirm data-test="manager-approve" variant="success" action="approve" id={item.id} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block d-flex text-center" disabled={item.status.id === 3} icon={<CheckCircleOutlineOutlined />} />
               </Col>
-              <Col>
-                <Link to={`/requests/${item.id}`}>
-                  <Button variant="primary">
-                    View request
-                  </Button>
-                </Link>
+              <Col md={6}>
+                <Confirm variant="danger" action="reject" id={item.id} processAction={this.processAction} title="reject  " size="md" buttonClass="process-request-button btn-block" disabled={item.status.id === 2} icon={<HighlightOffOutlined />} />
               </Col>
             </Row>
-              {item.status.id === 1 && (
-                <Row>
-                  <Col md={8} />
-                  <Col md={2}>
-                    <Confirm data-test="manager-approve" variant="success" action="approve" id={item.id} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" />
-                  </Col>
-                  <Col md={2}>
-                    <Confirm variant="danger" action="reject" id={item.id} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" />
-                  </Col>
-                </Row>
-              ) }
-        </Container>
-      </Container>
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer className="text-center">
+          <Link style={{ textDecoration: 'none' }} to={`/requests/${item.id}`} className="text-primary">
+          <RemoveRedEyeOutlined />
+            {' '}
+            {' '}
+            View request
+          </Link>
+        </Card.Footer>
+      </Card>
     );
   }
 }

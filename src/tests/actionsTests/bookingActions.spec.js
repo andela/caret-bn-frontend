@@ -56,6 +56,8 @@ describe('Booking Actions Test Suite', () => {
       pending: null,
       booked: null,
       bookedError: null,
+      oneBookingData: null,
+      oneBookingError: null,
       status: 'success'
     };
 
@@ -100,6 +102,8 @@ describe('Booking Actions Test Suite', () => {
       dataError: null,
       booked: null,
       bookedError: null,
+      oneBookingData: null,
+      oneBookingError: null,
       status: 'success'
     };
 

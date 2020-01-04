@@ -27,6 +27,8 @@ import PendingBookings from './views/bookings/PendingBookings';
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
 import AllNotifications from './views/notifications/AllNotifications';
+import MyBookings from './components/pages/MyBookings';
+import OneBooking from './components/pages/OneBooking';
 
 export class App extends Component {
   render() {
@@ -55,6 +57,8 @@ export class App extends Component {
           <ProtectedRoute exact path="/profile" component={UserProfile} />
           <ProtectedRoute exact path="/bookings/pending" component={PendingBookings} />
           <ProtectedRoute exact path="/notifications" component={AllNotifications} />
+          <ProtectedRoute exact path="/my-bookings" component={MyBookings} />
+          <ProtectedRoute exact path="/bookings/:id" component={OneBooking} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

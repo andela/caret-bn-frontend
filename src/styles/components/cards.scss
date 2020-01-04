@@ -1,6 +1,33 @@
 .booking-card {
   width: 100vw;
   margin: 5px 0;
+  box-shadow: 0 0 5px lighten(#000, 60%);
+  transition: box-shadow .2s ease-in-out;
+}
+
+.single-booking-card {
+  width: 50vw;
+  margin: 5px 0;
+  box-shadow: 0 0 5px lighten(#000, 60%);
+  transition: box-shadow .2s ease-in-out;
+
+  .description{
+    width: 10px;
+  }
+}
+
+.filter-outline {
+  &:hover {
+    background-color: none;
+  }
+}
+
+.no-round-left {
+  .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 7rem;
+  }
 }
 
 .centered-flex {

@@ -4,6 +4,10 @@
     text-transform: uppercase;
   }
 }
+
+.search-box {
+  box-shadow: 0 0 5px lighten(#000, 60%);
+}
 .loader-big {
   font-size: 100px;
   color: $primary;

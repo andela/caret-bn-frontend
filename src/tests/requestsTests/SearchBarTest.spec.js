@@ -54,7 +54,7 @@ describe('SearchBar Test Suite', () => {
 
   it('Should handleDayChange', () => {
     const component = setUp(mainState);
-    component.find('.full-width-buttons').first().simulate('click')
+    component.find('.btn-block').first().simulate('click')
     component.find('.day-picker').first().simulate('dayChange')
     expect(component).toMatchSnapshot();
 
