@@ -164,7 +164,7 @@ export class SingleAccommodation extends React.Component {
                     <a>Edit</a>
                     {' '}
                     {' '}
-                    <EditOutlined  />
+                    <EditOutlined />
                   </Link>
                 )
                 : null : null
@@ -198,7 +198,9 @@ export class SingleAccommodation extends React.Component {
                         <h3> Highlights </h3>
                         <div className="highlights">
                           <i>
-                            <h6>{accommodation.highlights}</h6>
+                            <h6 dangerouslySetInnerHTML={{
+                    __html: accommodation.highlights,
+                  }} />
                           </i>
                         </div>
                       </Col>
@@ -210,7 +212,9 @@ export class SingleAccommodation extends React.Component {
                         <h3 className="amenities"> Anemities </h3>
                         <div>
                           <i>
-                            <h6 className="highlights">{accommodation.amenities}</h6>
+                            <h6 className="highlights" dangerouslySetInnerHTML={{
+                    __html: accommodation.amenities,
+                  }} />
                           </i>
                         </div>
 
@@ -262,7 +266,10 @@ export class SingleAccommodation extends React.Component {
                 </h3>
                 <div className="description">
                   <h4>Description</h4>
-                  <i>{accommodation.description}</i>
+                  <i dangerouslySetInnerHTML={{
+                    __html: accommodation.description,
+                  }}
+                  />
                 </div>
                 <Booking />
                 <Row>
