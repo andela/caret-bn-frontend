@@ -119,7 +119,7 @@ class SearchBar extends Component {
               </Form.Group>
             </Col>
           </Row>
-          <Row className="center-tems">
+          <Row className="center-items">
             <Button className="full-width-buttons" data-test="submit-button" onClick={() => this.submitSearch()}>Search</Button>
             <Button className="full-width-buttons" data-test="show-all-button" onClick={() => endSearch()}>Show All</Button>
           </Row>

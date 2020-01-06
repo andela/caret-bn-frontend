@@ -26,6 +26,8 @@ const props = {
     }
   },
   singleRequestAction: jest.fn(),
+  processRequestAction: jest.fn(),
+  singleRequestAction: jest.fn(),
   match: {
     params: 2,
   }
@@ -49,13 +51,6 @@ describe('SingleRequest Test Suite', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
-  
-  // it('Should Click on Confirm Button', () => {
-  //   const component = setUp(mainState);
-  //   console.log('component.debug() ===> ', component.debug());
-  //   component.find('[data-test="single-confirm"]').simulate('click');
-    
-  // });
 
   it('Should return initial data', () => {
     const initialState = {
@@ -68,9 +63,10 @@ describe('SingleRequest Test Suite', () => {
     expect(mapStateToProps(initialState).singleData).toEqual(null);
   });
 
-  it('should switch through status', () => {
+  it('should switch through status', async () => {
     const component = setUp(mainState);
     const renderStatusSpy = jest.spyOn(component.instance(), 'renderStatus');
+    await component.instance().processAction('myActions', 1);
     component.instance().renderStatus({
       id: 1
     });
@@ -80,7 +76,6 @@ describe('SingleRequest Test Suite', () => {
     component.instance().renderStatus({
       id: 2
     });
-
     expect(renderStatusSpy).toBeCalled();
   });
 });

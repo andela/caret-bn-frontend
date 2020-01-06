@@ -25,6 +25,7 @@ import { hideAlert, showAlert } from '../../actions/alertAction';
 import { rateAccommodation } from '../../actions/ratingsActions';
 import RatingModal from './RatingModal';
 import RateItem from './RateItem';
+import { EditOutlined } from '@material-ui/icons';
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
@@ -49,7 +50,9 @@ export class SingleAccommodation extends React.Component {
 
   componentDidMount = async () => {
     const userInfo = isAuthenticated();
-    const { slug, GetSingleAccommodation, getBookings, accommodation } = this.props;
+    const {
+      slug, GetSingleAccommodation, getBookings, accommodation,
+    } = this.props;
     this.setState({ isLoading: true });
     await GetSingleAccommodation(slug);
     await getBookings();
@@ -58,7 +61,7 @@ export class SingleAccommodation extends React.Component {
     await this.setState({
       userId: userInfo.payload.id,
       userRole: userInfo.payload.role,
-      hasBooked: this.props.bookings.data.some(booking => booking.accommodation.id === this.props.accommodation.id)
+      hasBooked: this.props.bookings.data.some((booking) => booking.accommodation.id === this.props.accommodation.id),
     });
   }
 
@@ -69,14 +72,14 @@ export class SingleAccommodation extends React.Component {
 
   async handleLike() {
     const { accommodation, likeUnlikeAccommodation, GetSingleAccommodation } = this.props;
-    await GetSingleAccommodation(accommodation.slug);
     await likeUnlikeAccommodation(accommodation.slug, 'like');
+    await GetSingleAccommodation(accommodation.slug);
   }
 
   async handleDislike() {
     const { accommodation, likeUnlikeAccommodation, GetSingleAccommodation } = this.props;
-    await GetSingleAccommodation(accommodation.slug);
     await likeUnlikeAccommodation(accommodation.slug, 'unlike');
+    await GetSingleAccommodation(accommodation.slug);
   }
 
   handleChange = async (e) => {
@@ -150,7 +153,7 @@ export class SingleAccommodation extends React.Component {
 
       return (
         <div key={accommodation.id} className="container-fluid single-container ">
-          <Row>
+          <Row className="row-between">
             <Col md={5} className="breadcrumbs">
               <Breadcrumbs itemsArray={['> Home', '  Accommodations', accommodation.name]} />
             </Col>
@@ -159,14 +162,17 @@ export class SingleAccommodation extends React.Component {
                 ? (
                   <Link to={{ pathname: `/accommodations/${accommodation.slug}/edit` }} className="edit-links">
                     <a>Edit</a>
+                    {' '}
+                    {' '}
+                    <EditOutlined  />
                   </Link>
                 )
                 : null : null
             }
-            <Col>
-              {bookedError && <AlertComponent variant="danger" heading="Error" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />}
-              {booked && <AlertComponent variant="success" heading="success" message={booked.message} />}
-            </Col>
+          </Row>
+          <Row className="center-items">
+            {bookedError && <AlertComponent variant="danger" heading="Error" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />}
+            {booked && <AlertComponent variant="success" heading="success" message={booked.message} />}
           </Row>
           <Row className="center-items">
             {
@@ -249,10 +255,9 @@ export class SingleAccommodation extends React.Component {
                   <i>
                     {(accommodation.hasRated)
                       ? <p className="information-tags">You have rated this accommodation</p>
-                      : (userRole === 5) ? <p className="information-tags">You are not eligible to rate this accommodation</p> 
-                      : (!hasBooked ) ?  <p className="information-tags">You can only rate accommodations you have booked with</p> 
-                      : <RatingModal handleChange={this.handleChange} submitRating={this.submitRating} error={this.state.error} ratings={this.state.ratings} data-test="rate-acc-btn" />
-                      }
+                      : (userRole === 5) ? <p className="information-tags">You are not eligible to rate this accommodation</p>
+                        : (!hasBooked) ? <p className="information-tags">You can only rate accommodations you have booked with</p>
+                          : <RatingModal handleChange={this.handleChange} submitRating={this.submitRating} error={this.state.error} ratings={this.state.ratings} data-test="rate-acc-btn" />}
                   </i>
                 </h3>
                 <div className="description">

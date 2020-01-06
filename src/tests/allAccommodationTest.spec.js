@@ -72,6 +72,7 @@ const props = {
   accommodations: accommodationsData,
   GetAllAccommodation: jest.fn(),
   accommodationSearch: jest.fn(),
+  startSearch: jest.fn(),
   stopLoader: jest.fn()
 }
 
@@ -113,21 +114,71 @@ describe('Like Dislike tests', () => {
       isLoading: false
     });
 
-    const likeBtn = findByTestAttribute(component, 'like-button');
-    const dislikeBtn = findByTestAttribute(component, 'dislike-button');
+    component.setProps({
+      likeUnlikeAccommodation: jest.fn(),
+      GetAllAccommodation: jest.fn()
+    })
 
     const likeSpy = jest.spyOn(component.instance(), 'handleLike');
     const dislikeSpy = jest.spyOn(component.instance(), 'handleDislike');
 
-    await likeBtn.simulate('click');
-    expect(likeSpy).toHaveBeenCalled();
+    component.instance().handleLike('isimbi');
+    component.instance().handleDislike('isimbi');
 
-    await dislikeBtn.simulate('click');
+    expect(likeSpy).toHaveBeenCalled();
     expect(dislikeSpy).toHaveBeenCalled();
   });
+
 });
 
 describe('Modal Tests', () => {
+  it('should start search', () => {
+    const component = setUp(mainState);
+    component.setState({
+      showSearch: false
+    });
+
+    component.instance().showSearch();
+
+    expect(component.instance().state.showSearch).toBe(true);
+  });
+
+  it('should stop loader', () => {
+    const component = setUp(mainState);
+    component.setState({
+      isLoading: true
+    });
+
+    component.instance().stopLoader();
+
+    expect(component.instance().state.isLoading).toBe(false);
+  });
+
+  it('should end search', () => {
+    const component = setUp(mainState);
+    component.setState({
+      isSearching: true,
+    });
+
+    component.instance().endSearch();
+
+    expect(component.instance().state.isSearching).toBe(false);
+  });
+
+  it('should start search', () => {
+    const component = setUp(mainState);
+    component.setState({
+      isLoading: false,
+      isSearching: false,
+    });
+
+    component.instance().startSearch();
+
+    expect(component.instance().state.isLoading).toBe(true);
+    expect(component.instance().state.isSearching).toBe(true);
+  });
+
+
   it('should call handleChange', () => {
     const component = searchSetup(mainState);
     component.setState({
@@ -139,8 +190,13 @@ describe('Modal Tests', () => {
     expect(handleChangeSpy).toHaveBeenCalled();
   });
 
-  it('should call submit', () => {
+  it('should call submit', async () => {
     const component = searchSetup(mainState);
+    component.setProps({
+      startSearch: jest.fn(),
+      accommodationSearch: jest.fn(),
+      stopLoader: jest.fn()
+    });
     const submitSearchSpy = jest.spyOn(component.instance(), 'submitSearch');
     const submitButton = findByTestAttribute(component, 'submit-button');
     submitButton.simulate('click')

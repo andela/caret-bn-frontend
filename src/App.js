@@ -23,6 +23,7 @@ import editAccommodation from './views/accommodations/editAccommodation';
 import ManagerView from './views/manager/ManagerView';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserProfile from './components/pages/profiles/UserProfile';
+import PendingBookings from './views/bookings/PendingBookings';
 import ViewAllUsers from './views/admin/ViewAllUsers';
 import SpecificUSer from './views/admin/SpecificUSer';
 import AllNotifications from './views/notifications/AllNotifications';
@@ -52,6 +53,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/admin/users" component={ViewAllUsers} />
           <ProtectedRoute exact path="/admin/users/:userId" component={SpecificUSer} />
           <ProtectedRoute exact path="/profile" component={UserProfile} />
+          <ProtectedRoute exact path="/bookings/pending" component={PendingBookings} />
           <ProtectedRoute exact path="/notifications" component={AllNotifications} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>

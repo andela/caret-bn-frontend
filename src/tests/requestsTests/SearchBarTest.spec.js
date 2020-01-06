@@ -38,13 +38,13 @@ const testStore = (state) => {
   return createStoreWithMiddleware(rootReducer, state);
 };
 
-const setUp = (initialState =  {}) => {
+const setUp = (initialState = {}) => {
   const store = testStore(initialState);
   const wrapper = shallow(
-      <SearchBar {...props} store={store} />
+    <SearchBar {...props} store={store} />
   );
-    return wrapper;
-} 
+  return wrapper;
+}
 
 describe('SearchBar Test Suite', () => {
   it('Should Mount Successfully', () => {
@@ -61,7 +61,7 @@ describe('SearchBar Test Suite', () => {
   });
 
   it('Should search for pending requests', () => {
-    const component = setUp(mainState); 
+    const component = setUp(mainState);
     const handleSubmitSpy = jest.spyOn(component.instance(), 'searchRequest');
     component.find('[data-test="filter-request"]').simulate('click');
 

@@ -29,34 +29,34 @@ export class Confirm extends Component {
         <Button data-test="confirm-button" variant={variant} show={show} onClick={() => setShow(true)} size={size} className={buttonClass}>
           {title}
         </Button>
-      <Modal show={show} onHide={() => setShow(false)} size="md" aria-labelledby="example-custom-modal-styling-title">
-        <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            Are you sure you want to
+        <Modal show={show} onHide={() => setShow(false)} size="md" aria-labelledby="example-custom-modal-styling-title">
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              Are you sure you want to
             {' '}
-            {action}
-            ?
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          { isLoading ? (
-            <div className="text-center">
-              Processing
+              {action}
+              ?
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {isLoading ? (
+              <div className="text-center">
+                Processing
               {' '}
-              <i className="fas fa-spinner fa-pulse" />
-            </div>
-          ) : (
-            <Row>
-              <Col md={6}>
-                <Button data-test="confirm-yes" variant="success" onClick={() => this.confirmAction().then(() => setShow(false))}>Yes!</Button>
-              </Col>
-              <Col>
-                <Button className="float-right" variant="danger" onClick={() => setShow(false)}>No!</Button>
-              </Col>
-            </Row>
-          )}
-        </Modal.Body>
-      </Modal>
+                <i className="fas fa-spinner fa-pulse" />
+              </div>
+            ) : (
+                <Row>
+                  <Col>
+                    <Button data-test="confirm-yes" variant="success" onClick={() => this.confirmAction().then(() => setShow(false))}>Yes!</Button>
+                  </Col>
+                  <Col>
+                    <Button className="float-right" variant="danger" onClick={() => setShow(false)}>No!</Button>
+                  </Col>
+                </Row>
+              )}
+          </Modal.Body>
+        </Modal>
       </Row>
     );
   };

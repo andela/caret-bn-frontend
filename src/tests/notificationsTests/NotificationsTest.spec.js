@@ -37,7 +37,18 @@ describe('Notifications Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
     component.setProps({
-      getNotifsAction: jest.fn()
+      getNotifsAction: jest.fn(),
+      markAllNotifAction: jest.fn(),
+      notifsData: [
+        {
+          createdAt: '2019-12-28',
+          timestamp: '11:50:09',
+        },
+        {
+          createdAt: '2019-12-28',
+          timestamp: '11:50:09',
+        },
+      ]
     })
     component.instance().markAllUnread()
     expect(component.exists()).toBe(true);

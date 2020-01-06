@@ -31,4 +31,5 @@ const notificationsMocks = {
   },
 };
 
+
 export default notificationsMocks;
