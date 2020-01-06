@@ -14,6 +14,7 @@ export default function accommodationListItem(props) {
   const {
     post, handleLike, handleDislike, userId,
   } = props;
+
   return (
     <Row className="center-items" key={post.id}>
       <Card key={post.id} className="accommodation-card">
@@ -91,7 +92,12 @@ export default function accommodationListItem(props) {
 
             <div className="accommodation-description">
               <p className="acc-title">description</p>
-              <p className="acc-desc">{post.description}</p>
+              <p
+                className="acc-desc"
+                dangerouslySetInnerHTML={{
+                  __html: props.post.description,
+                }}
+              />
               <p className="acc-locale">
                 <LocationOn />
                 {' '}

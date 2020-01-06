@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { Edit } from '@material-ui/icons';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { GetSingleAccommodation, updateAccommodation, resetAccommodationState } from '../../actions/accommodationActions';
 import { getLocations } from '../../actions/locationActions';
 import AlertComponent from '../../components/global/AlertComponent';
@@ -160,20 +162,58 @@ class editAccommodation extends Component {
             <Col xs={12} sm={12} md={6} lg={4}>
               <Form.Group>
                 <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" rows="3" name="description" value={accommodation.description} type="text" onChange={this.handleChange} placeholder="Description..." title="Enter available amenities" minLength="10" maxLength="250" required className="acc-edit-text-area" />
-
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={accommodation.description}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    const handleChangeData = {
+                      target: {
+                        name: 'description',
+                        value: data,
+                      },
+                    };
+                    this.handleChange(handleChangeData);
+                  }}
+                />
               </Form.Group>
             </Col>
             <Col xs={12} sm={12} md={6} lg={4}>
               <Form.Group>
                 <Form.Label>Highlights</Form.Label>
-                <Form.Control as="textarea" rows="3" name="highlights" value={accommodation.highlights} type="text" onChange={this.handleChange} placeholder="Highlights..." title="Enter available amenities" minLength="10" maxLength="250" required className="acc-edit-text-area" />
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={accommodation.highlights}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    const handleChangeData = {
+                      target: {
+                        name: 'highlights',
+                        value: data,
+                      },
+                    };
+                    this.handleChange(handleChangeData);
+                  }}
+                />
               </Form.Group>
             </Col>
             <Col xs={12} sm={12} md={6} lg={4}>
               <Form.Group>
                 <Form.Label>Amenities</Form.Label>
-                <Form.Control as="textarea" rows="3" name="amenities" value={accommodation.amenities} type="text" onChange={this.handleChange} placeholder="Amenities..." title="Enter available amenities" minLength="10" maxLength="250" required className="acc-edit-text-area" />
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={accommodation.amenities}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    const handleChangeData = {
+                      target: {
+                        name: 'amenities',
+                        value: data,
+                      },
+                    };
+                    this.handleChange(handleChangeData);
+                  }}
+                />
               </Form.Group>
             </Col>
           </Row>

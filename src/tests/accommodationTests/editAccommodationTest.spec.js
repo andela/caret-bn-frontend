@@ -87,6 +87,7 @@ describe('Test Request Component', () => {
     component.setProps({
       locations: locations, accommodation: accommodationMocks, GetSingleAccommodation: jest.fn(),
       getLocations: jest.fn(),
+      match: { params: { slug: 'isimbi-hotel' } }
     })
     const handleChangeSpy = jest.spyOn(component.instance(), 'handleChange');
     component.setState({ accommodation: accommodationMocks, isLoading: false })
@@ -99,6 +100,7 @@ describe('Test Request Component', () => {
     component.setProps({
       locations: locations, accommodation: accommodationMocks, GetSingleAccommodation: jest.fn(),
       getLocations: jest.fn(),
+      match: { params: { slug: 'isimbi-hotel' } }
     })
     const updateAccommodationSpy = jest.spyOn(component.instance(), 'updateAccommodation');
     component.setState({ accommodation: accommodationMocks, isLoading: false })
@@ -119,8 +121,10 @@ describe('Test Request Component', () => {
     component.setProps({
       locations: locations, accommodation: accommodationMocks, GetSingleAccommodation: jest.fn(),
       getLocations: jest.fn(),
+      match: { params: { slug: 'isimbi-hotel' } }
     })
     component.setState({ accommodation: accommodationMocks, isLoading: false, updatedAccommodation: updatedMock })
+    component.instance().componentDidMount()
     component.instance().updateAccommodation({ preventDefault: jest.fn() });
     expect(updateAccommodationSpy).toBeCalled();
   });
