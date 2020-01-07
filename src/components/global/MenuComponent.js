@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
-  Notifications, AccountCircle,
-  ExitToApp, FileCopy, HomeOutlined, BookOutlined, LocalHotel,
+  Notifications, FileCopy, HomeOutlined, LocalHotel, BookmarkTwoTone, BookmarksTwoTone,
 } from '@material-ui/icons';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import AirlineSeatFlatAngled from '@material-ui/icons/AirlineSeatFlatAngled';
@@ -110,6 +109,16 @@ export class MenuComponent extends Component {
                     <div className="account-icon">
                       <LocalHotel className="icon" />
                       My Bookings
+                    </div>
+                  )
+                    : <Redirect to="/" />}
+                </Link>
+
+                <Link className="nav-links" to="/my-bookmarks">
+                  {!checkSupplier() ? (
+                    <div className="account-icon">
+                      <BookmarksTwoTone className="icon" />
+                      My Bookmarks
                     </div>
                   )
                     : <Redirect to="/" />}

@@ -26,6 +26,7 @@ import { rateAccommodation } from '../../actions/ratingsActions';
 import RatingModal from './RatingModal';
 import RateItem from './RateItem';
 import { EditOutlined } from '@material-ui/icons';
+import BookMark from './../pages/accommodations/BookMark';
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
@@ -226,7 +227,10 @@ export class SingleAccommodation extends React.Component {
               <Col xs={6} className="single-column container-fluid col-lg-6 col-md-6 col-12">
                 <div className="infio">
                   <i>
-                    <h1>{accommodation.name}</h1>
+                    <h1>{accommodation.name} 
+                    {' '}
+                    <BookMark hasBookmarked={accommodation.hasBookmarked} slug={accommodation.slug} />
+                    </h1>
                   </i>
                   <i>
                     <h2>

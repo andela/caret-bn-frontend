@@ -16,17 +16,20 @@ jest.mock('axios');
 const makeWrapper = () => {
   const state = mockStore({
     accommodation: {
-        singleAccommodation: {data:{id:1, name: 'isimbi', ownerUser:{id: 7, email: "caretsupplier@gmail.com"}, images: []}},
-        like: {message: 'Liked successfully'},
-        dislike: null
+      singleAccommodation: { data: { id: 1, name: 'isimbi', ownerUser: { id: 7, email: "caretsupplier@gmail.com" }, images: [] } },
+      like: { message: 'Liked successfully' },
+      dislike: null
     },
     bookings: {
-        booked: null,
-        bookings: null,
-        bookedError: null
+      booked: null,
+      bookings: null,
+      bookedError: null
+    },
+    bookmarks: {
+      bookmarkStatus: 'success'
     }
   });
-  return  mount(
+  return mount(
     <Provider store={state}>
       <Router>
         <SingleAccommodation />
@@ -35,11 +38,10 @@ const makeWrapper = () => {
   );
 }
 describe('Like and dislike Accommodation Test Suite', () => {
-    it('Should handle like', () => {
-        const spying = sinon.spy(axios, 'post');
-        axios.patch.mockResolvedValue({message: 'Liked successfully'});
-        let wrapper = makeWrapper();
-        expect(spying.calledOnce);
-    });
-});  
-  
+  it('Should handle like', () => {
+    const spying = sinon.spy(axios, 'post');
+    axios.patch.mockResolvedValue({ message: 'Liked successfully' });
+    let wrapper = makeWrapper();
+    expect(spying.calledOnce);
+  });
+});

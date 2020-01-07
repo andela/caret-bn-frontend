@@ -35,6 +35,9 @@
 .info-container {
 	text-align: left;
 	margin-right: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
 	a {
 		&:hover {
 			text-decoration: none;
@@ -67,9 +70,11 @@
 }
 
 .accommodation-card {
-	padding: 10px 0px;
+	padding: 0px 0px;
 	width: 90vw;
 	.row {
+		margin-top: 0;
+		margin-bottom: 0;
 		img {
 			width: 250px;
 			height: 150px;
@@ -79,7 +84,7 @@
 
 .accommodation-description {
 	background-color: $paleBlue;
-	border: .5px solid $borderBlue;
+	border: 0.5px solid $borderBlue;
 	border-radius: 5px;
 	width: 100%;
 	display: flex;
@@ -113,9 +118,9 @@
 }
 
 .star-ratings {
-	justify-content: space-evenly;
+	justify-content: flex-start;
 	.average-rating {
-		margin: 10px 0;
+		margin: 2px 10px;
 		span {
 			font-size: small;
 		}
@@ -135,24 +140,30 @@
 
 .acc-pricing-details {
 	justify-content: flex-start;
+	padding: 0 5px;
 	.badge {
 		display: flex;
 		align-items: center;
+		margin-right: 5px;
+	}
+	.acc-pricing {
+		margin: 5px 0;
+		justify-content: start;
+		.cost {
+			font-size: small;
+			color: $chocolate;
+		}
+
+		.unit {
+			font-size: xx-small;
+		}
 	}
 }
 
-.acc-pricing {
-	padding: 0 15px;
-	margin: 5px 0;
-	justify-content: start;
-	.cost {
-		font-size: larger;
-		color: $chocolate;
-	}
-
-	.unit {
-		font-size: xx-small;
-	}
+.acc-image {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .acc-buttons {
@@ -174,6 +185,60 @@
 	span {
 		font-size: smaller;
 		margin-right: 10px;
+	}
+}
+
+.bookmark-locale {
+	justify-content: flex-start;
+	padding-left: 15px;
+}
+
+.bookmark {
+	&:hover {
+		cursor: pointer;
+	}
+
+	svg {
+		color: $gold;
+	}
+}
+
+.name-holder {
+	justify-content: center;
+	svg {
+		margin-top: 11px;
+		margin-left: 20px;
+		color: $primary;
+	}
+}
+
+.bookmark-row {
+	justify-content: center;
+	.card {
+		margin: 10px 0;
+	}
+}
+
+.bookmark-not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+
+	.not-found-title {
+		font-size: 25px;
+		font-weight: 400;
+		text-transform: uppercase;
+		padding: 5px;
+	}
+	.not-found-help-text {
+		text-align: center;
+		padding: 15px;
+		background-color: $paleBlue;
+		border-radius: 5px;
+		border: 1px solid $borderBlue;
+		margin: 0 10px;
 	}
 }
 @media (min-width: 375px) {
@@ -223,6 +288,33 @@
 	.accommodation-name {
 		text-align: left;
 	}
+	.star-ratings {
+		.average-rating {
+			margin: 2px 10px;
+			span {
+				font-size: small;
+			}
+		}
+	}
+
+	.name-holder {
+		justify-content: flex-start;
+	}
+	.acc-buttons {
+		margin: 3px 0;
+
+		button {
+			margin: 0 0;
+		}
+	}
+
+	.bookmark-row {
+		justify-content: flex-start;
+		padding: 20px;
+		.card {
+			margin: 10px 5px;
+		}
+	}
 }
 @media (min-width: 1024px) {
 	.acc-searchBar {
@@ -248,6 +340,30 @@
 			img {
 				width: 500px;
 				height: 320px;
+			}
+		}
+	}
+	.bookmark-locale {
+		justify-content: flex-start;
+		padding-left: 15px;
+		p {
+			margin-right: 50px;
+		}
+	}
+
+	.acc-pricing-details {
+		.badge {
+			margin-right: 10px;
+		}
+		.acc-pricing {
+			margin: 5px 0;
+			justify-content: start;
+			.cost {
+				font-size: medium;
+				color: $chocolate;
+			}
+			.unit {
+				font-size: small;
 			}
 		}
 	}

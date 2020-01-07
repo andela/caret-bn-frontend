@@ -1,0 +1,84 @@
+.bookmarks-title {
+  display: flex;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  margin-bottom: 5px;
+  .bookmark {
+    margin-top: 11px;
+    margin-left: 5px;
+  }
+}
+
+.remove-bookmark {
+  color: white;
+  background-color: $primary;
+  border-radius: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.card-img-top {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.bookmark-image {
+  width: 17.9rem;
+}
+
+.top-right-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.bookmarks-button {
+  margin-bottom: 0;
+}
+
+.bookmark-card {
+  width: 18rem;
+}
+.bookmarks-pricing {
+  .cost {
+    font-size: 15px;
+  }
+
+  .unit {
+    font-size: 13px;
+  }
+}
+
+.bookmark-image {
+  height: 200px;
+}
+
+.bookmarks-location {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.bookmarks-availability {
+  .badge {
+    margin-bottom: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .bookmark-row {
+    margin-left: 30px;
+  }
+
+  .bookmarks-availability {
+    .badge {
+      margin-bottom: 12px;
+    }
+  }
+}
