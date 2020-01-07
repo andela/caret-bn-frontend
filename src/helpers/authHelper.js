@@ -19,6 +19,19 @@ export const checkSupplier = () => {
   return false;
 };
 
+export const checkTravel = () => {
+  const userInfo = isAuth();
+  if (userInfo) {
+    const { payload } = userInfo;
+    const { role } = payload;
+    if (role !== 2) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
+
 export const checkHost = () => {
   const userInfo = isAuth();
   if (userInfo) {
@@ -37,7 +50,7 @@ export const checkManager = () => {
   if (user) {
     const { payload } = user;
     const { role } = payload;
-    if (role !== 1 && role !== 3 && role !== 5 && role !== 6) {
+    if (role !== 1 && role !== 3 && role !== 5 && role !== 6 && role !== 2) {
       return false;
     }
     return true;

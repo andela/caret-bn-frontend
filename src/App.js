@@ -18,6 +18,7 @@ import SingleRequest from './views/requests/SingleRequest';
 import GetsingleAccommodation from './views/accommodations/SingleAccommodation';
 import MenuComponent from './components/global/MenuComponent';
 import GetAllAccommodations from './views/accommodations/AllAccommodations';
+import GetAllDeactivatedAccommodations from './views/accommodations/AllDeactivatedAccommodation';
 import NewAccommodation from './views/accommodations/NewAccommodation';
 import editAccommodation from './views/accommodations/editAccommodation';
 import ManagerView from './views/manager/ManagerView';
@@ -50,6 +51,7 @@ export class App extends Component {
           <ProtectedRoute path="/requests/:requestId" component={SingleRequest} />
           <ProtectedRoute path="/accommodations/new" component={NewAccommodation} />
           <ProtectedRoute exact path="/accommodations" component={GetAllAccommodations} />
+          <ProtectedRoute exact path="/accommodations/deactivated" component={GetAllDeactivatedAccommodations} />
           <ProtectedRoute exact path="/accommodations/:slug/edit" component={editAccommodation} />
           <ProtectedRoute exact path="/user-manager" component={ManagerView} />
           <ProtectedRoute exact path="/accommodations/:slug" component={GetsingleAccommodation} />

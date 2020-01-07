@@ -22,7 +22,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     });
   });
 
@@ -52,7 +54,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     })
   });
 
@@ -84,7 +88,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     })
   });
 
@@ -114,7 +120,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "hihRatedError": null,
       "searchError": null,
       "searchResults": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     })
   });
 
@@ -146,7 +154,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "hihRatedError": null,
       "searchError": null,
       "searchResults": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     })
   });
 
@@ -178,7 +188,10 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
+
     })
   });
 
@@ -211,7 +224,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     });
   });
 
@@ -244,7 +259,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     })
   });
 
@@ -277,7 +294,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     });
   });
 
@@ -309,7 +328,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "searchResults": null,
       "highRated": action.payload,
       "hihRatedError": null,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     })
   });
 
@@ -342,7 +363,9 @@ describe('Create accommodation Reducer Tests ', () => {
       "searchResults": null,
       "highRated": null,
       "hihRatedError": action.payload,
-      "deleteStatus": null
+      "deleteStatus": null,
+      "accommodationDeactivatedData": [],
+      "accommodationDeactivatedError": {},
     });
   });
 

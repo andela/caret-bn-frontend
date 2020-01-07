@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import {
   Row, Card, Col, Button, Badge,
@@ -13,12 +12,12 @@ import {
   LocationOn, StarBorderOutlined, Star,
 } from '@material-ui/icons';
 import BookMark from './BookMark';
-import { checkHost } from '../../../helpers/authHelper';
 
-export default function accommodationListItem(props) {
+export default function deactivatedListItem(props) {
   const {
-    post, handleLike, handleDislike, userId,
+    post, userId,
   } = props;
+
   return (
     <Row className="center-items" key={post.id}>
       <Card key={post.id} className="accommodation-card">
@@ -84,26 +83,18 @@ export default function accommodationListItem(props) {
               </span>
             </Row>
             <Row className="center-items like-disklike">
-                <span md={4} className="like">
-                  {checkHost() ? null : post.hasLiked ? <ThumbUpAltIcon className="like-button" data-test="like-button" /> : <ThumbUpOutlinedIcon className="like-button" data-test="like-button" onClick={() => handleLike(post.slug, 'like')} />}
-                  {' '}
-                  {`${post.Likes} Likes`}
-                </span>
-                <span md={4} className="dislike">
-                  {checkHost() ? null : post.hasUnliked ? <ThumbDownAltIcon className="dislike-button" data-test="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" data-test="dislike-button" onClick={() => handleDislike(post.slug, 'unlike')} />}
-                  {' '}
-                  {`${post.Unlikes} Dislikes`}
-                </span>
+              <span md={4} className="like">
+                {post.hasLiked ? <ThumbUpAltIcon className="like-button" data-test="like-button" /> : <ThumbUpOutlinedIcon className="like-button" data-test="like-button" />}
+                {' '}
+                {`${post.Likes} Likes`}
+              </span>
+              <span md={4} className="dislike">
+                {post.hasUnliked ? <ThumbDownAltIcon className="dislike-button" data-test="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" data-test="dislike-button" />}
+                {' '}
+                {`${post.Unlikes} Dislikes`}
+              </span>
             </Row>
             <Row className="acc-buttons">
-              <Link to={`/accommodations/${post.slug}`}>
-                {checkHost() ? null
-                  : (
-                    <Button className="full-width-buttons">
-                                      Book accommodation
-                    </Button>
-                  )}
-              </Link>
               {
                 ((post.ownerUser ? post.ownerUser.id : post.owner) === userId)
                   ? (
