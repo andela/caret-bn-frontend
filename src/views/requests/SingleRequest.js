@@ -12,13 +12,11 @@ import DestinationDisplay from '../../components/pages/requests/DestinationDispl
 import { checkSupplier, checkManager } from '../../helpers/authHelper';
 import ProcessRequest from '../../components/pages/requests/ProcessRequest';
 import Confirm from '../../components/global/Confirm';
+import CommentDisplay from '../../components/pages/requests/CommentDisplay';
 
 export class SingleRequest extends Component {
   state = {
     isLoading: false,
-    // processLoading: false,
-    // displayConfirm: false,
-    // action: '',
   }
 
   async componentDidMount() {
@@ -150,6 +148,7 @@ export class SingleRequest extends Component {
                   </Col>
                 </Row>
                 )}
+                <CommentDisplay requestId={requestId} />
               </div>
             )
           }

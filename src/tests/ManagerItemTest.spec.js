@@ -37,7 +37,6 @@ describe('ManagerItem Test Suite', () => {
   it('Should Click Approve Successfully', () => {
     const component = setUp(mainState);
     component.dive().find('[data-test="manager-approve"]').simulate('click');
-    console.log('ManagerItem Test ===> ', component.instance());
     component.instance().processAction();
     expect(component.dive().find('[data-test="manager-approve"]')).toHaveLength(1);
   });

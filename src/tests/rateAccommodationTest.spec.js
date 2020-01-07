@@ -65,7 +65,6 @@ describe('Testing Modal', () => {
   it('Should Call Submit Successfully', async () => {
     const component = setUp(mainState);
     const modal = findByTestAttribute(component, 'rate-acc-btn');
-    console.log(component.debug());
     const submitSpy = jest.spyOn(component.instance(), 'submitRating');
     const rateButton = findByTestAttribute(modal.dive().dive(), 'rate-button')
     const submitButton = findByTestAttribute(modal.dive().dive(), 'submit-button')
