@@ -8,7 +8,13 @@
 	color: $white;
 	&:hover {
 		color: $light;
+		text-decoration: none;
 	}
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
 }
 
 .nav-drop {

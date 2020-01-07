@@ -31,19 +31,19 @@ export class ManagerView extends Component {
   renderResults = (data, dataError) => (
 
     <div>
-    { data && data.length === 0 && (
-      <Row>
-        No request
-      </Row>
-    ) }
-    { data && data.map((item) => (
-          <Row key={item.id}>
-            <ManagerItem item={item} user={item.requester.username} email={item.requester.email} />
-          </Row>
-    )) }
+      { data && data.length === 0 && (
         <Row>
-          { dataError && <Row>{dataError.message}</Row> }
+          No request
         </Row>
+      ) }
+      <Row className="centered-flex">
+        { data && data.map((item) => (
+          <ManagerItem key={item.id} item={item} user={item.requester.username} email={item.requester.email} />
+        )) }
+      </Row>
+      <Row>
+        { dataError && <Row>{dataError.message}</Row> }
+      </Row>
     </div>
   );
 
@@ -68,19 +68,22 @@ export class ManagerView extends Component {
             <Col md={5} />
           </Row>
 
+          <Row />
+
+          <SearchBar />
+
           <Row className="text-center mx-auto">
             {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
           </Row>
-          <Row />
-          <SearchBar />
+
           {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
+          <Row className="centered-flex mx-auto">
           {status === '' && data && data.map((user) => (
             user.requests.map((item) => (
-              <Row key={item.id}>
-                <ManagerItem item={item} user={user.username} email={user.email} />
-              </Row>
+              <ManagerItem key={item.id} item={item} user={user.username} email={user.email} />
             ))
           ))}
+          </Row>
           <Row>
             {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
           </Row>

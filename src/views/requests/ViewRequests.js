@@ -33,11 +33,11 @@ export class ViewRequests extends Component {
         No request
       </Row>
     ) }
-    { data && data.map((item) => (
-          <Row key={item.id}>
-            <RequestItem item={item} />
-          </Row>
-    )) }
+      <Row className="centered-flex mx-auto">
+        { data && data.map((item) => (
+          <RequestItem key={item.id} item={item} />
+        )) }
+      </Row>
         <Row>
           { dataError && <Row>{dataError.message}</Row> }
         </Row>

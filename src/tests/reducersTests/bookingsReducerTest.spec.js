@@ -5,19 +5,20 @@ import {
 } from "../../actions/types";
 
 describe('User Bookings Reducer Tests ', () => {
-  it('Should return default state for users', () => {
-    const inistialState = bookingsReducer(undefined, {});
-    expect(inistialState).toEqual({
-      "approvalStatus": null,
-      "data": null,
-      "dataError": null,
-      "pending": null,
-      "booked": null,
-      "bookedError": null,
-      "status": '',
+    it('Should return default state for users', () => {
+        const inistialState = bookingsReducer(undefined, {});
+        expect(inistialState).toEqual({
+          "approvalStatus": null,
+          "pending": null,
+          "data": null,
+          "dataError": null,
+          "booked": null,
+          "bookedError": null,
+          "oneBookingData": null,
+          "oneBookingError": null,
+          "status": '',
+        });
     });
-  });
-
 
   it('Should handle BOOK_FAILURE ', () => {
     const successAction = {
@@ -35,6 +36,8 @@ describe('User Bookings Reducer Tests ', () => {
       "booked": null,
       "bookedError": successAction.payload,
       "status": 'error',
+      "oneBookingData": null,
+      "oneBookingError": null,
     })
   });
 
@@ -53,7 +56,9 @@ describe('User Bookings Reducer Tests ', () => {
       bookedError: null,
       status: 'success',
       pending: null,
-      approvalStatus: null
+      approvalStatus: null,
+      oneBookingData: null,
+      oneBookingError: null,
     })
   });
 
@@ -74,7 +79,9 @@ describe('User Bookings Reducer Tests ', () => {
         bookedError: null,
         status: '',
         pending: null,
-        approvalStatus: 'success'
+        approvalStatus: 'success',
+        oneBookingData: null,
+        oneBookingError: null,
       })
   });
 
@@ -94,7 +101,9 @@ describe('User Bookings Reducer Tests ', () => {
         bookedError: null,
         status: '',
         pending: null,
-        approvalStatus: 'fail'
+        approvalStatus: 'fail',
+        oneBookingData: null,
+        oneBookingError: null,
       }
     )
   });
@@ -115,7 +124,9 @@ describe('User Bookings Reducer Tests ', () => {
         bookedError: null,
         status: 'success',
         pending: { message: 'Booking Failed' },
-        approvalStatus: null
+        approvalStatus: null,
+        oneBookingData: null,
+        oneBookingError: null,
       }
     )
   });
@@ -137,10 +148,31 @@ describe('User Bookings Reducer Tests ', () => {
         bookedError: null,
         status: 'fail',
         pending: null,
-        approvalStatus: null
+        approvalStatus: null,
+        oneBookingData: null,
+        oneBookingError: null,
       }
     )
   });
 
-
+    it('Should handle BOOK_FAILURE ', () => {
+        const successAction = {
+            type: BOOK_FAILURE,
+            payload: {
+                message:'Booking Failed'
+            }
+        }
+        const returnedSate = bookingsReducer(undefined, successAction);
+        expect(returnedSate).toEqual({
+            "data": null,
+            "dataError": null,
+            "booked": null,
+            "bookedError": successAction.payload,
+            "oneBookingData": null,
+            "oneBookingError": null,
+            "status": 'error',
+            "pending": null,
+            "approvalStatus": null,
+        })
+    });
 }); 

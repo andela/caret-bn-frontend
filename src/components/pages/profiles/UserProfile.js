@@ -147,113 +147,119 @@ export class UserProfile extends Component {
     const { data, dataError, statesss } = props;
     return (
       <div className="user-profile">
-        <Row>
-          <Col md={5} className="breadcrumbs">
-            <Breadcrumbs itemsArray={['> Home', '  Profile']} />
-          </Col>
-        </Row>
-        <Row>
-          {isLoading ? <i className="fas fa-spinner fa-pulse loader-big align-items-center" /> : ''}
-        </Row>
-        {
-          data
-          && (
-            <Row className="center-items">
-              <form className="text-center bg-white" onSubmit={this.handleSubmit}>
-                <Row>
-                  <Col>
-                    {dataError && <AlertComponent variant="danger" heading="Error" message={dataError.error} />}
-                  </Col>
-                </Row>
-                <div className="prof-container">
-                  <img id="profile-picture" className="avatar mb-5 center-image-small-screen" src={image || 'https://via.placeholder.com/450'} alt="profile" />
-                  <div className="button-wrapper">
-                    <span className="label">
-                      <i className="fa fa-camera" />
-                    </span>
-                    <input type="file" name="upload" id="upload" name="selectedFile" onChange={this.handleImage} className="upload-box" disabled={isDisabled} />
-                  </div>
-                  <div className="form-group row p-1 pb-0">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">User Name</label>
-                    <div className="col-sm-10">
-                      <input type="text" className="form-control" name="username" placeholder="username" required value={username} onChange={this.handleChange} readOnly={isReadOnly} />
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
-                    <div className="col-sm-10">
-                      <input type="text" className="form-control" name="email" placeholder="Email" value={email} disabled />
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Gender</label>
-                    <div className="col-sm-10">
-                      <select className="form-control mb-2" name="gender" onChange={this.handleChange} disabled={isDisabled} value={gender}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Language</label>
-                    <div className="col-sm-10">
-                      <input type="text" className="form-control mb-2" name="language" placeholder="language" value={language} onChange={this.handleChange} readOnly={isReadOnly} />
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Phone</label>
-                    <div className="col-sm-10">
-                      <input type="number" className="form-control mb-2" name="phone" placeholder="phone" minLength="3" maxLength="10" value={phone} onChange={this.handleChange} readOnly={isReadOnly} />
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Country</label>
-                    <div className="col-sm-10">
-                      <input type="text" className="form-control mb-2" name="country" placeholder="country" value={country} onChange={this.handleChange} readOnly={isReadOnly} />
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Company</label>
-                    <div className="col-sm-10">
-                      <input type="text" className="form-control mb-2" name="company" placeholder="company" value={company} onChange={this.handleChange} readOnly={isReadOnly} />
-                    </div>
-                  </div>
-                  <div className="form-group row p-1">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Department</label>
-                    <div className="col-sm-10">
-                      <input type="text" className="form-control mb-2" name="department" placeholder="department" value={department} onChange={this.handleChange} readOnly={isReadOnly} />
-                    </div>
-                  </div>
-                  <Row>
-                    <Col xs={12} sm={12} md={6} lg={6}>
-                      Email Notifications:
-                {' '}
-                      <Switch data-test="email-notification" onChange={() => this.switchNotif('email-notification')} checked={emailNotif} />
-                    </Col>
-                    <Col xs={12} sm={12} md={6} lg={6}>
-                      In-app Notifications:
-                {' '}
-                      <Switch data-test="app-notification" onChange={() => this.switchNotif('app-notification')} checked={appNotif} />
-                    </Col>
-                  </Row>
+      <Row>
+        <Col md={5} className="breadcrumbs">
+          <Breadcrumbs itemsArray={['> Home', '  Profile']} />
+        </Col>
+      </Row>
+      <Row>
+        {isLoading ? <i className="fas fa-spinner fa-pulse loader-big align-items-center" /> : ''}
+      </Row>
+      {
+        data
+        && (
+        <Row className="center-items">
+          <form className="text-center bg-white" onSubmit={this.handleSubmit}>
+          <Row>
+              <Col>
+                { dataError && <AlertComponent variant="danger" heading="Error" message={dataError.error} /> }
+              </Col>
+          </Row>
+            <div className="prof-container">
+                <img id="profile-picture" className="avatar mb-5 center-image-small-screen" src={image || 'https://via.placeholder.com/450'} alt="profile" />
+                <div className="button-wrapper">
+                <span className="label">
+                  <i className="fa fa-camera" />
+                </span>
+                  <input type="file" name="upload" id="upload" name="selectedFile" onChange={this.handleImage} className="upload-box" disabled={isDisabled} />
                 </div>
-                {status === 'display'
-                  ? (
-                    <Button variant="primary" className="style-btn-update" onClick={this.changeEditMode} id="buttonEdit">
-                      Edit Profile
-</Button>
-                  )
-                  : (
-                    <div>
-                      <Button variant="primary" type="submit" className="style-btn-update mx-1">
-                        {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Update'}
-                      </Button>
-                      {!isLoading ? <Button variant="primary" type="reset" className="style-btn-update mx-1" onClick={this.handleCancel} id="buttonCancel"> Cancel </Button> : null}
-                    </div>
-                  )}
-              </form>
-            </Row>
-          )
+            <div className="form-group row p-1 pb-0">
+                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">User Name</label>
+                <div className="col-sm-10">
+                  <input type="text" className="form-control" name="username" placeholder="username" required value={username} onChange={this.handleChange} readOnly={isReadOnly} />
+                </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control" name="email" placeholder="Email" value={email} disabled />
+              </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Gender</label>
+              <div className="col-sm-10">
+              <select className="form-control mb-2" name="gender" onChange={this.handleChange} disabled={isDisabled} value={gender}>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+              </select>
+              </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Language</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control mb-2" name="language" placeholder="language" value={language} onChange={this.handleChange} readOnly={isReadOnly} />
+              </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Phone</label>
+              <div className="col-sm-10">
+                <input type="number" className="form-control mb-2" name="phone" placeholder="phone" minLength="3" maxLength="10" value={phone} onChange={this.handleChange} readOnly={isReadOnly} />
+              </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Country</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control mb-2" name="country" placeholder="country" value={country} onChange={this.handleChange} readOnly={isReadOnly} />
+              </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Company</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control mb-2" name="company" placeholder="company" value={company} onChange={this.handleChange} readOnly={isReadOnly} />
+              </div>
+            </div>
+            <div className="form-group row p-1">
+              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Department</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control mb-2" name="department" placeholder="department" value={department} onChange={this.handleChange} readOnly={isReadOnly} />
+              </div>
+            </div>
+            {/* <Row> */}
+            <div className="form-group row p-1">
+              <span className="col-sm-3 col-form-label">
+                Email Notifications:
+              </span>
+              {' '}
+              <div className="col-sm-2">
+                <Switch onChange={() => this.switchNotif('email-notification')} checked={emailNotif} />
+              </div>
+              <span className="col-sm-3 col-form-label">
+                In-app Notifications:
+              </span>
+              {' '}
+              <div className="col-sm-2">
+                <Switch onChange={() => this.switchNotif('app-notification')} checked={appNotif} />
+              </div>
+            </div>
+            {/* </Row> */}
+            </div>
+            {status === 'display'
+              ? (
+              <Button variant="primary" className="style-btn-update" onClick={this.changeEditMode} id="buttonEdit">
+                Edit Profile
+              </Button>
+              )
+              : (
+                <div>
+                  <Button variant="primary" type="submit" className="style-btn-update mx-1">
+                    {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Update'}
+                  </Button>
+                  {!isLoading ? <Button variant="primary" type="reset" className="style-btn-update mx-1" onClick={this.handleCancel} id="buttonCancel"> Cancel </Button> : null }
+                </div>
+              )}
+          </form>
+        </Row>
+        )
         }
       </div>
     );

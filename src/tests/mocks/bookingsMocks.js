@@ -1,0 +1,70 @@
+const bookingsMocks = [
+  {
+    id: 57,
+    bookedSpace: 1,
+    checkIn: '2019-12-28',
+    checkOut: '2019-12-31',
+    createdAt: '2019-12-27',
+    updatedAt: '2020-01-03',
+    status: { id: 1, name: 'Pending' },
+    user: {
+      id: 3,
+      username: 'Caret User',
+      email: 'caretuser@gmail.com',
+    },
+    accommodation: {
+      id: 39,
+      name: 'La Caverna',
+      description: 'This is a really nice place for you and your wife not others.',
+      cost: 120,
+      currency: 'USD',
+      owner: 7,
+    },
+  },
+  {
+    id: 57,
+    bookedSpace: 1,
+    checkIn: '2019-12-28',
+    checkOut: '2019-12-31',
+    createdAt: '2019-12-27',
+    updatedAt: '2020-01-03',
+    status: { id: 1, name: 'Pending' },
+    user: {
+      id: 3,
+      username: 'Caret User',
+      email: 'caretuser@gmail.com',
+    },
+    accommodation: {
+      id: 39,
+      name: 'La Caverna',
+      description: 'This is a really nice place for you and your wife not others.',
+      cost: 120,
+      currency: 'USD',
+      owner: 7,
+    },
+  },
+  {
+    id: 57,
+    bookedSpace: 1,
+    checkIn: '2019-12-28',
+    checkOut: '2019-12-31',
+    createdAt: '2019-12-27',
+    updatedAt: '2020-01-03',
+    status: { id: 1, name: 'Pending' },
+    user: {
+      id: 3,
+      username: 'Caret User',
+      email: 'caretuser@gmail.com',
+    },
+    accommodation: {
+      id: 39,
+      name: 'La Caverna',
+      description: 'This is a really nice place for you and your wife not others.',
+      cost: 120,
+      currency: 'USD',
+      owner: 7,
+    },
+  },
+];
+
+export default bookingsMocks;

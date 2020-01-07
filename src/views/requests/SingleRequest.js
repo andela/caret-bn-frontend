@@ -4,13 +4,13 @@ import { Redirect } from 'react-router-dom';
 import {
   Container, Row, Button, Col, Form,
 } from 'react-bootstrap';
+import { CheckCircleOutlineOutlined, HighlightOffOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { singleRequestAction, processRequestAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import Alert from '../../components/global/AlertComponent';
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
 import { checkSupplier, checkManager } from '../../helpers/authHelper';
-import ProcessRequest from '../../components/pages/requests/ProcessRequest';
 import Confirm from '../../components/global/Confirm';
 import CommentDisplay from '../../components/pages/requests/CommentDisplay';
 
@@ -83,6 +83,24 @@ export class SingleRequest extends Component {
                   <h4>Request Information</h4>
                   <p>Details on the Trip Request.</p>
                 </Row>
+                {!checkManager() && (
+                  <>
+                    <Row className="section">
+                      <h4>
+                        Requester:
+                        {' '}
+                        {singleData.data.requester.username}
+                      </h4>
+                    </Row>
+                    <Row className="section">
+                      <h4>
+                        Email:
+                        {' '}
+                        {singleData.data.requester.email}
+                      </h4>
+                    </Row>
+                  </>
+                )}
                 <Row className="section">
                   <h4>
                     Status:
@@ -137,14 +155,14 @@ export class SingleRequest extends Component {
                     </Row>
                   </Form>
                 </Row>
-                {!checkManager() && singleData.data.status.id === 1 && (
+                {!checkManager() && (
                 <Row className="mb-3">
                   <Col md={2} />
                   <Col md={4}>
-                    <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" />
+                <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" disabled={singleData.data.status.id === 3} icon={<CheckCircleOutlineOutlined />} />
                   </Col>
                   <Col md={4}>
-                    <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" />
+                    <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" disabled={singleData.data.status.id === 2} icon={<HighlightOffOutlined />} />
                   </Col>
                 </Row>
                 )}

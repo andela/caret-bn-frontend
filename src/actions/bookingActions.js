@@ -1,6 +1,7 @@
 import {
   GET_BOOKINGS, GET_BOOKINGS_ERROR, GET_PENDING_BOOKINGS, GET_PENDING_BOOKINGS_ERROR,
   APPROVE_BOOKING, APPROVE_BOOKING_ERROR, REJECT_BOOKING, REJECT_BOOKING_ERROR, SHOW_ALERT, BOOK_SUCCESS, BOOK_FAILURE,
+  GET_ONE_BOOKING, GET_ONE_BOOKING_ERROR,
 } from './types';
 import { getToken } from '../helpers/authHelper';
 import backendCall from '../helpers/backendCall';
@@ -59,4 +60,11 @@ export const BookAccommodation = (checkInDate, checkOutDate, accomodationId, roo
       bookingsType(BOOK_FAILURE, error.response.data),
     );
     dispatch(bookingsType(SHOW_ALERT));
+  });
+
+export const getOneBooking = (id) => (dispatch) => backendCall.get(`/accommodations/bookings/${id}`, { headers })
+  .then((response) => {
+    dispatch(bookingsType(GET_ONE_BOOKING, response.data));
+  }).catch((error) => {
+    dispatch(bookingsType(GET_ONE_BOOKING_ERROR, error.response.data));
   });
