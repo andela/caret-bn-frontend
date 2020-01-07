@@ -13,9 +13,10 @@ import {
 } from '@material-ui/icons';
 import BookMark from './BookMark';
 
+
 export default function deactivatedListItem(props) {
   const {
-    post, userId,
+    post, handleLike, handleDislike, userId,
   } = props;
 
   return (
@@ -51,6 +52,7 @@ export default function deactivatedListItem(props) {
                   {' '}
                   {post.cost.toFixed(2)}
                   {' '}
+
                 </span>
                 <span className="unit">
                   {' '}
@@ -84,12 +86,13 @@ export default function deactivatedListItem(props) {
             </Row>
             <Row className="center-items like-disklike">
               <span md={4} className="like">
-                {post.hasLiked ? <ThumbUpAltIcon className="like-button" data-test="like-button" /> : <ThumbUpOutlinedIcon className="like-button" data-test="like-button" />}
+                {post.hasLiked ? <ThumbUpAltIcon className="like-button" data-test="like-button" /> : <ThumbUpOutlinedIcon className="like-button" data-test="like-button" onClick={() => handleLike(post.slug, 'like')} />}
                 {' '}
                 {`${post.Likes} Likes`}
+
               </span>
               <span md={4} className="dislike">
-                {post.hasUnliked ? <ThumbDownAltIcon className="dislike-button" data-test="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" data-test="dislike-button" />}
+                {post.hasUnliked ? <ThumbDownAltIcon className="dislike-button" data-test="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" data-test="dislike-button" onClick={() => handleDislike(post.slug, 'unlike')} />}
                 {' '}
                 {`${post.Unlikes} Dislikes`}
               </span>

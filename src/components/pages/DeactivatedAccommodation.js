@@ -64,6 +64,18 @@ export class DeactivatedAccommodation extends React.Component {
     });
   }
 
+  handleLike = async (slug, action) => {
+    const { likeUnlikeAccommodation, getDeactivatedAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await getDeactivatedAccommodation();
+  }
+
+  handleDislike = async (slug, action) => {
+    const { likeUnlikeAccommodation, getDeactivatedAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await getDeactivatedAccommodation();
+  }
+
   renderAcommodation() {
     const {
       accommodationDeactivatedData, searchResults, searchError, showAlert,

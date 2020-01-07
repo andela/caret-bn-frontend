@@ -368,6 +368,4 @@ describe('Create accommodation Reducer Tests ', () => {
       "accommodationDeactivatedError": {},
     });
   });
-
-
 }); 

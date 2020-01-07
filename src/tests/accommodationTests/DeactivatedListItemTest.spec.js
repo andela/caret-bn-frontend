@@ -8,6 +8,9 @@ import DeactivatedListItem from '../../components/pages/accommodations/Deactivat
 import mockStore from '../../utilities/tests/mockStore';
 import findByTestAttribute from './../../utilities/tests/findByTestAttribute';
 import { ExpansionPanelActions } from '@material-ui/core';
+import DeactivatedListItem from '../../components/pages/accommodations/DeactivatedListItem';
+import mockStore from '../../utilities/tests/mockStore';
+import findByTestAttribute from './../../utilities/tests/findByTestAttribute';
 
 const props = {
   post: {
@@ -79,5 +82,13 @@ describe('Test AccommodationItem', () => {
   it('should mount ThumbUpOutlinedIcon', () => {
     const component = setUp1({});
      expect(component.find(ThumbUpOutlinedIcon));
+    });
+  it('should mount and render accommodationItem Correctly', () => {
+    const component = setUp({});
+    const likeButton = findByTestAttribute(component, 'like-button');
+    const disLikeButton = findByTestAttribute(component, 'dislike-button');
+    likeButton.simulate('click');
+    disLikeButton.simulate('click');
+    expect(props.handleLike).toBeCalled();
   });
 });

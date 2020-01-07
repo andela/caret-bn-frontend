@@ -93,6 +93,25 @@ describe('ViewAllAccommodation Test Suite', () => {
   });
 });
 
+describe('Like Dislike tests', () => {
+  it('should like and deslike', async () => {
+    const component = setUp(mainState);
+    component.setState({
+      isLoading: false
+    });
+    component.setProps({
+      likeUnlikeAccommodation: jest.fn(),
+      getDeactivatedAccommodation: jest.fn(),
+    })
+    const likeSpy = jest.spyOn(component.instance(), 'handleLike');
+    const dislikeSpy = jest.spyOn(component.instance(), 'handleDislike');
+    component.instance().handleLike('isimbi');
+    component.instance().handleDislike('isimbi');
+    expect(likeSpy).toHaveBeenCalled();
+    expect(dislikeSpy).toHaveBeenCalled();
+  });
+});
+
 describe('Modal Tests', () => {
   it('should start search', () => {
     const component = setUp(mainState);
