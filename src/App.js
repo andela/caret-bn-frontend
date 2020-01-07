@@ -31,6 +31,7 @@ import AllNotifications from './views/notifications/AllNotifications';
 import MyBookings from './components/pages/MyBookings';
 import OneBooking from './components/pages/OneBooking';
 import Bookmarks from './views/Bookmarks';
+import CommunityChat from './components/pages/chat/CommunityChat';
 
 export class App extends Component {
   render() {
@@ -63,6 +64,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/my-bookings" component={MyBookings} />
           <ProtectedRoute exact path="/bookings/:id" component={OneBooking} />
           <ProtectedRoute exact path="/my-bookmarks" component={Bookmarks} />
+          <ProtectedRoute exact path="/community" component={CommunityChat} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />
