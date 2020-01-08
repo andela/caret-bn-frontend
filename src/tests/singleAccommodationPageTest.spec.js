@@ -73,20 +73,4 @@ describe('Make booking Test Suite', () => {
     };
     expect(mapStateToProps(initialState).accommodation).toEqual({});
   });
-
-  it('Should handle like & dislike buttons', async () => {
-    const component = setUp(mainState);
-
-    const likeBtn = findByTestAttribute(component, 'like-button');
-    const dislikeBtn = findByTestAttribute(component, 'dislike-button');
-
-    const likeSpy = jest.spyOn(component.instance(), 'handleLike');
-    const dislikeSpy = jest.spyOn(component.instance(), 'handleDislike');
-
-    await likeBtn.simulate('click');
-    expect(likeSpy).toHaveBeenCalled();
-
-    await dislikeBtn.simulate('click');
-    expect(dislikeSpy).toHaveBeenCalled();
-  });
 });

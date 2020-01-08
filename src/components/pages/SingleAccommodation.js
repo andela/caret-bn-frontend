@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Carousel, Modal,
-  Container, Row, Col, Button, Form,
+  Container, Row, Col, Button, Form, Badge,
 } from 'react-bootstrap';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
@@ -27,6 +27,7 @@ import RatingModal from './RatingModal';
 import RateItem from './RateItem';
 import { EditOutlined } from '@material-ui/icons';
 import BookMark from './../pages/accommodations/BookMark';
+import { checkHost } from '../../helpers/authHelper';
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
@@ -200,8 +201,9 @@ export class SingleAccommodation extends React.Component {
                         <div className="highlights">
                           <i>
                             <h6 dangerouslySetInnerHTML={{
-                    __html: accommodation.highlights,
-                  }} />
+                              __html: accommodation.highlights,
+                            }}
+                            />
                           </i>
                         </div>
                       </Col>
@@ -209,16 +211,15 @@ export class SingleAccommodation extends React.Component {
                         <img src={img3} alt="icon" />
                       </div>
                       <Col>
-
-                        <h3 className="amenities"> Anemities </h3>
-                        <div>
+                        <h3> Amenities </h3>
+                        <div className="highlights">
                           <i>
-                            <h6 className="highlights" dangerouslySetInnerHTML={{
-                    __html: accommodation.amenities,
-                  }} />
+                            <h6 dangerouslySetInnerHTML={{
+                              __html: accommodation.amenities,
+                            }}
+                            />
                           </i>
                         </div>
-
                       </Col>
                     </Row>
                   </div>
@@ -275,16 +276,21 @@ export class SingleAccommodation extends React.Component {
                   }}
                   />
                 </div>
-                <Booking />
+                <Badge variant="info">
+                  {accommodation.availableSpace}
+                  &nbsp;
+                  Rooms available
+                </Badge>
+                {checkHost() ? null : <Booking />}
                 <Row>
-                  <Col className="like">
-                    {hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon data-test="like-button" className="like-button" onClick={() => this.handleLike()} />}
-                    {` Total Likes: ${accommodation.Likes}`}
-                  </Col>
-                  <Col className="dislike">
-                    {hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon data-test="dislike-button" className="dislike-button" onClick={() => this.handleDislike()} />}
-                    {` Total Dislikes: ${accommodation.Unlikes}`}
-                  </Col>
+                <Col className="like">
+                  {checkHost() ? null : hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon className="like-button" onClick={this.handleLike} />}
+                  {` Total Likes: ${accommodation.Likes}`}
+                </Col>
+                <Col className="dislike">
+                  {checkHost() ? null : hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" onClick={this.handleDislike} />}
+                  {` Total Dislikes: ${accommodation.Unlikes}`}
+                </Col>
                 </Row>
                 <h4>Reviews</h4>
                 {ratingArray.map((rating) => (

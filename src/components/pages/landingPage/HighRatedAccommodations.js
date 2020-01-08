@@ -28,6 +28,7 @@ export class HighRatedAccommodation extends Component {
       <div>
         <Row>{ isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' }</Row>
           <Col className=" high-rated container-fluid">
+          <h1 className="home-heading">Highest Rated</h1>
               <div className="top-accommodations">
               {
                 highRated ? highRated.data.map((ratedAccommodation) => (

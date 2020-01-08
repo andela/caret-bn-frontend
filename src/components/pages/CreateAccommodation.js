@@ -107,22 +107,17 @@ export class CreateAccommodation extends Component {
               <Card.Title>Create Accommodation</Card.Title>
               <Card.Text>
                 <Form id="accommodation-form" onSubmit={this.handleSubmit}>
-                  <Row>
-                    <Col>
-                      {accommodationError && <AlertComponent variant="danger" heading="Error" message={accommodationError.data.message} />}
-                    </Col>
-                  </Row>
                   <Form.Group>
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" name="name" onChange={this.handleChange} placeholder="Name..." title="Enter the name" minLength="10" maxLength="100" required />
+                    <Form.Control type="text" name="name" onChange={this.handleChange} placeholder="Name..." title="Enter the name" required />
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Available Space</Form.Label>
-                    <Form.Control type="number" min="1" max="99990" name="availableSpace" onChange={this.handleChange} placeholder="Available space..." title="Enter the number of available rooms" required />
+                    <Form.Control type="number" min="1" name="availableSpace" onChange={this.handleChange} placeholder="Available space..." title="Enter the number of available rooms" required />
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Cost</Form.Label>
-                    <Form.Control name="cost" type="number" min="1" max="99999" onChange={this.handleChange} placeholder="Cost..." title="Enter the cost" maxLength="100" required />
+                    <Form.Control name="cost" type="number" min="1" onChange={this.handleChange} placeholder="Cost..." title="Enter the cost" maxLength="100" required />
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Currency</Form.Label>
@@ -199,6 +194,11 @@ export class CreateAccommodation extends Component {
                     {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Create'}
                   </Button>
                 </Form>
+                <Row>
+                    <Col>
+                      {accommodationError && <AlertComponent variant="danger" heading="Error" message={accommodationError.data.message} />}
+                    </Col>
+                </Row>
               </Card.Text>
             </Card.Body>
           </Card>

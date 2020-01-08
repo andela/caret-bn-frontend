@@ -25,8 +25,11 @@ describe('Login Test Suite', () => {
     const state = mockStore({
       auth: {
         data: {},
-        dataError: {},
+        dataError: {data:{message: 'Incorrect email or password'}},
         status: "Success"
+      },
+      alert: {
+        isShown: false,
       }
     })
     wrapper = mount(

@@ -20,7 +20,6 @@
                 display: block;
                 height: 15rem;
                 margin: 0 0 1rem 0;
-                // margin-left:0;
                 flex-grow: 1;
             }
             img {
@@ -49,8 +48,13 @@
             min-width: 15rem;
             height: 0;
         }
-        
     }
+
+    .home-heading{
+        font-size: 3.5vw;
+        font-weight: bold;
+    }
+
     }
     
     .destinations{
@@ -94,5 +98,9 @@
             height: 0;
         }
         
+        .home-heading{
+            font-size: 3.5vw;
+            font-weight: bold;
+        }
     }
 }
