@@ -7,7 +7,6 @@ import requestsReducer from './requestsReducer';
 import accommodationReducer from './AccommodationReducer';
 import bookingsReducer from './bookingsReducer';
 import locationReducer from './locationReducer';
-import searchRequestsReducer from './searchRequestsReducer';
 import userReducer from './userReducer';
 import roleReducer from './roleReducer';
 import alertReducer from './alertReducer';
@@ -20,6 +19,7 @@ import ratingsReducer from './ratingsReducer';
 import commentReducer from './commentReducer';
 import bookmarksReducer from './bookmarksReducer';
 import chatReducer from './chatReducer';
+import resetPageReducer from './resetPageReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -27,7 +27,6 @@ export default combineReducers({
   response: resetpasswordreducer,
   request: requestReducer,
   requests: requestsReducer,
-  searchRequests: searchRequestsReducer,
   accommodation: accommodationReducer,
   bookings: bookingsReducer,
   locations: locationReducer,
@@ -43,4 +42,5 @@ export default combineReducers({
   requestComment: commentReducer,
   bookmarks: bookmarksReducer,
   chat: chatReducer,
+  resetPageReducer,
 });

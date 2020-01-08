@@ -13,9 +13,9 @@ const AlertComponent = (props) => {
     return (
       <Alert data-test="data-alert" onClose={() => dispatch(hideAlert())} variant={variant} dismissible>
         <Alert.Heading>{heading}</Alert.Heading>
-        <small>
+        <p>
           {message}
-        </small>
+        </p>
       </Alert>
     );
   } return null;

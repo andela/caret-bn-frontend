@@ -6,6 +6,7 @@ import Separator from './auth-separator';
 import UserVerify from '../pages/UserVerify';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/Resetpassword';
+import RegisterSuccess from '../pages/RegisterSuccess';
 
 export default function AuthHolder(props) {
   return (
@@ -17,6 +18,9 @@ export default function AuthHolder(props) {
             <Route path="/register">
                 <Signup />
                 <Separator />
+            </Route>
+            <Route path="/registered">
+                <RegisterSuccess />
             </Route>
             <Route path="/verify/:token">
                 <UserVerify token={props.token} />

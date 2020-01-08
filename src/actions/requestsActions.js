@@ -1,6 +1,6 @@
 import {
   GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL, PROCESS_REQUEST_SUCCESS, PROCESS_REQUEST_ERROR,
-  GET_STATS_SUCCESS, GET_STATS_ERROR,
+  GET_STATS_SUCCESS, GET_STATS_ERROR, SHOW_ALERT,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -55,4 +55,5 @@ export const getStatsAction = (statsParams) => (dispatch) => backendCall.get(`/r
   })
   .catch((error) => {
     dispatch(requestType(GET_STATS_ERROR, error.response.data));
+    dispatch(requestType(SHOW_ALERT));
   });

@@ -145,6 +145,8 @@ export class UserProfile extends Component {
     } = this.state;
 
     const { data, dataError, statesss } = props;
+    console.log('data ===> ', data);
+
     return (
       <div className="user-profile">
       <Row>
@@ -159,7 +161,7 @@ export class UserProfile extends Component {
         data
         && (
         <Row className="center-items">
-          <form className="text-center bg-white" onSubmit={this.handleSubmit}>
+          <form className="text-center bg-white rounded mb-2 pb-4" onSubmit={this.handleSubmit}>
           <Row>
               <Col>
                 { dataError && <AlertComponent variant="danger" heading="Error" message={dataError.error} /> }
@@ -229,12 +231,12 @@ export class UserProfile extends Component {
               <span className="col-sm-6 col-form-label">
                 Email Notifications:
               {' '}
-                <Switch onChange={() => this.switchNotif('email-notification')} checked={emailNotif} />
+                <Switch onChange={() => this.switchNotif('email-notification')} checked={data ? data.profile.emailNotif : emailNotif} />
               </span>
               <span className="col-sm-6 col-form-label">
                 In-app Notifications:
               {' '}
-                <Switch onChange={() => this.switchNotif('app-notification')} checked={appNotif} />
+                <Switch onChange={() => this.switchNotif('app-notification')} checked={data ? data.profile.appNotif : appNotif} />
               </span>
             </div>
             {/* </Row> */}

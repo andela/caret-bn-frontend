@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import { SIGNUP_SUCCESS, SIGNUP_FAIL } from '../../actions/types';
+import { SIGNUP_SUCCESS, SIGNUP_FAIL, SHOW_ALERT } from '../../actions/types';
 import { signupAction } from '../../actions/authActions';
 import backendCall from '../../helpers/backendCall';
 import { Done } from '@material-ui/icons';
@@ -44,6 +44,10 @@ describe('Signup Actions Test Suite', () => {
         error: ["username required"],
       },
       type: SIGNUP_FAIL
+    },
+    {
+      payload: undefined,
+      type: SHOW_ALERT,
     }];
     store = mockStore({});
     await store.dispatch(signupAction())

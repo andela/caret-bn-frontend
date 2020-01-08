@@ -49,6 +49,7 @@ const setUp = (initialState = {}) => {
 describe('SearchBar Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
+    component.instance().hideStats();
     expect(component.exists()).toBe(true);
   });
 

@@ -43,6 +43,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/" component={Home} />
           <Route path="/login" component={AuthPage} />
           <Route path="/register" component={AuthPage} />
+          <Route path="/registered" component={AuthPage} />
           <Route exact path="/users/auth/success" component={SocialAuthSuccess} />
           <Route path="/verify/:token" component={Verify} />
           <Route path="/forgotpassword" component={AuthPage} />

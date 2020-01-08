@@ -1,5 +1,5 @@
 import requestsReducer from '../../reducers/requestsReducer';
-import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, EDIT_REQUEST_SUCCESS, EDIT_REQUEST_FAIL, } from '../../actions/types';
+import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, EDIT_REQUEST_SUCCESS, EDIT_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL } from '../../actions/types';
 
 describe('Requests Reducer Test Suite', () => {
   it('Should return default state', () => {
@@ -12,7 +12,9 @@ describe('Requests Reducer Test Suite', () => {
       "editError": null,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
+      "searchData": null,
+      "searchDataError": null,
+      "status": '',
     });
   });
 
@@ -35,7 +37,9 @@ describe('Requests Reducer Test Suite', () => {
       "editError": null,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
+      "searchData": null,
+      "searchDataError": null,
+      "status": 'all-success',
     })
   });
 
@@ -58,7 +62,9 @@ describe('Requests Reducer Test Suite', () => {
       "editError": null,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
+      "searchData": null,
+      "searchDataError": null,
+      "status": 'all-error',
     });
   });
 
@@ -80,8 +86,10 @@ describe('Requests Reducer Test Suite', () => {
       "editError": null,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
       "singleData": action.payload.data,
+      "searchData": null,
+      "searchDataError": null,
+      "status": 'one-success',
     })
   });
 
@@ -104,7 +112,9 @@ describe('Requests Reducer Test Suite', () => {
       "editError": null,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
+      "searchData": null,
+      "searchDataError": null,
+      "status": 'one-error',
     });
   });
 
@@ -126,8 +136,10 @@ describe('Requests Reducer Test Suite', () => {
       "editError": null,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
       "singleData": null,
+      "searchData": null,
+      "searchDataError": null,
+      "status": 'edit-success',
     })
   });
 
@@ -149,9 +161,61 @@ describe('Requests Reducer Test Suite', () => {
       "editError": action.payload,
       "statsData": null,
       "statsError": null,
-      "statsStatus": null,
       "singleData": null,
+      "searchData": null,
+      "searchDataError": null,
+      "status": 'edit-error',
     })
+  });
+
+  it('Should return SEARCH_REQUESTS_SUCCESS', () => {
+    const action = {
+      type: SEARCH_REQUESTS_SUCCESS,
+      payload: {
+        status: 200,
+        data: {
+          message: 'Got Requests...'
+        }
+      }
+    }
+    const returnedSate = requestsReducer(undefined, action);
+    expect(returnedSate).toEqual({
+      "searchData": action.payload.data,
+      "searchDataError": null,
+      "dataError": null,
+      "data": null,
+      "editData": null,
+      "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "singleData": null,
+      "status": 'search-success',
+    })
+  });
+
+  it('Should return SEARCH_REQUESTS_FAIL', () => {
+    const action = {
+      type: SEARCH_REQUESTS_FAIL,
+      payload: {
+        status: 404,
+        data: {
+          message: 'No Requests!!!'
+        }
+      }
+    }
+    const returnedSate = requestsReducer(undefined, action);
+    expect(returnedSate).toEqual({
+      "searchData": null,
+      "searchDataError": action.payload,
+      "status": 'search-error',
+      "dataError": null,
+      "data": null,
+      "editData": null,
+      "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "singleData": null,
+    });
   });
 
 });

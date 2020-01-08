@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Container, Row, Button, Col, Spinner,
+  Container, Row, Button, Col, Pagination, Spinner,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Add } from '@material-ui/icons';
@@ -11,10 +13,15 @@ import Breadcrumbs from '../../components/global/Breadcrumbs';
 import RequestItem from '../../components/pages/requests/RequestItem';
 import SearchBar from '../../components/pages/requests/SearchBar';
 import { checkSupplier, checkManager } from '../../helpers/authHelper';
+import { cancelResetPageAction } from '../../actions/resetPageAction';
+import AlertComponent from '../../components/global/AlertComponent';
+import { hideAlert } from '../../actions/alertAction';
+
 
 export class ViewRequests extends Component {
   state = {
     isLoading: false,
+    currentPage: 1,
   }
 
   async componentDidMount() {
@@ -26,23 +33,60 @@ export class ViewRequests extends Component {
     this.setState({ isLoading: false });
   }
 
-  renderResults = (data, dataError) => (
-    <div>
-      { data && data.length === 0 && (
-        <Row>
-          No request
+  async componentWillUnmount() {
+    const { hideAlert } = this.props;
+    await hideAlert();
+  }
+
+  pageList = (currentPage, data) => {
+    const numberPages = Math.ceil(data.length / 6);
+    const pages = [];
+    for (let i = 1; i <= numberPages; i++) {
+      pages.push(
+        <Pagination.Item key={i} onClick={() => this.setState({ currentPage: i })} active={currentPage === i}>{i}</Pagination.Item>,
+      );
+    }
+    return pages;
+  }
+
+  resetPage = () => {
+    const { props } = this;
+    props.cancelResetPageAction();
+    this.setState({
+      currentPage: 1,
+    });
+  };
+
+  renderResults = (data, dataError, currentPage) => {
+    const start = (currentPage - 1) * 6;
+    return (
+      <div>
+        { data && data.length === 0 && (
+          <Row>
+            No request
+          </Row>
+        ) }
+
+        {data && data.length > 0 && (
+          <p>
+            Showing requests
+            {' '}
+            { start + 1 }
+            {' '}
+            to
+            {' '}
+            { data.slice(start, currentPage * 6).length + start }
+          </p>
+        )}
+
+        <Row className="d-flex">
+          { data && data.slice(start, currentPage * 6).map((item) => (
+            <RequestItem key={item.id} item={item} />
+          )) }
         </Row>
-      ) }
-      <Row className="d-flex justify-content-center mx-auto">
-        { data && data.map((item) => (
-          <RequestItem key={item.id} item={item} />
-        )) }
-      </Row>
-      <Row>
-        { dataError && <Row>{dataError.message}</Row> }
-      </Row>
-    </div>
-  );
+      </div>
+    );
+  }
 
   allRequestsButton = () => (
     <Row>
@@ -59,11 +103,11 @@ export class ViewRequests extends Component {
     let dataError;
     let statsData;
     let statsError;
-    const { isLoading } = this.state;
     const { props } = this;
-    const { searchRequests, statsStatus } = props;
-    const { status, searchDataError } = searchRequests;
-    const { searchData } = searchRequests;
+    const {
+      searchDataError, searchData, status, resetState,
+    } = props;
+    const { isLoading, currentPage } = this.state;
 
     if (props.data) {
       data = props.data;
@@ -72,10 +116,14 @@ export class ViewRequests extends Component {
       dataError = props.dataError;
     }
 
-    if (statsStatus) {
+    if (props.statsData) {
       statsData = props.statsData.data.Trips;
+    }
+    if (props.statsError) {
       statsError = props.statsError;
     }
+
+    (resetState) ? this.resetPage() : currentPage;
 
     return (
       <>
@@ -110,10 +158,10 @@ export class ViewRequests extends Component {
           </Row>
 
           <Row className="text-center mx-auto">
-          {status && <Row className="section"><p>Results of your search:</p></Row>}
+            {status === 'search-success' && <Row className="section"><p>Results of your search:</p></Row>}
           </Row>
           <Row className="text-center mx-auto">
-          {statsData && (
+          {status === 'stats-success' && (
             <Row className="section">
               <p>
                 You have made
@@ -126,10 +174,38 @@ export class ViewRequests extends Component {
           )}
           </Row>
 
-          <Row />
-          { status === '' && statsStatus === null && this.renderResults(data, dataError) }
-          { status !== '' && this.renderResults(searchData, searchDataError) }
-          { statsStatus === 'success' && this.renderResults(statsData, statsError) }
+          { status === 'stats-success' && this.renderResults(statsData, statsError, currentPage) }
+          { status === 'all-success' && this.renderResults(data, dataError, currentPage)}
+          { status === 'search-success' && this.renderResults(searchData, searchDataError, currentPage)}
+
+          <Row>
+            { status === 'stats-error' && <AlertComponent variant="danger" message={statsError.message} /> }
+            { status === 'all-error' && <Row>{dataError.message}</Row> }
+            { status === 'search-error' && <Row>{searchDataError.message}</Row> }
+          </Row>
+
+          {data && data.length > 0 && status === 'all-success' && (
+            <Row className="center-items">
+              <Pagination size="sm">
+                <Pagination.First data-test="page-first" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: 1 })} />
+                <Pagination.Prev data-test="page-prev" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: currentPage - 1 })} />
+                {this.pageList(currentPage, data)}
+                <Pagination.Next data-test="page-next" disabled={currentPage === Math.ceil(data.length / 6)} onClick={() => this.setState({ currentPage: currentPage + 1 })} />
+                <Pagination.Last data-test="page-last" disabled={currentPage === Math.ceil(data.length / 6)} onClick={() => this.setState({ currentPage: Math.ceil(data.length / 6) })} />
+              </Pagination>
+            </Row>
+          )}
+          {searchData && searchData.length > 0 && status === 'search-success' && (
+            <Row className="center-items">
+              <Pagination size="sm">
+                <Pagination.First data-test="page-first" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: 1 })} />
+                <Pagination.Prev data-test="page-prev" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: currentPage - 1 })} />
+                {this.pageList(currentPage, searchData)}
+                <Pagination.Next data-test="page-next" disabled={currentPage === Math.ceil(searchData.length / 6)} onClick={() => this.setState({ currentPage: currentPage + 1 })} />
+                <Pagination.Last data-test="page-last" disabled={currentPage === Math.ceil(searchData.length / 6)} onClick={() => this.setState({ currentPage: Math.ceil(searchData.length / 6) })} />
+              </Pagination>
+            </Row>
+          )}
         </Container>
       </>
     );
@@ -139,21 +215,27 @@ export class ViewRequests extends Component {
 export const mapStateToProps = (state) => ({
   data: state.requests.data,
   dataError: state.requests.dataError,
+  searchData: state.requests.searchData,
+  searchDataError: state.requests.searchDataError,
   statsData: state.requests.statsData,
   statsError: state.requests.statsError,
-  statsStatus: state.requests.statsStatus,
+  status: state.requests.status,
+  resetState: state.resetPageReducer.resetState,
 
-  searchRequests: state.searchRequests,
 });
 
 ViewRequests.propTypes = {
   getRequestsAction: PropTypes.func.isRequired,
+  cancelResetPageAction: PropTypes.func.isRequired,
   data: PropTypes.object,
   dataError: PropTypes.object,
-  searchRequests: PropTypes.object,
   status: PropTypes.string,
   searchData: PropTypes.object,
   searchDataError: PropTypes.object,
+  resetState: PropTypes.any,
+  statsData: PropTypes.any,
+  statsError: PropTypes.any,
+  hideAlert: PropTypes.func,
 };
 
-export default connect(mapStateToProps, { getRequestsAction })(ViewRequests);
+export default connect(mapStateToProps, { getRequestsAction, cancelResetPageAction, hideAlert })(ViewRequests);

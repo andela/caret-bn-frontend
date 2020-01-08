@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL, EDIT_REQUEST_SUCCESS, EDIT_REQUEST_FAIL, GET_STATS_SUCCESS, GET_STATS_ERROR } from '../../actions/types';
+import { GET_REQUESTS_SUCCESS, GET_REQUESTS_FAIL, SINGLE_REQUEST_SUCCESS, SINGLE_REQUEST_FAIL, SEARCH_REQUESTS_SUCCESS, SEARCH_REQUESTS_FAIL, EDIT_REQUEST_SUCCESS, EDIT_REQUEST_FAIL, GET_STATS_SUCCESS, GET_STATS_ERROR, SHOW_ALERT } from '../../actions/types';
 import { getRequestsAction, singleRequestAction, searchRequestAction, getStatsAction } from '../../actions/requestsActions';
 import { editRequestAction } from '../../actions/requestActions'
 import backendCall from '../../helpers/backendCall';
@@ -297,6 +297,10 @@ it('Should trigger GET_STATS_ERROR', async () => {
       message: "No Request Found!",
     },
     type: GET_STATS_ERROR
+  },
+  {
+    payload: undefined,
+    type: SHOW_ALERT,
   }];
   store = mockStore({});
   await store.dispatch(getStatsAction())

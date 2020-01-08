@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import {
-  Container, Row, Col, Button, Form,
+  Row, Col, Button, Form,
 } from 'react-bootstrap';
 import moment from 'moment';
 import { getStatsAction } from '../../../actions/requestsActions';
