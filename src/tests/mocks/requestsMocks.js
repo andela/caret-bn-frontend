@@ -4,6 +4,16 @@ const requestsMocks = {
     reasons: 'Partner Company Meeting',
     departureDate: '2019-11-21',
     returnDate: '2019-11-21',
+    requester: {
+      id: 3,
+      username: 'Caret User',
+      email: 'caretuser@gmail.com',
+    },
+    origin: {
+      country: 'Nigeria',
+      id: 5,
+      name: 'Lagos Office',
+    },
     type: {
       id: 5,
       name: 'Lagos Office',
@@ -32,6 +42,16 @@ const requestsMocks = {
     reasons: 'Partner Company Meeting',
     departureDate: '2019-11-21',
     returnDate: '2019-11-21',
+    requester: {
+      id: 3,
+      username: 'Caret User',
+      email: 'caretuser@gmail.com',
+    },
+    origin: {
+      country: 'Nigeria',
+      id: 5,
+      name: 'Lagos Office',
+    },
     type: {
       id: 5,
       name: 'Lagos Office',
@@ -59,6 +79,16 @@ const requestsMocks = {
     id: 1,
     reasons: 'Partner Company Meeting',
     departureDate: '2019-11-21',
+    requester: {
+      id: 3,
+      username: 'Caret User',
+      email: 'caretuser@gmail.com',
+    },
+    origin: {
+      country: 'Nigeria',
+      id: 5,
+      name: 'Lagos Office',
+    },
     returnDate: null,
     type: {
       id: 5,

@@ -1,11 +1,13 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { SingleRequest, mapStateToProps } from '../../views/requests/SingleRequest';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers/index';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import requestsMocks from '../mocks/requestsMocks';
+import { checkManagerRequest } from '../../helpers/authHelper';
+import CommentDisplay from '../../components/pages/requests/CommentDisplay';
 
 const middlewares = [thunk];
 
@@ -14,6 +16,8 @@ const mainState = {
     dataError: null,
     data: null,
     singleData: null,
+    editError: null,
+    editData: null,
   }
 }
 
@@ -25,12 +29,31 @@ const props = {
       singleData: requestsMocks.itemPending,
     }
   },
+  locations: {
+    data: {
+      data:[
+        {
+          country: 'Nigeria',
+          id: 5,
+          name: 'Lagos Office',
+        },
+        {
+          country: 'Nigeria',
+          id: 5,
+          name: 'Lagos Office',
+        }
+      ]
+    }
+  },
+  singleData: requestsMocks.itemPending,
   singleRequestAction: jest.fn(),
   processRequestAction: jest.fn(),
   singleRequestAction: jest.fn(),
+  checkManagerRequest: jest.fn(() => true),
   match: {
     params: 2,
   }
+  ,isDisabled: true,
 }
 
 const testStore = (state) => {
@@ -41,7 +64,7 @@ const testStore = (state) => {
 const setUp = (initialState = {}) => {
   const store = testStore(initialState);
   const wrapper = shallow(
-    <SingleRequest {...props} store={store} />
+    <SingleRequest {...props} store={store}/>
   );
   return wrapper;
 }
@@ -59,6 +82,8 @@ describe('SingleRequest Test Suite', () => {
         dataError: null,
         data: null,
         singleData: null,
+        editError: null,
+        editData: null,
       }
     };
     expect(mapStateToProps(initialState).singleData).toEqual(null);
@@ -79,4 +104,38 @@ describe('SingleRequest Test Suite', () => {
     });
     expect(renderStatusSpy).toBeCalled();
   });
-});
+
+  
+  it('Should test hundleChange', () => {
+      const component = setUp(mainState); 
+      const handleSubmitSpy = jest.spyOn(component.instance(), 'handleChange');
+      const returnDate = { target: { name: 'returnDate', value: '20201-08-13' } };
+      component.find('[data-test="returnDate-field"]').first().simulate('change', returnDate);
+      component.find('[data-test="departureDate-field"]').first().simulate('click');
+      component.find('Form').simulate('submit', {
+     
+        preventDefault() {},
+      })
+      component.instance().handleEdit({  preventDefault: jest.fn()});
+      component.instance().handleCancel({  preventDefault: jest.fn()});   
+    expect(handleSubmitSpy).toReturn();
+    });
+
+  });
+
+  it('Should test handleDestinationChange', () => {
+    const component = setUp(mainState); 
+    component.setState({ destinations: [requestsMocks.itemPending] });
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'handleDestinationChange');
+    const returnDate = { target: { name: 'returnDate', value: '20201-08-13' } };
+    component.find('[data-test="returnDate-field"]').first().simulate('change', returnDate);
+    component.find('[data-test="departureDate-field"]').first().simulate('click');
+    component.find('Form').simulate('submit', {
+      preventDefault() {},
+    }); 
+    component.instance().handleDestinationChange({ target: { id: 'returnDate-0', value: '20201-08-13' }, preventDefault: jest.fn()});
+    expect(component.find('Col')).toHaveLength(9);
+  });
+
+
+  

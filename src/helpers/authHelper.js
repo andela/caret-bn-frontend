@@ -45,6 +45,20 @@ export const checkManager = () => {
   return false;
 };
 
+
+export const checkManagerRequest = (id) => {
+  const user = isAuth();
+  if (user) {
+    const { payload } = user;
+    const { role } = payload;
+    if (role !== 1 && role !== 3 && role !== 5 && role !== 6 && payload.id !== id) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+};
+
 export const checkAdmin = () => {
   const userInfo = isAuth();
   if (userInfo) {
