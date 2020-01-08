@@ -6,7 +6,7 @@ import {
   Card, Container, Button, Row, Badge, Col,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { LocationOnOutlined, StarBorderOutlined } from '@material-ui/icons';
+import { LocationOnOutlined, StarBorderOutlined, BookmarkBorder } from '@material-ui/icons';
 import { getBookmarks } from '../actions/bookmarkActions';
 import PageLoading from '../components/global/PageLoading';
 import BookMark from '../components/pages/accommodations/BookMark';
@@ -99,7 +99,7 @@ class Bookmarks extends Component {
               <p className="not-found-help-text">
                 Add bookmarks by clicking the
                 {' '}
-                <StarBorderOutlined style={{ color: '#FFB404' }} fontSize="large" />
+                <BookmarkBorder style={{ color: '#FFB404' }} fontSize="large" />
                 {' '}
                 icon on the accommodations page
               </p>

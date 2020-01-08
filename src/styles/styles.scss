@@ -22,127 +22,129 @@
 @import './components/cards.scss';
 @import './pages/comments.scss';
 @import './pages/bookmarks.scss';
+@import './pages/bookings.scss';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 * {
-  font-family: helvetica;
-  margin: 0;
-  padding: 0;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	padding: 0;
 }
 body {
-  background-color: $mainBackgroundColor;
+	background-color: $mainBackgroundColor;
 }
 
 input[disabled] {
-  cursor: default;
+	cursor: default;
 }
 
 .header {
-  background-color: $primary;
-  color: $light;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .link {
-    color: $light;
-  }
+	background-color: $primary;
+	color: $light;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.link {
+		color: $light;
+	}
 }
 .link {
-  text-decoration: none;
+	text-decoration: none;
 }
 .header-component {
-  color: $light;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .header-img {
-    margin: 1rem;
-    height: 5rem;
-    width: 5rem;
-  }
-  h2,
-  h4 {
-    margin-bottom: 1rem;
-  }
+	color: $light;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.header-img {
+		margin: 1rem;
+		height: 5rem;
+		width: 5rem;
+	}
+	h2,
+	h4 {
+		margin-bottom: 1rem;
+	}
 }
 
 .form-input {
-  border: 1px solid $blackish;
-  margin-bottom: 1rem;
-  height: 2rem;
-  font-size: 0.8rem;
+	border: 1px solid $blackish;
+	margin-bottom: 1rem;
+	height: 2rem;
+	font-size: 0.8rem;
 }
 .button-holder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .forgot-password {
-  > form input {
-    width: 80%;
-    padding-left: 0.5rem;
-  }
-  button {
-    text-transform: uppercase;
-    font-size: 1rem;
-    background: #073763;
-    border-color: $light;
-    color: #e2e2e2;
-    padding: 0.2rem 0.5rem;
-    cursor: pointer;
-    margin: 0.2rem 0.5rem 1rem 0;
-    transition: all 0.5s ease-in-out;
-    height: 2rem;
-    width: 150px;
+	> form input {
+		width: 80%;
+		padding-left: 0.5rem;
+	}
+	button {
+		text-transform: uppercase;
+		font-size: 1rem;
+		background: #073763;
+		border-color: $light;
+		color: #e2e2e2;
+		padding: 0.2rem 0.5rem;
+		cursor: pointer;
+		margin: 0.2rem 0.5rem 1rem 0;
+		transition: all 0.5s ease-in-out;
+		height: 2rem;
+		width: 150px;
 
-    &:hover {
-      border-color: #073763;
-      background: #e2e2e2;
-      color: #073763;
-    }
+		&:hover {
+			border-color: #073763;
+			background: #e2e2e2;
+			color: #073763;
+		}
 
-    &:focus {
-      outline: none;
-    }
-  }
-  .forgot-password {
-    color: $redish;
-    font-size: 0.8rem;
-    cursor: pointer;
-  }
-  .switch-auth {
-    color: $primary;
-    margin: 0;
-    padding: 0;
-  }
+		&:focus {
+			outline: none;
+		}
+	}
+	.forgot-password {
+		color: $redish;
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+	.switch-auth {
+		color: $primary;
+		margin: 0;
+		padding: 0;
+	}
 }
 
 // Media Queries
 @media only screen and (min-width: 768px) {
-  .forgot-password {
-    color: $redish;
-    font-size: 0.8rem;
-    cursor: pointer;
-  }
-  .switch-auth {
-    color: $primary;
-    margin: 0;
-    padding: 0;
-  }
+	.forgot-password {
+		color: $redish;
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+	.switch-auth {
+		color: $primary;
+		margin: 0;
+		padding: 0;
+	}
 
-  .form-input {
-    border: 1px solid $blackish;
-    margin-bottom: 1rem;
-    height: 2rem;
-    font-size: 0.8rem;
-  }
+	.form-input {
+		border: 1px solid $blackish;
+		margin-bottom: 1rem;
+		height: 2rem;
+		font-size: 0.8rem;
+	}
 
-  .manager-buttons-abs {
-    position: absolute;
-    bottom: 0;
-  }
+	.manager-buttons-abs {
+		position: absolute;
+		bottom: 0;
+	}
 }
 
 .content {
-  padding: 20px;
+	padding: 20px;
 }

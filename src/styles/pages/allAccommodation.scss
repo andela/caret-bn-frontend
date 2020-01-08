@@ -81,28 +81,6 @@
 		}
 	}
 }
-
-.accommodation-description {
-	background-color: $paleBlue;
-	border: 0.5px solid $borderBlue;
-	border-radius: 5px;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	padding: 10px 5px;
-	margin: 5px 0;
-	.acc-title {
-		text-transform: uppercase;
-		font-weight: 600;
-	}
-	.acc-desc {
-		font-size: small;
-	}
-	.acc-locale {
-		font-size: small;
-	}
-}
-
 .accommodation-name {
 	text-transform: uppercase;
 	text-align: center;
