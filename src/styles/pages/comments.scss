@@ -7,6 +7,34 @@
   -webkit-border-radius: 3px;
   border-radius: 3px;
   padding: 20px !important;
-  margin-top: 20px;
+  margin-top: 2px;
   margin-bottom: 25px;
+}
+
+.commentTrash
+{
+    margin-left: 80%;
+    text-align: right;
+}
+.commentEdit
+{
+    margin-left: 80%;
+    text-align: left;
+}
+
+.bodyIcons.footerIconsRight.trash 
+{
+    filter: invert(26%) sepia(37%) saturate(5056%) hue-rotate(347deg) brightness(88%) contrast(80%);
+}
+
+.bodyIcons.footerIconsRight.edit
+{
+    filter: invert(26%) saturate(16%) hue-rotate(3deg) brightness(88%) contrast(10%);
+}
+
+.bodyIcons
+{
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
 }

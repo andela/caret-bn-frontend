@@ -76,7 +76,8 @@
 		"style-loader": "^1.0.0",
 		"url-loader": "^3.0.0",
 		"yup": "^0.27.0",
-		"tesla-error-handler": "^2.8.0"
+		"tesla-error-handler": "^2.8.0",
+		"react-confirm-alert": "^2.4.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.4",

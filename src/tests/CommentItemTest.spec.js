@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { CommentDisplay, mapStateToProps } from '../components/pages/requests/CommentDisplay';
+import { CommentItem, mapStateToProps } from '../components/pages/requests/CommentItem';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
@@ -36,6 +36,25 @@ const mainState = {
     history: {
   
     },
+    element: {
+        id: 133,
+        comment: "jkkkkjkjjjkjkjk",
+        requestId: 46,
+        deleted: false,
+        createdAt: "2020-01-07T17:05:40.522Z",
+        updatedAt: "2020-01-07T17:05:40.522Z",
+        user: {
+            id: 8,
+            username: "demoManager",
+            email: "caretmanager@gmail.com",
+            image: "http://res.cloudinary.com/ddypcld8o/image/upload/v1577091275/s7b73e9umbev8ckkhqg9.jpg",
+        }
+    },
+    userInfo: {
+        payload: {
+            email: 'toto@gmail.com',
+        },
+    },
     setComment: jest.fn(),
     singleRequestAction: jest.fn(),
     getComment: jest.fn(),
@@ -50,19 +69,20 @@ const mainState = {
   const setUp = (initialState =  {}) => {
     const store = testStore(initialState);
     const wrapper = shallow(
-        <CommentDisplay {...props} store={store} />
+        <CommentItem {...props} store={store} />
     );
       return wrapper;
   } 
   describe('comment Display Test Suite', () => { 
     it('Should Mount Successfully', () => {
       const component = setUp(mainState); 
-      const handleSubmitSpy = jest.spyOn(component.instance(), 'handleSubmit');
-      component.find('[data-test="comment-view"]').simulate('click');
       const comment = { target: { name: 'comment', value: 'johndoe@gmail.com' } };
-      component.find('[data-test="comment"]').simulate('change', comment);
-       component.find('form').simulate('submit'); 
-       component.instance().handleSubmit();
+       component.instance().editButton({ target: { comment: {}, id: 1 }, preventDefault: jest.fn()});
+       component.instance().sendCommentEdit({  preventDefault: jest.fn()});
+       component.instance().dispatchDeleteComment();
+       component.instance().closeEditMode({  preventDefault: jest.fn()});
+       component.instance().actionSwitch();
+       component.instance().handleChange({ target: { comment: {}, id: 1 }, preventDefault: jest.fn()});
     });
 
     it('Should return initial data', () => {
