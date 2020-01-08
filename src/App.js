@@ -29,6 +29,7 @@ import SpecificUSer from './views/admin/SpecificUSer';
 import AllNotifications from './views/notifications/AllNotifications';
 import MyBookings from './components/pages/MyBookings';
 import OneBooking from './components/pages/OneBooking';
+import Bookmarks from './views/Bookmarks';
 
 export class App extends Component {
   render() {
@@ -40,7 +41,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/" component={Home} />
           <Route path="/login" component={AuthPage} />
           <Route path="/register" component={AuthPage} />
-          <ProtectedRoute exact path="/users/auth/success" component={SocialAuthSuccess} />
+          <Route exact path="/users/auth/success" component={SocialAuthSuccess} />
           <Route path="/verify/:token" component={Verify} />
           <Route path="/forgotpassword" component={AuthPage} />
           <Route path="/resetpassword/:token" component={AuthPage} />
@@ -59,6 +60,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/notifications" component={AllNotifications} />
           <ProtectedRoute exact path="/my-bookings" component={MyBookings} />
           <ProtectedRoute exact path="/bookings/:id" component={OneBooking} />
+          <ProtectedRoute exact path="/my-bookmarks" component={Bookmarks} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

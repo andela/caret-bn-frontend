@@ -18,6 +18,7 @@ import allNotifsReducer from './allNotifsReducer';
 import processRequestReducer from './processRequestReducer';
 import ratingsReducer from './ratingsReducer';
 import commentReducer from './commentReducer';
+import bookmarksReducer from './bookmarksReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -39,4 +40,5 @@ export default combineReducers({
   processRequest: processRequestReducer,
   ratings: ratingsReducer,
   requestComment: commentReducer,
+  bookmarks: bookmarksReducer,
 });
