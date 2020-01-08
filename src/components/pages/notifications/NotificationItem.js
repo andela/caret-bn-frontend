@@ -46,13 +46,21 @@ export class NotificationItem extends Component {
           </Col>
           <Col xs={12} sm={12} md={6} lg={3}>
             <Button data-test="button-click" className="btn-sm" onClick={() => this.markUnmark(item.id)}>
-              {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : (
-                <>
+              {isLoading
+                ? (
+                  <>
+                    <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" />
+                    {' '}
+                    Marking...
+                  </>
+                )
+                : (
+                  <>
                   Mark as
                   {' '}
                   { item.isRead ? 'Unread' : 'Read' }
-                </>
-              )}
+                  </>
+                )}
             </Button>
           </Col>
         </Row>
@@ -67,7 +75,7 @@ export class NotificationItem extends Component {
         </div>
         <div className="text-muted">
           <small>
-            {moment(`${item.createdAt} ${item.timestamp}`).fromNow()}
+            {moment(`${item.createdAt}`).fromNow()}
           </small>
         </div>
         <hr />

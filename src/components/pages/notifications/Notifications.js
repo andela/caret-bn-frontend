@@ -35,7 +35,7 @@ export class Notifications extends Component {
     const { notifsData } = props;
 
     if (notifsData) {
-      notifsData.sort((recent, old) => moment(`${old.createdAt} ${old.timestamp}`) - moment(`${recent.createdAt} ${recent.timestamp}`));
+      notifsData.sort((recent, old) => moment(`${old.createdAt}`) - moment(`${recent.createdAt}`));
     }
 
     return (
