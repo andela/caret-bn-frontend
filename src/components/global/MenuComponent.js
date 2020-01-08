@@ -152,21 +152,20 @@ export class MenuComponent extends Component {
                         <>
                           <NavDropdown.Item data-test="mark-all-click" className="dropdown-item text-primary font-weight-bold text-right" onClick={() => this.markAllNotifs()}><u>Mark All as Read</u></NavDropdown.Item>
                           <NavDropdown.Divider />
-                          {notifsData && notifsData.sort((recent, old) => moment(`${old.createdAt} ${old.timestamp}`) - moment(`${recent.createdAt} ${recent.timestamp}`)).slice(0, 10).filter((notif) => !notif.isRead).map((notif) => (
+                          {notifsData && notifsData.sort((recent, old) => moment(`${old.createdAt}`) - moment(`${recent.createdAt}`)).slice(0, 10).filter((notif) => !notif.isRead).map((notif) => (
                             <NavDropdown.Item key={notif.id} className="dropdown-item font-weight-bold">
                               {notif.activity.substring(0, notif.activity.indexOf('.'))}
                               {'.'}
                               <br />
-                              {notif.activity.substring(notif.activity.indexOf('.') + 1, notif.activity.indexOf(': '))}
-                              {': '}
                               <u>
                                 <Link data-test="link-click" className="text-underline" to={`/${notif.entity}s/${notif.entityId}`} onClick={() => this.markLink(notif)}>
+                                  View
+                                  {' '}
                                   {notif.entity}
                                 </Link>
                               </u>
-                              <br />
-                              <small className="text-muted">
-                                {moment(`${notif.createdAt} ${notif.timestamp}`).fromNow()}
+                              <small className="text-muted float-right text-lowercase">
+                                {moment(`${notif.createdAt}`).fromNow()}
                               </small>
                             </NavDropdown.Item>
                           ))}
