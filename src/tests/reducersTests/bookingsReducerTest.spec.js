@@ -139,7 +139,6 @@ describe('User Bookings Reducer Tests ', () => {
       }
     }
     const returnedSate = bookingsReducer(undefined, pendingBookings);
-    console.log(returnedSate);
     expect(returnedSate).toEqual(
       {
         data: null,

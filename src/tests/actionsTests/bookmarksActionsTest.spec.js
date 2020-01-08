@@ -64,7 +64,6 @@ describe('Bookmark Actions Test Suite', () => {
     const store = testStore();
     return store.dispatch(getBookmarks()).then(() => {
       const state = store.getState();
-      console.log(state.bookmarks);
       expect(state.bookmarks.status).toEqual('error');
       done();
     });

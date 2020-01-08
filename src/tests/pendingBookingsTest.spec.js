@@ -82,7 +82,6 @@ describe('Make booking Test Suite', () => {
 
     const dispatchAprove = component.instance().actionSwitch('approve', 1);
     const dispatcReject = component.instance().actionSwitch('reject', 1);
-    console.log(component.instance())
   });
 
 

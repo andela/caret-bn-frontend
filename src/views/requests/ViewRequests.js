@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Container, Row, Button, Col,
+  Container, Row, Button, Col, Spinner,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Add } from '@material-ui/icons';
@@ -10,7 +10,7 @@ import { getRequestsAction } from '../../actions/requestsActions';
 import Breadcrumbs from '../../components/global/Breadcrumbs';
 import RequestItem from '../../components/pages/requests/RequestItem';
 import SearchBar from '../../components/pages/requests/SearchBar';
-import { checkSupplier } from '../../helpers/authHelper';
+import { checkSupplier, checkManager } from '../../helpers/authHelper';
 
 export class ViewRequests extends Component {
   state = {
@@ -28,28 +28,40 @@ export class ViewRequests extends Component {
 
   renderResults = (data, dataError) => (
     <div>
-    { data && data.length === 0 && (
-      <Row>
-        No request
-      </Row>
-    ) }
-      <Row className="centered-flex mx-auto">
+      { data && data.length === 0 && (
+        <Row>
+          No request
+        </Row>
+      ) }
+      <Row className="d-flex justify-content-center mx-auto">
         { data && data.map((item) => (
           <RequestItem key={item.id} item={item} />
         )) }
       </Row>
-        <Row>
-          { dataError && <Row>{dataError.message}</Row> }
-        </Row>
+      <Row>
+        { dataError && <Row>{dataError.message}</Row> }
+      </Row>
     </div>
   );
+
+  allRequestsButton = () => (
+    <Row>
+      <Col xs={12} sm={6} md={4} lg={4}>
+        <Button className="btn-block" style={{ width: '100%' }} onClick={() => this.componentDidMount()} data-test="all-requests-button">
+          All requests
+        </Button>
+      </Col>
+    </Row>
+  )
 
   render() {
     let data;
     let dataError;
+    let statsData;
+    let statsError;
     const { isLoading } = this.state;
     const { props } = this;
-    const { searchRequests } = props;
+    const { searchRequests, statsStatus } = props;
     const { status, searchDataError } = searchRequests;
     const { searchData } = searchRequests;
 
@@ -58,6 +70,11 @@ export class ViewRequests extends Component {
     }
     if (props.dataError) {
       dataError = props.dataError;
+    }
+
+    if (statsStatus) {
+      statsData = props.statsData.data.Trips;
+      statsError = props.statsError;
     }
 
     return (
@@ -82,19 +99,37 @@ export class ViewRequests extends Component {
             </Col>
           </Row>
 
-          <SearchBar />
+          <SearchBar allRequestsButton={this.allRequestsButton} />
 
-          <Row className="text-center mx-auto">
-            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+          <Row className="d-flex justify-content-center">
+          {isLoading && (
+            <div className="d-flex justify-content-center">
+              <Spinner animation="grow" size="lg" variant="primary" />
+            </div>
+          )}
           </Row>
 
           <Row className="text-center mx-auto">
-          {status && <Row className="section"><h4>Results of your search:</h4></Row>}
+          {status && <Row className="section"><p>Results of your search:</p></Row>}
+          </Row>
+          <Row className="text-center mx-auto">
+          {statsData && (
+            <Row className="section">
+              <p>
+                You have made
+                {' '}
+                {statsData.length}
+                {' '}
+                trip(s)
+              </p>
+            </Row>
+          )}
           </Row>
 
           <Row />
-          { status === '' && this.renderResults(data, dataError)}
-          { status !== '' && this.renderResults(searchData, searchDataError)}
+          { status === '' && statsStatus === null && this.renderResults(data, dataError) }
+          { status !== '' && this.renderResults(searchData, searchDataError) }
+          { statsStatus === 'success' && this.renderResults(statsData, statsError) }
         </Container>
       </>
     );
@@ -104,6 +139,9 @@ export class ViewRequests extends Component {
 export const mapStateToProps = (state) => ({
   data: state.requests.data,
   dataError: state.requests.dataError,
+  statsData: state.requests.statsData,
+  statsError: state.requests.statsError,
+  statsStatus: state.requests.statsStatus,
 
   searchRequests: state.searchRequests,
 });

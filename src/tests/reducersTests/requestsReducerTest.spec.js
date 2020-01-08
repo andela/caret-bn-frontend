@@ -10,6 +10,9 @@ describe('Requests Reducer Test Suite', () => {
       "singleData":null,
       "editData": null,
       "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
     });
   });
 
@@ -30,6 +33,9 @@ describe('Requests Reducer Test Suite', () => {
       "singleData": null,
       "editData": null,
       "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
     })
   });
 
@@ -50,6 +56,9 @@ describe('Requests Reducer Test Suite', () => {
       "singleData": null,
       "editData": null,
       "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
     });
   });
 
@@ -69,6 +78,9 @@ describe('Requests Reducer Test Suite', () => {
       "data": null,
       "editData": null,
       "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
       "singleData": action.payload.data,
     })
   });
@@ -90,6 +102,9 @@ describe('Requests Reducer Test Suite', () => {
       "singleData": null,
       "editData": null,
       "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
     });
   });
 
@@ -109,6 +124,9 @@ describe('Requests Reducer Test Suite', () => {
       "data": null,
       "editData": action.payload,
       "editError": null,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
       "singleData": null,
     })
   });
@@ -129,9 +147,11 @@ describe('Requests Reducer Test Suite', () => {
       "data": null,
       "editData": null,
       "editError": action.payload,
+      "statsData": null,
+      "statsError": null,
+      "statsStatus": null,
       "singleData": null,
     })
   });
-
 
 });

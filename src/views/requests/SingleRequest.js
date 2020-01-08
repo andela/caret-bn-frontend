@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
-  Container, Row, Button, Col, Form,
+  Container, Row, Button, Col, Form, Spinner,
 } from 'react-bootstrap';
 import { CheckCircleOutlineOutlined, HighlightOffOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -13,7 +13,6 @@ import Breadcrumbs from '../../components/global/Breadcrumbs';
 import Alert from '../../components/global/AlertComponent';
 import DestinationDisplay from '../../components/pages/requests/DestinationDisplay';
 import { checkSupplier, checkManager, checkManagerRequest } from '../../helpers/authHelper';
-import ProcessRequest from '../../components/pages/requests/ProcessRequest';
 import Confirm from '../../components/global/Confirm';
 import CommentDisplay from '../../components/pages/requests/CommentDisplay';
 import { hideAlert } from '../../actions/alertAction';
@@ -160,8 +159,12 @@ export class SingleRequest extends Component {
             </Col>
           </Row>
 
-          <Row>
-            {isDisabled ? isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' : null}
+          <Row className="center-items">
+            {isDisabled ? isLoading ? (
+              <div className="d-flex justify-content-center">
+                <Spinner animation="grow" size="lg" variant="primary" />
+              </div>
+            ) : '' : null}
           </Row>
 
           <Row>
@@ -182,27 +185,25 @@ export class SingleRequest extends Component {
                 {!checkManager() && (
                   <>
                     <Row className="section">
-                      <h4>
+                      <p>
                         Requester:
                         {' '}
                         {singleData.requester.username}
-                      </h4>
-                    </Row>
-                    <Row className="section">
-                      <h4>
+                      </p>
+                      <p>
                         Email:
                         {' '}
                         {singleData.requester.email}
-                      </h4>
+                      </p>
                     </Row>
                   </>
                 )}
                 <Row className="section">
-                  <h4>
+                  <p>
                     Status:
                     {' '}
                     {this.renderStatus(singleData.status)}
-                  </h4>
+                  </p>
                 </Row>
                 <Row className="center-items">
                   <Form className="form-section" onSubmit={this.handleSubmit}>

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Container, Row, Col,
+  Container, Row, Col, Spinner, Button,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -47,6 +47,16 @@ export class ManagerView extends Component {
     </div>
   );
 
+  allRequestsButton = () => (
+    <Row>
+      <Col xs={12} sm={6} md={4} lg={4}>
+        <Button className="btn-block" style={{ width: '100%' }} onClick={() => this.componentDidMount()} data-test="all-requests-button">
+          All requests
+        </Button>
+      </Col>
+    </Row>
+  )
+
   render() {
     let data;
     let dataError;
@@ -70,10 +80,14 @@ export class ManagerView extends Component {
 
           <Row />
 
-          <SearchBar />
+          <SearchBar allRequestsButton={this.allRequestsButton} />
 
-          <Row className="text-center mx-auto">
-            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+          <Row className="text-center mx-auto center-items">
+            {isLoading && (
+              <div className="d-flex justify-content-center">
+                <Spinner animation="grow" size="lg" variant="primary" />
+              </div>
+            )}
           </Row>
 
           {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
