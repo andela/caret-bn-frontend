@@ -19,6 +19,7 @@ const mainState = {
     singleAccommodation: {},
     singleAccommodationError: {},
     isLoading: false,
+    userId: 1
   },
 };
 
@@ -26,6 +27,14 @@ const props = {
   slug: 'Hello',
   GetSingleAccommodation: jest.fn(),
   likeUnlikeAccommodation: jest.fn(),
+  getBookings: jest.fn(),
+  bookings: {
+    data: [
+      {
+        id: 1
+      }
+    ]
+  },
   accommodation: {
     ratings: [],
     images: [],
@@ -59,7 +68,9 @@ describe('Make booking Test Suite', () => {
   });
 
   it('Should return initial data', () => {
+
     const initialState = {
+
       accommodation: {
         accommodationData: null,
         accommodationError: null,
@@ -72,5 +83,59 @@ describe('Make booking Test Suite', () => {
       bookings: {}
     };
     expect(mapStateToProps(initialState).accommodation).toEqual({});
+  });
+
+  it('Should delete', () => {
+    const component = setUp(mainState);
+    component.setState({
+      userId: 1
+    });
+    component.setProps({
+      accommodation: {
+        ownerUser: {
+          id: 1
+        }
+      },
+      accommodation: {
+        id: 1
+      },
+      status: 'success',
+      deleteAccommodation: jest.fn(),
+      history: {
+        push: jest.fn()
+      }
+    });
+    component.instance().deleteAcc();
+    expect(component.state().error.status).toEqual(false);
+
+  });
+  it('Should fail delete', () => {
+    const component = setUp(mainState);
+    component.setState({
+      userId: 1
+    });
+    component.setProps({
+      accommodation: {
+        ownerUser: {
+          id: 1
+        }
+      },
+      accommodation: {
+        id: 1
+      },
+      status: 'fail',
+      deleteAccommodation: jest.fn(),
+      history: {
+        push: jest.fn()
+      }
+    });
+
+    const likeBtn = findByTestAttribute(component, 'like');
+    const dislikebtn = findByTestAttribute(component, 'dislike');
+
+    dislikebtn.simulate('click')
+    likeBtn.simulate('click')
+    component.instance().deleteAcc();
+    expect(component.state().error.status).toEqual(false);
   });
 });

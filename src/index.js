@@ -8,11 +8,11 @@ import 'regenerator-runtime/runtime';
 import App from './App';
 
 const Root = () => (
-    <BrowserRouter>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
 );
 
 ReactDOM.render(<Root />, document.getElementById('app'));

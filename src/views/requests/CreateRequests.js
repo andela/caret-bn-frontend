@@ -117,6 +117,8 @@ class CreateRequests extends Component {
         },
       });
     }
+
+    sendRequest(requestCopy);
   }
 
   validateInput = async () => {
