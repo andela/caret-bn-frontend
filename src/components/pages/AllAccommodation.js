@@ -124,11 +124,11 @@ export class AllAccommodation extends React.Component {
               </div>
             ) : null}
            {checkTravel() ? (
-               <Button className="btn ml-3 text-nowrap px-3 mb-2 text-white">
               <Link className="text-white" to="/accommodations/deactivated">
-               Deactivated Accommadation
-              </Link>
+               <Button className="btn ml-3 text-nowrap px-3 mb-2 text-white">
+               Deactivated Accommodation
                </Button>
+              </Link>
            ) : null}
           </div>
           </Col>

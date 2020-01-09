@@ -7,13 +7,10 @@ const initSocketNotif = () => {
     query: `token=${localStorage.getItem('token')}`,
   });
   socket.on('notification', (notif) => {
-    // console.log('<=== New Notification ===>');
     store.dispatch({
       type: NEW_NOTIFICATION,
       payload: notif,
     });
-    // const { newNotif } = store.getState().allNotifs;
-    // console.log('newNotif ===>', newNotif);
   });
 };
 export default initSocketNotif;

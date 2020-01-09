@@ -17,6 +17,7 @@ class Bookmarks extends Component {
   }
 
   componentDidMount = async () => {
+    document.title = 'Barefoot Nomad - Bookmarks';
     const { getBookmarks } = this.props;
     this.setState({
       isLoading: true,
@@ -110,7 +111,6 @@ class Bookmarks extends Component {
   }
 
   render() {
-    document.title = 'Barefoot Nomad - Bookmarks';
     const { isLoading } = this.state;
     const { status, bookmarks } = this.props;
     return (

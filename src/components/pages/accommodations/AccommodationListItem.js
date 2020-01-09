@@ -13,12 +13,13 @@ import {
   LocationOn, StarBorderOutlined, Star,
 } from '@material-ui/icons';
 import BookMark from './BookMark';
-import { checkHost } from '../../../helpers/authHelper';
+import { checkHost, checkTravel } from '../../../helpers/authHelper';
 
 export default function accommodationListItem(props) {
   const {
-    post, handleLike, handleDislike, userId,
+    post, handleLike, handleDislike, userId, isActivated,
   } = props;
+
   return (
     <Row className="center-items" key={post.id}>
       <Card key={post.id} className="accommodation-card">
@@ -83,9 +84,9 @@ export default function accommodationListItem(props) {
                 </span>
               </span>
             </Row>
-            <Row className="center-items like-disklike">
-                <span md={4} className="like">
-                  {checkHost() ? null : post.hasLiked ? <ThumbUpAltIcon className="like-button" data-test="like-button" /> : <ThumbUpOutlinedIcon className="like-button" data-test="like-button" onClick={() => handleLike(post.slug, 'like')} />}
+            <Row className="center-items like-disklike" data-test="Row">
+                <span md={4} className="like or">
+                  {checkHost() ? null : post.hasLiked ? <ThumbUpAltIcon className="like-button or" data-test="like-button" /> : <ThumbUpOutlinedIcon className="like-button o" data-test="like-button" onClick={() => handleLike(post.slug, 'like')} />}
                   {' '}
                   {`${post.Likes} Likes`}
                 </span>
@@ -97,12 +98,36 @@ export default function accommodationListItem(props) {
             </Row>
             <Row className="acc-buttons">
               <Link to={`/accommodations/${post.slug}`}>
-                {checkHost() ? null
-                  : (
-                    <Button className="full-width-buttons">
+                {
+
+                !checkHost() ? (post.isActivated)
+                  ? (
+                    <Button className="full-width-buttons mb-md-2 mb-2">
                                       Book accommodation
                     </Button>
-                  )}
+                  )
+                  : null : null
+                }
+              </Link>
+
+              <Link to={{
+                pathname: `/accommodations/${(post.isActivated) ? 'deactivate' : 'activate'}/${post.slug}`,
+                state: {
+                  action: (post && post.isActivated) ? 'Deactivate' : 'Activate',
+                },
+              }}
+              >
+                {!checkTravel() ? null
+                  : post.isActivated === true
+                    ? (
+                      <Button className="full-width-buttons accent-button">
+                        Deactivate accomodation
+                      </Button>
+                    ) : (
+                      <Button className="full-width-buttons accent-button">
+                          Activate accomodation
+                      </Button>
+                    )}
               </Link>
               {
                 ((post.ownerUser ? post.ownerUser.id : post.owner) === userId)

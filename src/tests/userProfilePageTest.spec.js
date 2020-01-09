@@ -1,6 +1,7 @@
 import UserProfile from '../components/pages/profiles/UserProfile';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import Bookmarks from '../views/Bookmarks';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
@@ -89,9 +90,6 @@ describe('User Profile Test Suite', () => {
     emailSwitch.simulate('change');
     langInput.simulate('change', {target: {name: 'language', value: 'english'}})
     image.simulate('change', {target: {files: ['myfile']}})
-    
-
- 
     form.simulate('submit', {
       preventDefault: jest.fn()
     });

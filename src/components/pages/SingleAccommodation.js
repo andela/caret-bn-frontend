@@ -31,9 +31,8 @@ import {
   EditOutlined, LocationOnOutlined, AttachMoneyOutlined, VerifiedUser, LocalHotel,
 } from '@material-ui/icons';
 import BookMark from './accommodations/BookMark';
-import { checkHost } from '../../helpers/authHelper';
+import { checkHost, checkTravel } from '../../helpers/authHelper';
 import Confirm from '../global/Confirm';
-
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
@@ -164,6 +163,7 @@ export class SingleAccommodation extends React.Component {
     const {
       accommodation, booked, bookedError, ratings,
     } = this.props;
+
     const { userRole, hasBooked } = this.state;
     const { ownerUser, hasLiked, hasUnliked } = accommodation;
     const ratingNumber = accommodation.ratings ? accommodation.ratings.length : 0;
@@ -172,19 +172,18 @@ export class SingleAccommodation extends React.Component {
     const ratingArray = accommodation.ratings ? accommodation.ratings : [];
     let images = [];
 
-    if (accommodation) {
-      switch (typeof imageArray) {
-        case 'string':
-          images.push(accommodation.images);
-          break;
-        default:
-          images = imageArray;
-          break;
-      }
+    switch (typeof imageArray) {
+      case 'string':
+        images.push(accommodation.images);
+        break;
+      default:
+        images = imageArray;
+        break;
+    }
 
-      document.title = `Barefoot Nomad - Accommodations - ${accommodation.name}`;
+    document.title = `Barefoot Nomad - Accommodations - ${accommodation.name}`;
 
-      return (
+    return (
         <div key={accommodation.id} className="container-fluid single-container ">
           <Row className="row-between">
             <Col md={5} className="breadcrumbs">
@@ -312,7 +311,7 @@ export class SingleAccommodation extends React.Component {
                             <Badge variant="warning">
                               <Link to={{ pathname: `/accommodations/${accommodation.slug}/edit` }} className="edit-links">
                                 Edit
-{' '}
+                              {' '}
                                 {accommodation.name}
                               </Link>
                             </Badge>
@@ -320,6 +319,29 @@ export class SingleAccommodation extends React.Component {
                         )
                         : null : null
                     }
+
+
+                <Link
+                  className="text-decoration-none"
+                  to={{
+                    pathname: `/accommodations/${(accommodation.isActivated) ? 'deactivate' : 'activate'}/${accommodation.slug}`,
+                    state: {
+                      action: (accommodation && accommodation.isActivated) ? 'Deactivate' : 'Activate',
+                    },
+                  }}
+                >
+                {!checkTravel() ? null
+                  : accommodation.isActivated === true
+                    ? (
+                      <Button className="full-width-buttons accent-button center-button">
+                        Deactivate accomodation
+                      </Button>
+                    ) : (
+                      <Button className="full-width-buttons accent-button">
+                          Activate accomodation
+                      </Button>
+                    )}
+                </Link>
                   </Row>
                   {
                     (ownerUser !== undefined) ? (accommodation.ownerUser.id === this.state.userId)
@@ -362,8 +384,8 @@ export class SingleAccommodation extends React.Component {
             </Row>
           </Container>
         </div>
-      );
-    }
+    );
+
     return (
       <div className="d-flex justify-content-center">
         <Spinner animation="border" animation="grow" size="lg" variant="primary" />

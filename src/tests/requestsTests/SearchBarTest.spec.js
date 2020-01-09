@@ -26,6 +26,8 @@ const mainState = {
       },
     ],
   },
+  openStats: false,
+  openSearch: false,
 }
 
 const props = {
@@ -51,6 +53,8 @@ const setUp = (initialState = {}) => {
 describe('SearchBar Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
+    
+    component.instance().hideFilter();
     component.instance().hideStats();
     expect(component.exists()).toBe(true);
   });
@@ -81,6 +85,8 @@ describe('SearchBar Test Suite', () => {
         dataError: null,
         data: null,
       },
+      openStats: false,
+      openSearch: false,
     };
     expect(mapStateToProps(initialState).locations).toEqual(null);
   });
