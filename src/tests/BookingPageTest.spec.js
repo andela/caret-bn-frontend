@@ -1,36 +1,36 @@
 import React from 'react';
-import { shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 import { Booking, mapStateToProps } from '../components/pages/Boooking';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
 import Breadcrumbs from '../components/global/Breadcrumbs';
 import axios from 'axios';
-
+import findByTestAttribute from '../utilities/tests/findByTestAttribute';
 const middlewares = [thunk];
 
 const mainState = {
-  bookings:{
+  bookings: {
     data: null,
     dataError: null,
     booked: null,
     bookedError: null,
     status: '',
-},
+  },
 };
 
 const props = {
   props: {
-    bookings:{
+    bookings: {
       data: null,
       dataError: null,
       booked: null,
       bookedError: null,
       status: '',
-  },
-  BookAccommodation: jest.fn(),
-  setTimeout: jest.fn()
-}
+    },
+    BookAccommodation: jest.fn(),
+    setTimeout: jest.fn()
+  }
 }
 jest.mock('axios');
 
@@ -41,62 +41,86 @@ const testStore = state => {
 
 const setUp = (initialState = {}) => {
   const store = testStore(initialState);
-  const wrapper = shallow(<Booking {...props}/>);
+  const wrapper = shallow(<Booking {...props} />);
   wrapper.setState({ isLoading: false });
   return wrapper;
 };
 
 describe('Make booking Test Suite', () => {
-it('Should Mount Successfully', () => {
-  const component = setUp(mainState); 
-  const date = component.find('DayPickerInput')
-  date.at(0).prop('onDayChange')(Date.now())
-  date.at(1).prop('onDayChange')(Date.now())
-  component.find('[data-test="make-booking"]').simulate('click');
-  component.find('form').simulate('submit', {
-    preventDefault() {},
-    setTimeout() {}
+  it('Should Mount Successfully', () => {
+    const component = setUp(mainState);
+    const bookingPage = findByTestAttribute(component, 'booking-page');
+    component.setProps({
+      accommodation: {
+        id: 1
+      },
+      BookAccommodation: jest.fn(),
+      bookings: {
+        data: [
+          {
+            accommodation: {
+              id: 1
+            }
+          }
+        ]
+      }
+    })
+    expect(bookingPage).toHaveLength(1);
   });
-  expect(component.find('h3')).toHaveLength(1);
-});
 
 
-it('Should Mount Successfully', () => {
-  axios.patch.mockResolvedValue({
-    msd: 'my message',
-    data: {}
+  it('Should handle submit', () => {
+    axios.patch.mockResolvedValue({
+      msd: 'my message',
+      data: {}
+    });
+    const component = setUp(mainState);
+    component.setState({
+      isLoading: true,
+      checkInDate: 'today',
+      checkOutDate: 'tomorrow',
+      roomsNumber: 5
+    });
+    component.setProps({
+      accommodation: {
+        id: 1
+      },
+      BookAccommodation: jest.fn(),
+    })
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'handleSubmit');
+    const roomsNumber = { target: { name: 'roomsNumber', value: '21' } };
+
+    component.find('[data-test="rooms"]').simulate('change', roomsNumber);
+    component.find('[data-test="make-booking"]').simulate('click');
+    component.find('form').simulate('submit', {
+      preventDefault() { },
+      setTimeout() { }
+    });
+    expect(handleSubmitSpy).toBeCalled();
   });
-  const component = setUp(mainState); 
-  const handleSubmitSpy = jest.spyOn(component.instance(), 'handleSubmit');
-  const roomsNumber = { target: { name: 'roomsNumber', value: '21' } };
-  
-  component.find('[data-test="rooms"]').simulate('change',roomsNumber );
-  component.find('[data-test="make-booking"]').simulate('click');
-  component.find('form').simulate('submit', {
-    preventDefault() {},
-    setTimeout() {}
+
+  it('Should handle checkin date Successfully', () => {
+    const date = '2019-06-15';
+    const component = setUp(mainState);
+    const checkinInput = findByTestAttribute(component, 'CheckIn');
+    checkinInput.prop('onDayChange')(new Date(date));
+    component.find('form').simulate('submit', {
+      preventDefault() { },
+      setTimeout() { }
+    });
+    expect(component.state().checkInDate).toEqual(date);
   });
-  expect(component.find('h3')).toHaveLength(1);
-});
 
-
-it('Should Mount Successfully', () => {
-  const component = setUp(mainState); 
-  const handleSubmitSpy = jest.spyOn(component.instance(), 'handleCheckOut');
-  const checkOutDate = { target: { name: 'checkOutDate', value: '2019-12-25' } };
-  
-  component.find('[data-test="checkout Input"]').simulate('change', checkOutDate);
-  component.find('[data-test="make-booking"]').simulate('click');
-  component.find('form').simulate('submit', {
-    preventDefault() {},
-    setTimeout() {}
+  it('Should handle checkout Successfully', () => {
+    const date = '2019-06-15';
+    const component = setUp(mainState);
+    const checkoutInput = findByTestAttribute(component, 'Checkout');
+    checkoutInput.prop('onDayChange')(new Date(date));
+    component.find('form').simulate('submit', {
+      preventDefault() { },
+      setTimeout() { }
+    });
+    expect(component.state().checkOutDate).toEqual(date);
   });
-  expect(component.find('h3')).toHaveLength(1);
-});
 
-it('Should update state', () => {
-  const component = setUp(mainState); 
-  component.setProps({ booked: null, bookedError: null,})
-  expect(component.find('h3')).toHaveLength(1);
-});
 });

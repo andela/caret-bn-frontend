@@ -1,5 +1,7 @@
 .edit-links {
 	color: $primary;
+	align-self: center;
+	justify-self: flex-end;
 	&:hover {
 		text-decoration: none;
 	}

@@ -115,10 +115,12 @@ export class AllAccommodation extends React.Component {
           </Col>
           <Col>
             {checkSupplier() ? (
-              <Button href="/accommodations/new">
-                <Add />
-                Create new accommodation
-              </Button>
+              <Link to="/accommodations/new">
+                <Button>
+                  <Add />
+                  Create new accommodation
+                </Button>
+              </Link>
             ) : null}
           </Col>
         </Row>

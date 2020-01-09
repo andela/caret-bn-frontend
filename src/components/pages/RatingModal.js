@@ -27,7 +27,7 @@ export default class RatingModal extends Component {
 
 
     return (
-      <Row style={{ margin: '10px' }}>
+      <Row className="singleacc-ratebtn">
         <Button className="ratingButton" onClick={() => setShow(true)} data-test="rate-button">Rate us</Button>
         <Modal
           show={show}
@@ -41,7 +41,7 @@ export default class RatingModal extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={(e) => submitRating(e, setShow)}>
+            <Form onSubmit={(e) => submiRating(e, setShow)}>
               <Row className="center-items">
                 {
                   (error.status) ? <AlertComponent variant="danger" heading={error.heading} message={error.message} /> : ''

@@ -5,6 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 
 export default function RateItem(rating) {
+  console.log(rating);
   return (
     <Row className="rateItem">
       <Col md={2} xs={6} sm={6} lg={2}>

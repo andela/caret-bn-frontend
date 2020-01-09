@@ -1,0 +1,77 @@
+.bookings-container {
+	input {
+		border: 0;
+	}
+	border: 1px solid $light;
+	border-radius: 3px;
+	.bookings-title {
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+}
+
+.accent-button {
+	background-color: $accent;
+	&:hover {
+		background-color: $accentDark;
+	}
+	border: 0px;
+}
+.DayPickerInput {
+	width: 100%;
+	input {
+		font-weight: 200;
+		font-size: 13px;
+		font-style: italic;
+		color: $grey;
+		padding: 5px 10px;
+		border: 1px solid $grey;
+		margin: 2px 0;
+		width: 100%;
+	}
+}
+
+.date-row {
+	svg {
+		visibility: hidden;
+		align-self: center;
+		color: $darkGrey;
+	}
+}
+
+.booking-form-item {
+	input {
+		width: 15rem;
+		border: 1px solid $grey;
+		border-radius: 0;
+		font-weight: 200;
+		font-size: 13px;
+		font-style: italic;
+		width: 100%;
+	}
+}
+@media (min-width: 768px) {
+	.date-row {
+		justify-content: center;
+	}
+}
+
+@media (min-width: 1024px) {
+	.spacer {
+		width: 4%;
+	}
+	.DayPickerInput {
+		width: 48%;
+		input {
+			width: 100%;
+		}
+	}
+}
+
+@media (min-width: 1440px) {
+	.DayPickerInput {
+		input {
+			margin: 0 2px;
+		}
+	}
+}

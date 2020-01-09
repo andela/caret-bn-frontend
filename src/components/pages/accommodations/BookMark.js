@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Star, StarBorderOutlined, Close } from '@material-ui/icons';
+import { Close, Bookmark, BookmarkBorder } from '@material-ui/icons';
 import { bookmarkAccommodation } from '../../../actions/bookmarkActions';
 
 class BookMark extends Component {
@@ -50,8 +50,8 @@ class BookMark extends Component {
     }
     return (
       <p className="bookmark">
-        {(!bookmarking) ? <Star style={{ color: '#FFB404' }} onClick={() => this.processBookmark()} data-test="bookmarked" />
-          : <StarBorderOutlined style={{ color: '#FFB404' }} onClick={() => this.processBookmark()} data-test="unbookmarked" />}
+        {(!bookmarking) ? <Bookmark style={{ color: '#FFB404' }} onClick={() => this.processBookmark()} data-test="bookmarked" />
+          : <BookmarkBorder style={{ color: '#FFB404' }} onClick={() => this.processBookmark()} data-test="unbookmarked" />}
       </p>
     );
   }

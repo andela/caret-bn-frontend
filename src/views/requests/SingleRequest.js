@@ -88,42 +88,42 @@ export class SingleRequest extends Component {
     });
   }
 
-handleSubmit = async (e) => {
-  e.preventDefault();
-  const { props, state } = this;
-  const { singleData } = props;
-  const { requestId } = props.match.params;
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const { props, state } = this;
+    const { singleData } = props;
+    const { requestId } = props.match.params;
 
-  const OneWayRequestData = {
-    departureDate: state.departureDate,
-    locationId: state.locationId,
-    destinations: [
-      {
-        id: state.id,
-        reasons: state.reasons,
-        arrivalDate: state.arrivalDate,
-      },
-    ],
+    const OneWayRequestData = {
+      departureDate: state.departureDate,
+      locationId: state.locationId,
+      destinations: [
+        {
+          id: state.id,
+          reasons: state.reasons,
+          arrivalDate: state.arrivalDate,
+        },
+      ],
+    };
+
+    const destinations = state.destinations.map((data) => ({
+      id: data.id,
+      arrivalDate: data.arrivalDate,
+      departureDate: data.departureDate,
+      reasons: data.reasons,
+    }));
+
+    const MultiCityRequestData = {
+      departureDate: state.departureDate,
+      returnDate: state.returnDate,
+      locationId: state.locationId,
+      destinations,
+    };
+
+    this.setState({ isLoading: true });
+    await props.editRequestAction(requestId, singleData.type.id === 1 ? OneWayRequestData : MultiCityRequestData);
+    this.setState({ isLoading: false, isDisabled: true });
   };
-
-  const destinations = state.destinations.map((data) => ({
-    id: data.id,
-    arrivalDate: data.arrivalDate,
-    departureDate: data.departureDate,
-    reasons: data.reasons,
-  }));
-
-  const MultiCityRequestData = {
-    departureDate: state.departureDate,
-    returnDate: state.returnDate,
-    locationId: state.locationId,
-    destinations,
-  };
-
-  this.setState({ isLoading: true });
-  await props.editRequestAction(requestId, singleData.type.id === 1 ? OneWayRequestData : MultiCityRequestData);
-  this.setState({ isLoading: false, isDisabled: true });
-};
 
   renderStatus = (status) => {
     switch (status.id) {
@@ -152,7 +152,7 @@ handleSubmit = async (e) => {
     const id = singleData && singleData.requester.id;
     return (
       <>
-        { checkSupplier() && <Redirect to="/" />}
+        {checkSupplier() && <Redirect to="/" />}
         <Container>
           <Row>
             <Col md={5} className="breadcrumbs">
@@ -166,9 +166,9 @@ handleSubmit = async (e) => {
 
           <Row>
             <Col>
-              { dataError && <Alert variant="danger" heading="Error" message={dataError.message} /> }
-              { editData && <Alert variant="success" heading="success" message={editData.message} /> }
-              { editError && <Alert variant="danger" heading="Error" message={(Array.isArray(editError.error)) ? editError.error[0] : editError.message} /> }
+              {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
+              {editData && <Alert variant="success" heading="success" message={editData.message} />}
+              {editError && <Alert variant="danger" heading="Error" message={(Array.isArray(editError.error)) ? editError.error[0] : editError.message} />}
             </Col>
           </Row>
           {
@@ -219,8 +219,8 @@ handleSubmit = async (e) => {
                       <Form.Group>
                         <Form.Label>Origin</Form.Label>
                         <Form.Control name="locationId" data-test="location-field" as="select" defaultValue={singleData.origin.id} onChange={(e) => this.handleChange(e)} disabled={isDisabled}>
-                            <option value={state.locationId}>{singleData.origin.name}</option>
-                            {locations.data && locations.data.data.map((location) => (<option value={location.id} key={location.id}>{location.name}</option>))}
+                          <option value={state.locationId}>{singleData.origin.name}</option>
+                          {locations.data && locations.data.data.map((location) => (<option value={location.id} key={location.id}>{location.name}</option>))}
                         </Form.Control>
                       </Form.Group>
                     </Col>
@@ -259,32 +259,32 @@ handleSubmit = async (e) => {
                           />
                         </Row>
                       ))}
-                {singleData && singleData.status.name === 'Pending' ? (
-                  checkManagerRequest(id) ? (
-                  <Button data-test="edit-Button" className="full-width-buttons" id="save-button" variant="primary" onClick={isDisabled ? (e) => this.handleEdit(e) : (e) => this.handleSubmit(e)} disabled={!(singleData && singleData.status.name === 'Pending')}>
-                  {isDisabled ? 'EDIT REQUEST' : isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'SAVE CHANGES'}
-                  </Button>
-                  ) : null
-                ) : null}
-                {isDisabled || isLoading ? null
-                  : (
-                <Button className="full-width-buttons" variant="primary" onClick={(e) => this.handleCancel(e)}>
-                    {isDisabled ? null : 'CANCEL' }
-                </Button>
-                  )}
+                      {singleData && singleData.status.name === 'Pending' ? (
+                        checkManagerRequest(id) ? (
+                          <Button data-test="edit-Button" className="full-width-buttons" id="save-button" variant="primary" onClick={isDisabled ? (e) => this.handleEdit(e) : (e) => this.handleSubmit(e)} disabled={!(singleData && singleData.status.name === 'Pending')}>
+                            {isDisabled ? 'EDIT REQUEST' : isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'SAVE CHANGES'}
+                          </Button>
+                        ) : null
+                      ) : null}
+                      {isDisabled || isLoading ? null
+                        : (
+                          <Button className="full-width-buttons" variant="primary" onClick={(e) => this.handleCancel(e)}>
+                            {isDisabled ? null : 'CANCEL'}
+                          </Button>
+                        )}
                     </Row>
                   </Form>
                 </Row>
-                {!checkManager() && singleData.status.id === 1 && (
-                <Row className="mb-3">
-                  <Col md={2} />
-                  <Col md={4}>
-                <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" disabled={singleData.status.id === 3} icon={<CheckCircleOutlineOutlined />} />
-                  </Col>
-                  <Col md={4}>
-                    <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" disabled={singleData.status.id === 2} icon={<HighlightOffOutlined />} />
-                  </Col>
-                </Row>
+                {!checkManager() && (
+                  <Row className="mb-3">
+                    <Col md={2} />
+                    <Col md={4}>
+                      <Confirm data-test="single-confirm" variant="success" action="approve" id={requestId} processAction={this.processAction} title="approve" size="md" buttonClass="process-request-button btn-block" disabled={singleData.status.id === 3} icon={<CheckCircleOutlineOutlined />} />
+                    </Col>
+                    <Col md={4}>
+                      <Confirm variant="danger" action="reject" id={requestId} processAction={this.processAction} title="reject" size="md" buttonClass="process-request-button btn-block" disabled={singleData.status.id === 2} icon={<HighlightOffOutlined />} />
+                    </Col>
+                  </Row>
                 )}
                 <CommentDisplay requestId={requestId} />
               </div>
