@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  Card, Button, Row, Col,
+  Card, Button, Row, Col, Spinner,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
@@ -33,7 +33,11 @@ export class ViewUsers extends Component {
         <Breadcrumbs itemsArray={['> Admin', 'Users', 'All users']} />
       </Col>
         </Row>
-        <Row>{ isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' }</Row>
+{ isLoading ? (
+<div className="d-flex justify-content-center">
+        <Spinner animation="grow" size="lg" variant="primary" />
+</div>
+) : '' }
             <div className="view-all-users">
               {
                 allUserData ? allUserData.data.map((user) => (

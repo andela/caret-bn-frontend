@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Spinner } from 'react-bootstrap';
 import { getHighRatedAccommodation } from '../../../actions/accommodationActions';
 
 export class HighRatedAccommodation extends Component {
@@ -26,7 +26,7 @@ export class HighRatedAccommodation extends Component {
 
       return (
       <div>
-        <Row>{ isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' }</Row>
+        <Row>{ isLoading ? '' : '' }</Row>
           <Col className=" high-rated container-fluid">
           <h1 className="home-heading">Highest Rated</h1>
               <div className="top-accommodations">

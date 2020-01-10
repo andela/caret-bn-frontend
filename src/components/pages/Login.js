@@ -70,7 +70,6 @@ export class Login extends Component {
 
     return (
       <div className="login-form">
-        {dataError && <AlertComponent variant="danger" message={dataError.data.message} />}
         <form onSubmit={this.submitForm} className="auth-form">
           <Form.Control data-test="email" type="email" name="email" id="email" placeholder="Email..." onChange={this.handleChange} data="email" value={email} title="Enter a valid email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required />
           <Form.Control type="password" name="password" id="password" placeholder="Password..." onChange={this.handleChange} data="password" value={password} title="Enter your password" required />

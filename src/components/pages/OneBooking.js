@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Container, Row, Col, Card,
+  Container, Row, Col, Card, Spinner,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getOneBooking } from '../../actions/bookingActions';
@@ -75,7 +75,7 @@ export class OneBooking extends Component {
         </Row>
 
         <Row>
-          {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
+          {isLoading ? <Spinner animation="grow" size="lg" variant="primary" /> : ''}
         </Row>
 
         {oneBooking && (
