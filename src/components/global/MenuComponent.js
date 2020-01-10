@@ -15,7 +15,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import barefootLogo from '../../assets/images/foot-print.png';
 import { GetUserProfile } from '../../actions/profileAction';
 import { getNotifsAction, markAllNotifAction, markOneNotifAction } from '../../actions/notificationsActions';
-import authHelper from '../../helpers/authHelper';
+import authHelper, { checkHost } from '../../helpers/authHelper';
 
 const { checkSupplier, checkAdmin, checkManager } = authHelper;
 
@@ -101,7 +101,7 @@ export class MenuComponent extends Component {
                       Bookings
                     </div>
                   )
-                    : <Redirect to="/" />}
+                    : ''}
                 </Link>
 
                 <Link className="nav-links" to="/my-bookings">
@@ -111,7 +111,7 @@ export class MenuComponent extends Component {
                       My Bookings
                     </div>
                   )
-                    : <Redirect to="/" />}
+                    : ''}
                 </Link>
 
                 <Link className="nav-links" to="/my-bookmarks">
@@ -121,7 +121,7 @@ export class MenuComponent extends Component {
                       My Bookmarks
                     </div>
                   )
-                    : <Redirect to="/" />}
+                    : ''}
                 </Link>
 
                 <Link to="/user-manager">
@@ -185,6 +185,7 @@ export class MenuComponent extends Component {
                     <img src={(data && data.profile) && (data.profile.image)} className="icon menu-photo" />
                     <NavDropdown className="nav-drop mr-3" title={(data && data.profile) && (data.profile.username)} id="basic-nav-dropdown" alignRight>
                       <NavDropdown.Item className="dropdown-item" href="/profile">Profile</NavDropdown.Item>
+                      {checkHost() ? null : <NavDropdown.Item><Link to="/community">Community Chat</Link></NavDropdown.Item>}
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</NavDropdown.Item>
                     </NavDropdown>
