@@ -22,7 +22,7 @@ describe('Comments Actions Test Suite', () => {
     moxios.uninstall(backendCall);
   });
 
-  it('Should trigger SET_COMMENT_ERROR', async () => {
+  it('Should trigger SET_COMMENT_ERROR', async (done) => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -44,6 +44,7 @@ describe('Comments Actions Test Suite', () => {
       .then(async () => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
+        done();
       });
   });
 
