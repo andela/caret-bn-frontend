@@ -21,6 +21,7 @@ import Breadcrumbs from '../global/Breadcrumbs';
 import 'react-day-picker/lib/style.css';
 import img3 from '../../assets/images/cocktail.png';
 import isAuthenticated from '../../helpers/isAuthenticated';
+import storeUserId from '../../helpers/isAuthenticated';
 import AlertComponent from '../global/AlertComponent';
 import Booking from './Boooking';
 import { hideAlert, showAlert } from '../../actions/alertAction';
@@ -33,6 +34,7 @@ import {
 import BookMark from './accommodations/BookMark';
 import { checkHost, checkTravel } from '../../helpers/authHelper';
 import Confirm from '../global/Confirm';
+import ChatWithsupplier from './privateChat';
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
@@ -60,6 +62,7 @@ export class SingleAccommodation extends React.Component {
     const {
       slug, GetSingleAccommodation, getBookings, accommodation,
     } = this.props;
+
     this.setState({ isLoading: true });
     await GetSingleAccommodation(slug);
     await getBookings();
@@ -122,6 +125,7 @@ export class SingleAccommodation extends React.Component {
     }));
   }
 
+
   submitRating = async (e, setShow) => {
     e.preventDefault();
     const { ratings: { rating, feedback } } = this.state;
@@ -170,6 +174,7 @@ export class SingleAccommodation extends React.Component {
     const imageArray = accommodation.images ? accommodation.images : [];
     const location = accommodation.accommodationLocation ? accommodation.accommodationLocation.name : null;
     const ratingArray = accommodation.ratings ? accommodation.ratings : [];
+
     let images = [];
 
     switch (typeof imageArray) {
@@ -382,6 +387,14 @@ export class SingleAccommodation extends React.Component {
                 ))}
               </Col>
             </Row>
+            {console.log('userId', accommodation.name)}
+            {checkHost() ? null
+              : (
+              <ChatWithsupplier
+                id={accommodation.ownerUser && accommodation.ownerUser.id}
+                AccommodationName={accommodation.name}
+              />
+              )}
           </Container>
         </div>
     );

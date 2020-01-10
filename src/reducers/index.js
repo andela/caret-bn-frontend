@@ -20,6 +20,7 @@ import commentReducer from './commentReducer';
 import bookmarksReducer from './bookmarksReducer';
 import chatReducer from './chatReducer';
 import resetPageReducer from './resetPageReducer';
+import privateChat from './privateChatreducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -43,4 +44,5 @@ export default combineReducers({
   bookmarks: bookmarksReducer,
   chat: chatReducer,
   resetPageReducer,
+  privateChat,
 });

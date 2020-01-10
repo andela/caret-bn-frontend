@@ -77,7 +77,9 @@ describe('Accommodations Actions Test Suite', () => {
         status: 200,
         response: {
           message: 'Accommodation facilities are retrieved successfully!',
-          data: {}
+          data: {
+            
+          }
         },
       });
     });
@@ -99,22 +101,31 @@ describe('Accommodations Actions Test Suite', () => {
       });
   });
 
-  it('Should trigger SINGLE_ACCOMMODATION_SUCCESS', async () => {
+  it('Should trigger SINGLE_ACCOMMODATION_SUCCESS', async (done) => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
         response: {
           message: 'Accommodation retrieved successfully!',
-          data: {}
+          data: {
+            ownerUser:{
+              id: 2
+            }
+          }
         },
       });
+    
     });
 
     const expectedActions = [{
       payload: {
         message: 'Accommodation retrieved successfully!',
-        data: {}
+        data: {
+          ownerUser:{
+            id: 2
+          }
+        }
       },
       type: SINGLE_ACCOMMODATION_SUCCESS
     }];
@@ -123,6 +134,7 @@ describe('Accommodations Actions Test Suite', () => {
       .then(async () => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
+        done();
       });
   });
 });

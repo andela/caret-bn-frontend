@@ -1,5 +1,6 @@
 import moxios from 'moxios';
 import { getChatHistory } from '../../actions/chatActions';
+import { getPrivateChatHistory } from '../../actions/chatActions';
 import backendCall from '../../helpers/backendCall';
 import testStore from '../../utilities/tests/mockStore';
 
@@ -34,6 +35,33 @@ describe('Chat Actions Test Suite', () => {
       return store.dispatch(getChatHistory()).then(() => {
       const state = store.getState();
       expect(state.chat).toEqual(expectedState);
+      done();
+    });
+  });
+
+  it('Should return privatechat data', async (done) => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: {
+          message: 'Chats retrieved successfully',
+          data: []
+        }
+      });
+    });
+
+    const expectedState = {
+      state: { chatMessage: {}, chatError: {} },
+      chatMessage: { message: 'Chats retrieved successfully', data: [] } 
+      };
+      
+  
+      const store = testStore();
+      return store.dispatch(getPrivateChatHistory()).then(() => {
+      const state = store.getState();
+      console.log('state from test =====>',state)
+      expect(state.Privatechat).toEqual(expectedState);
       done();
     });
   });

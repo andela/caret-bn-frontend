@@ -3,6 +3,7 @@ import jwtDecode from 'jsonwebtoken';
 import isAuth from './isAuthenticated';
 
 export const storeToken = (token) => localStorage.setItem('token', token);
+export const storeUserId = (userId) => localStorage.setItem('userId', userId);
 
 export const getToken = () => localStorage.getItem('token');
 
@@ -97,5 +98,5 @@ export const checkEmail = () => {
 };
 
 export default {
-  storeToken, getToken, checkSupplier, checkEmail, checkAdmin, checkManager,
+  storeToken, getToken, checkSupplier, checkEmail, checkAdmin, checkManager, storeUserId,
 };

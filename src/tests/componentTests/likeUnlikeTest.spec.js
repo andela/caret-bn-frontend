@@ -28,6 +28,9 @@ const makeWrapper = () => {
     },
     bookmarks: {
       bookmarkStatus: 'success'
+    },
+    Privatechat:{
+      chatMessage:{}
     }
   });
   return mount(

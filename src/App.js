@@ -33,6 +33,7 @@ import MyBookings from './components/pages/MyBookings';
 import OneBooking from './components/pages/OneBooking';
 import Bookmarks from './views/Bookmarks';
 import CommunityChat from './components/pages/chat/CommunityChat';
+import supplierChat from './views/supplierChat';
 
 export class App extends Component {
   render() {
@@ -69,6 +70,7 @@ export class App extends Component {
           <ProtectedRoute exact path="/community" component={CommunityChat} />
           <ProtectedRoute path="/accommodations/activate/:slug" component={ActivateAccommodations} />
           <ProtectedRoute path="/accommodations/deactivate/:slug" component={ActivateAccommodations} />
+          <ProtectedRoute exact path="/supplierChat" component={supplierChat} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

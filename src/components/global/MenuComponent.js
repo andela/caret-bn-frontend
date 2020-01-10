@@ -214,6 +214,7 @@ export class MenuComponent extends Component {
                   <NavDropdown className="nav-drop nav-drop-notif space" title={(data && data.profile) && (data.profile.username)} id="basic-nav-dropdown" alignRight>
                     <NavDropdown.Item className="dropdown-item" href="/profile" onClick={this.toggleExpanded}>Profile</NavDropdown.Item>
                     {checkHost() ? null : <NavDropdown.Item><Link to="/community" onClick={this.toggleExpanded}>Community Chat</Link></NavDropdown.Item>}
+                    {checkHost() ? <NavDropdown.Item><Link to="/supplierChat" onClick={this.toggleExpanded}>Chat</Link></NavDropdown.Item> : null}
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</NavDropdown.Item>
                   </NavDropdown>

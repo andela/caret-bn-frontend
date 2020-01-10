@@ -7,7 +7,7 @@ import {
   ACTIVATE_ACCOMMODATION_SUCCESS, DELETE_ACCOMMODATION_SUCCESS, DELETE_ACCOMMODATION_FAIL,
 } from './types';
 import backendCall from '../helpers/backendCall';
-import { getToken } from '../helpers/authHelper';
+import { getToken, storeUserId } from '../helpers/authHelper';
 
 const accommodationType = (type, payload) => ({
   type,
@@ -60,6 +60,7 @@ export const GetSingleAccommodation = (slug) => (dispatch) => {
   return backendCall.get(`accommodations/${slug}`, { headers: { Authorization: AuthUser } })
     .then((res) => {
       const response = res.data;
+      storeUserId(response.data.ownerUser.id);
       dispatch(
         accommodationType(SINGLE_ACCOMMODATION_SUCCESS, response),
       );

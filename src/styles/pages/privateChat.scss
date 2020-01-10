@@ -1,0 +1,63 @@
+@import './variables.scss';
+.rcw-launcher{
+  background-color: $primary !important;
+}
+
+.chats-users{ 
+width: 25%;
+
+}
+.rcw-conversation-container > .rcw-header {
+  background-color: $primary !important;
+  height:4.5em;
+button >.rcw-close-launcher, > .rcw-open-launcher{
+  background-color: $primary !important;
+}
+}
+
+.rcw-message > .rcw-response {
+  background-color: rgb(233, 235, 238);
+  color: black;
+  padding: 0;
+  padding-right: 10px;
+  padding-top: 5px;
+  pre{
+    font-size: 11px !important;
+    margin: 0;
+  }
+}
+.rcw-message > .rcw-client{
+  background-color: #dbdbdb;
+  color: black;
+  padding: 0;
+  padding-right: 10px;
+  padding-top: 5px;
+  pre{
+    font-size: 11px !important;
+    margin: 0;
+  }
+}
+
+.rcw-header > .rcw-title {
+  color: $white;
+  font-size: 1rem;
+  font-family: 'Andale Mono, monospace';
+  text-transform: capitalize;
+  padding:0 !important;
+  padding-top:0 !important;
+  
+}
+.rcw-message > .rcw-client> {
+  padding-right: 0;
+}
+
+.rcw-message > .rcw-client> .rcw-message-text,.rcw-response> .rcw-message-text{
+ 
+  p{
+    font-size: 1rem;
+    font-family:'Open Sans, sans-serif';
+    padding:1px;
+  }
+
+}
+
