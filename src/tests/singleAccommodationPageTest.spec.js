@@ -43,7 +43,6 @@ const props = {
   },
 };
 
-
 const testStore = state => {
   const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
   return createStoreWithMiddleware(rootReducer, state);
@@ -65,6 +64,7 @@ describe('Make booking Test Suite', () => {
   it('Should Mount Successfully', () => {
     const component = setUp(mainState);
     expect(component.find(Breadcrumbs)).toHaveLength(1);
+    component.instance().componentWillUnmount();
   });
 
   it('Should return initial data', () => {

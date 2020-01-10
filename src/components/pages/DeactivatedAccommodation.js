@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
@@ -8,19 +7,18 @@ import { Link, withRouter } from 'react-router-dom';
 import {
   Col, Container, Button, Row, Card, Spinner,
 } from 'react-bootstrap';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import { Add, SearchOutlined } from '@material-ui/icons';
-import { checkSupplier, checkTravel } from '../../helpers/authHelper';
-import { GetAllAccommodation, likeUnlikeAccommodation } from '../../actions/accommodationActions';
+import { checkSupplier } from '../../helpers/authHelper';
+import { likeUnlikeAccommodation, getDeactivatedAccommodation } from '../../actions/accommodationActions';
 import { getLocations } from '../../actions/locationActions';
 import Breadcrumbs from '../global/Breadcrumbs';
 import isAuthenticated from '../../helpers/isAuthenticated';
 import { showAlert } from '../../actions/alertAction';
 import SearchBar from './accommodations/SearchBar';
 import AlertComponent from '../global/AlertComponent';
-import AccommodationListItem from './accommodations/AccommodationListItem';
+import DeactivatedListItem from './accommodations/DeactivatedListItem';
 
-export class AllAccommodation extends React.Component {
+export class DeactivatedAccommodation extends React.Component {
   state = {
     isLoading: false,
     isSearching: false,
@@ -56,33 +54,22 @@ export class AllAccommodation extends React.Component {
   }
 
   componentDidMount = async () => {
-    this.setState({ isLoading: true });
     const userInfo = isAuthenticated();
-    await this.props.GetAllAccommodation();
+    this.setState({ isLoading: true });
+
+    await this.props.getDeactivatedAccommodation();
     this.setState({ isLoading: false });
-    this.renderAcommodation = this.renderAcommodation.bind(this);
     await this.setState({
       userId: userInfo.payload.id,
     });
   }
 
-  handleLike = async (slug, action) => {
-    const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
-    await likeUnlikeAccommodation(slug, action);
-    await GetAllAccommodation();
-  }
-
-  handleDislike = async (slug, action) => {
-    const { likeUnlikeAccommodation, GetAllAccommodation } = this.props;
-    await likeUnlikeAccommodation(slug, action);
-    await GetAllAccommodation();
-  }
-
   renderAcommodation() {
     const {
-      accommodations, searchResults, searchError, showAlert,
+      accommodationDeactivatedData, searchResults, searchError, showAlert,
     } = this.props;
     let displayItems = {};
+
     if (searchError) {
       showAlert();
       return (
@@ -91,10 +78,10 @@ export class AllAccommodation extends React.Component {
         </Container>
       );
     }
-    (!this.state.isSearching) ? displayItems = accommodations : displayItems = searchResults.data;
+    (!this.state.isSearching) ? displayItems = accommodationDeactivatedData.data : displayItems = searchResults.data;
     if (displayItems) {
       const accommodation = displayItems.map((post) => (
-        <AccommodationListItem post={post} handleLike={this.handleLike} handleDislike={this.handleDislike} userId={this.state.userId} data-test="accommodation-item" />
+        <DeactivatedListItem post={post} userId={this.state.userId} data-test="accommodation-item" />
       ));
       return accommodation;
     }
@@ -107,30 +94,12 @@ export class AllAccommodation extends React.Component {
 
   render() {
     const { isLoading, showSearch } = this.state;
+
     return (
       <div className="accommodation">
         <Row>
-          <Col md={4} className="breadcrumbs">
-            <Breadcrumbs itemsArray={['> Home', '  accommodations']} />
-          </Col>
-          <Col md={8}>
-          <div className="row">
-            {checkSupplier() ? (
-              <div className="">
-              <Button className="btn ml-3 text-nowrap px-3 mb-2" href="/accommodations/new">
-                <Add />
-                Create new accommodation
-              </Button>
-              </div>
-            ) : null}
-           {checkTravel() ? (
-               <Button className="btn ml-3 text-nowrap px-3 mb-2 text-white">
-              <Link className="text-white" to="/accommodations/deactivated">
-               Deactivated Accommadation
-              </Link>
-               </Button>
-           ) : null}
-          </div>
+          <Col md={5} className="breadcrumbs">
+            <Breadcrumbs itemsArray={['> Home', ' Deactivated accommodations']} />
           </Col>
         </Row>
         <Row className="center-items">
@@ -160,17 +129,18 @@ export class AllAccommodation extends React.Component {
     );
   }
 }
-AllAccommodation.propTypes = {
-  GetAllAccommodation: PropTypes.func.isRequired,
+DeactivatedAccommodation.propTypes = {
+  getDeactivatedAccommodation: PropTypes.func.isRequired,
   likeUnlikeAccommodation: PropTypes.func.isRequired,
-  accommodations: PropTypes.array.isRequired,
 };
+
 export const mapStateToProps = (state) => ({
-  accommodations: state.accommodation.getAccommodation,
   searchResults: state.accommodation.searchResults,
   searchError: state.accommodation.searchError,
+  accommodationDeactivatedError: state.accommodation.accommodationDeactivatedError,
+  accommodationDeactivatedData: state.accommodation.accommodationDeactivatedData,
 });
 
 export default withRouter(connect(mapStateToProps, {
-  GetAllAccommodation, likeUnlikeAccommodation, showAlert, getLocations,
-})(AllAccommodation));
+  likeUnlikeAccommodation, showAlert, getLocations, getDeactivatedAccommodation,
+})(DeactivatedAccommodation));
