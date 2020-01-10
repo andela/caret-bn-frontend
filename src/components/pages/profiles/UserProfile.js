@@ -226,20 +226,16 @@ export class UserProfile extends Component {
             </div>
             {/* <Row> */}
             <div className="form-group row p-1">
-              <span className="col-sm-3 col-form-label">
+              <span className="col-sm-6 col-form-label">
                 Email Notifications:
-              </span>
               {' '}
-              <div className="col-sm-2">
                 <Switch onChange={() => this.switchNotif('email-notification')} checked={emailNotif} />
-              </div>
-              <span className="col-sm-3 col-form-label">
-                In-app Notifications:
               </span>
+              <span className="col-sm-6 col-form-label">
+                In-app Notifications:
               {' '}
-              <div className="col-sm-2">
                 <Switch onChange={() => this.switchNotif('app-notification')} checked={appNotif} />
-              </div>
+              </span>
             </div>
             {/* </Row> */}
             </div>

@@ -74,7 +74,6 @@ describe('Test Request Component', () => {
     await component.setState({
       request: multiCityRequest.request
     });
-    console.log(component.instance());
     component.instance().handleDestinationChange({
       target: {
         name: 'place',

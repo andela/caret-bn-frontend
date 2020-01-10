@@ -48,6 +48,7 @@ const setUp = (initialState =  {}) => {
 describe('ViewRequests Test Suite', () => { 
   it('Should Mount Successfully', () => {
     const component = setUp(mainState); 
+    component.instance().renderResults([requestsMocks.itemApproved, requestsMocks.itemPending], { message: 'error'});
     expect(component.find(Breadcrumbs)).toHaveLength(1);
   });
 
