@@ -104,14 +104,14 @@ export class CommentDisplay extends Component {
              <div className="input-group shadow-sm mb-3 mt-3">
                <div className="input-group-prepend">
                  <span className="input-group-text bg-white p-1" id="basic-addon1">
-                 {profile && profile.image && <img src={this.props.profile.image} className="icon menu-photo" /> }
+                 {profile &&  <img src={this.props.profile.image || 'https://via.placeholder.com/450'} className="icon menu-photo" /> }
                  </span>
                </div>
                      <Form.Control as="textarea" rows="3" data-test="comment" type="text" className="form-control" onChange={this.handleChange} name="comment" placeholder="Enter a comment here" value={comment} required />
              </div>
              </div>
         </div>
-        <Button type="submit">{loadingButton ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Post Comment'}</Button>
+        <Button type="submit">{loadingButton ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Post'}</Button>
         </form>
           <Row />
           <div className="request-item mb-3 p-3">

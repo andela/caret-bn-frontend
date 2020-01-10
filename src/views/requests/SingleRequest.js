@@ -319,6 +319,7 @@ SingleRequest.propTypes = {
   locations: PropTypes.any,
   editData: PropTypes.any,
   editError: PropTypes.any,
+
 };
 
 export default connect(mapStateToProps, {

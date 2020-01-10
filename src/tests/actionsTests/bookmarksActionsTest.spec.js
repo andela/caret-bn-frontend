@@ -3,7 +3,7 @@ import { getBookmarks, bookmarkAccommodation } from '../../actions/bookmarkActio
 import backendCall from '../../helpers/backendCall';
 import testStore from '../../utilities/tests/mockStore';
 
-describe('Bookmark Actions Test Suite', () => {
+describe('Bookmark Actions Test Suites', () => {
   beforeEach(() => {
     moxios.install(backendCall);
   });

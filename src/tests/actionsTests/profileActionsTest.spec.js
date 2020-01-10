@@ -108,11 +108,16 @@ describe('Profile Actions Test Suite', () => {
       });
     });
 
-    const expectedActions = [{
-      payload: {
-        message: "No Profile Found!",
-      },
-      type: UPDATE_PROFILE_SUCCESS
+    const expectedActions = [
+      {
+             payload: {
+               message: "No Profile Found!",
+             },
+             type: "UPDATE_PROFILE_SUCCESS",
+           },
+      {
+      payload: null,
+      type: "SHOW_ALERT",
     }];
     store = mockStore({});
     await store.dispatch(UpdateUserProfile())

@@ -1,21 +1,13 @@
+import UserProfile from '../components/pages/profiles/UserProfile';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import UserProfile from '../components/pages/profiles/UserProfile';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
-import Breadcrumbs from '../components/global/Breadcrumbs';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
-import sinon from 'sinon';
-
-jest.mock('axios');
+import findByTestAttribute from './../utilities/tests/findByTestAttribute';
 
 let wrapper;
 const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
 const mainState = {
   profile: {
     data: {
@@ -28,62 +20,91 @@ const mainState = {
         company: 'andela',
         department: 'it',
         image: 'image.png',
-        isLoading: false,
-
+        isLoading: false
       }
     },
+    GetUserProfile: jest.fn(),
+    switchNotifAction: jest.fn(),
     dataError: null,
     status: '',
+    history: {
+
+    }
   },
 };
 
-const event = { target: { username: 'eric', value: 'thatway' } }
-const eventFile = { target: { name: 'eric', files: ['image.png'] } }
-const state = {
-  username: 'eric',
-  gender: 'male',
-  phone: '09409339',
-  language: 'lingala',
-  country: 'rwanda',
-  company: 'andela',
-  department: 'it',
-  image: 'image.png',
-  isLoading: false,
-}
 const testStore = (state) => {
   const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
   return createStoreWithMiddleware(rootReducer, state);
 };
+
 const setUp = (initialState = {}) => {
-  const store = mockStore(initialState);
-  wrapper = mount(
-    <Provider store={store}>
-      <Router><UserProfile /></Router>
-    </Provider>
-  );
+  const store = testStore(initialState);
+  const wrapper = shallow(
+    <UserProfile  {...mainState} store={store} />
+  ).childAt(0).dive();
   return wrapper;
 }
 
 describe('User Profile Test Suite', () => {
-  it('Should Mount Successfully', () => {
-    const spy = sinon.spy(axios, 'get');
-    axios.get.mockResolvedValue({ data: { profile: state } });
-    const component = setUp(mainState);
-    expect(component.find(Breadcrumbs)).toHaveLength(1);
-    component.find('input[name="selectedFile"]').first().simulate('change', eventFile);
-    component.find('input[name="username"]').first().simulate('change', event);
-    component.find('#buttonEdit').first().simulate('click');
-    component.find('#buttonCancel').first().simulate('click');
-    component.find('form').simulate('submit');
-    spy.restore();
-  });
-
+  
   it('should test gender element', () => {
-    const spy = sinon.spy(axios, 'get');
-    axios.get.mockResolvedValue({ data: { profile: state } });
     const component = setUp(mainState);
-    expect(component.find(Breadcrumbs)).toHaveLength(1);
-    spy.restore();
+    component.setState({
+        isLoading: false,
+        username: 'eric',
+        gender: 'male',
+        phone: '09409339',
+        language: 'lingala',
+        country: 'rwanda',
+        company: 'andela',
+        department: 'it',
+        selectFile: 'image.png',
+        isLoading: false,
+        emailNotif: false,
+        appNotif: false
+      });
+
+    component.setProps({
+      switchNotifAction: jest.fn(),
+      GetUserProfile: jest.fn(),
+      data: {
+        profile: {
+          emailNotif: true,
+          appNotif: true
+        }
+      }
+    })
+
+    const handleChangeSpy = jest.spyOn(component.instance(), 'handleChange');
+
+    const emailSwitch = findByTestAttribute(component, 'email-switch');
+    const langInput = findByTestAttribute(component, 'language');
+    const image = findByTestAttribute(component, 'image');
+    const form = findByTestAttribute(component, 'form');
+    const editMode = findByTestAttribute(component, 'edit-mode');
+    editMode.simulate('click', {
+      preventDefault: jest.fn()
+    })
+    emailSwitch.simulate('change');
+    langInput.simulate('change', {target: {name: 'language', value: 'english'}})
+    image.simulate('change', {target: {files: ['myfile']}})
+    
+
+ 
+    form.simulate('submit', {
+      preventDefault: jest.fn()
+    });
+
+    component.setState({
+      isLoading: false
+    });
+
+    const cancelBtn = findByTestAttribute(component, 'cancel');
+    cancelBtn.simulate('click', {
+      preventDefault: jest.fn()
+    });
+  
+    expect(component.state().language).toEqual('english');
   });
 });
-
