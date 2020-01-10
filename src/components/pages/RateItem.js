@@ -27,7 +27,7 @@ export default function RateItem(rating) {
           numberOfStars={5}
           name="rating"
           starEmptyColor="F5F1F1"
-          starDimension="25px"
+          starDimension="20px"
           starBorder="#e99434"
         />
         <p className="feedback">{rating.rating.feedback}</p>

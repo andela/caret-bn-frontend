@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -13,8 +14,8 @@ import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import StarRatings from 'react-star-ratings';
-import { Link } from 'react-router-dom';
-import { GetSingleAccommodation, likeUnlikeAccommodation } from '../../actions/accommodationActions';
+import { Link, withRouter } from 'react-router-dom';
+import { GetSingleAccommodation, likeUnlikeAccommodation, deleteAccommodation } from '../../actions/accommodationActions';
 import { BookAccommodation, getBookings } from '../../actions/bookingActions';
 import Breadcrumbs from '../global/Breadcrumbs';
 import 'react-day-picker/lib/style.css';
@@ -26,9 +27,13 @@ import { hideAlert, showAlert } from '../../actions/alertAction';
 import { rateAccommodation } from '../../actions/ratingsActions';
 import RatingModal from './RatingModal';
 import RateItem from './RateItem';
-import { EditOutlined, LocationOnOutlined, AttachMoneyOutlined, VerifiedUser, LocalHotel } from '@material-ui/icons';
-import BookMark from './../pages/accommodations/BookMark';
+import {
+  EditOutlined, LocationOnOutlined, AttachMoneyOutlined, VerifiedUser, LocalHotel,
+} from '@material-ui/icons';
+import BookMark from './accommodations/BookMark';
 import { checkHost } from '../../helpers/authHelper';
+import Confirm from '../global/Confirm';
+
 
 export class SingleAccommodation extends React.Component {
   constructor(props) {
@@ -71,6 +76,29 @@ export class SingleAccommodation extends React.Component {
   async componentWillUnmount() {
     const { hideAlert } = this.props;
     await hideAlert();
+  }
+
+  deleteAcc = async () => {
+    const {
+      accommodation, status, deleteAccommodation, history,
+    } = this.props;
+
+    await deleteAccommodation(accommodation.id);
+
+    switch (this.props.status) {
+      case 'success':
+        return history.push('/accommodations');
+      case 'fail':
+        this.setState({
+          error: {
+            status: true,
+            message: 'Cannot delete this accommodation',
+          },
+        });
+        return showAlert();
+      default:
+        return null;
+    }
   }
 
   async handleLike() {
@@ -172,7 +200,8 @@ export class SingleAccommodation extends React.Component {
             <Row>
               <Col xs={6} className="single-column container-fluid col-lg-6 col-md-6 col-12">
                 <Carousel
-                  className="MyCarousel">
+                  className="MyCarousel"
+                >
                   {images.map((image, index) => (
                     <Carousel.Item key={index}>
                       <img className="d-block w-100" src={image} alt="accommodation" />
@@ -190,15 +219,19 @@ export class SingleAccommodation extends React.Component {
                   <div className="highlights">
                     <p dangerouslySetInnerHTML={{
                       __html: accommodation.highlights,
-                    }} />
+                    }}
+                    />
                   </div>
                 </Row>
                 <Row className="highlights-amenities-box">
                   <p className="title"> amenities </p>
                   <div>
-                    <p className="highlights" dangerouslySetInnerHTML={{
-                      __html: accommodation.amenities,
-                    }} />
+                    <p
+                      className="highlights"
+                      dangerouslySetInnerHTML={{
+                        __html: accommodation.amenities,
+                      }}
+                    />
                   </div>
                 </Row>
               </Col>
@@ -216,17 +249,14 @@ export class SingleAccommodation extends React.Component {
                   <span xs={12} sm={12} lg={12} md={12} className="average-rating">
                     <Badge variant="primary">
                       {(accommodation.averageRating)
-                        ? accommodation.averageRating.toFixed(1) :
-                        '0'}
+                        ? accommodation.averageRating.toFixed(1)
+                        : '0.0'}
                     </Badge>
                     <span>
-                      {' '}
-                      from
-                  {' '}
-                      {ratingNumber}
-                      {' '}
-                      rating(s)
-                </span>
+                      {(accommodation.averageRating)
+                        ? `  from ${ratingNumber} rating(s)`
+                        : ''}
+                    </span>
                   </span>
                 </Row>
                 {(accommodation.hasRated)
@@ -269,7 +299,7 @@ export class SingleAccommodation extends React.Component {
                         {accommodation.availableSpace}
                         &nbsp;
                         Rooms available
-                      </Badge>
+                          </Badge>
                     </span>
                     {
                       (ownerUser !== undefined) ? (accommodation.ownerUser.id === this.state.userId)
@@ -279,7 +309,9 @@ export class SingleAccommodation extends React.Component {
                             &nbsp;
                             <Badge variant="warning">
                               <Link to={{ pathname: `/accommodations/${accommodation.slug}/edit` }} className="edit-links">
-                                Edit {accommodation.name}
+                                Edit
+{' '}
+                                {accommodation.name}
                               </Link>
                             </Badge>
                           </span>
@@ -287,20 +319,38 @@ export class SingleAccommodation extends React.Component {
                         : null : null
                     }
                   </Row>
+                  {
+                    (ownerUser !== undefined) ? (accommodation.ownerUser.id === this.state.userId)
+                      ? (
+                        <Row className="delete-row">
+                          <Confirm processAction={() => this.deleteAcc()} action={`Delete ${accommodation.name}`} size="md" title="Delete" data-test="delete" variant="danger" />
+                          <p>Only do this if you are absolutely certain</p>
+                        </Row>
+                      )
+                      : null : null
+                  }
                 </div>
-                {bookedError &&
-                  <Row className="center-items"> <AlertComponent variant="danger" heading="" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />  </Row>}
-                {booked && <Row className="center-items"> <AlertComponent variant="success" heading="" message={booked.message} /> </Row>}
+                {bookedError
+                  && (
+                    <Row className="center-items">
+                      <AlertComponent variant="danger" heading="" message={(Array.isArray(bookedError.error)) ? bookedError.error[0] : bookedError.message} />
+                    </Row>
+                  )}
+                {booked && (
+                  <Row className="center-items">
+                    <AlertComponent variant="success" heading="" message={booked.message} />
+                  </Row>
+                )}
                 {checkHost() ? null : <Booking />}
                 <Row>
-                <Col className="like">
-                  {checkHost() ? null : hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon className="like-button" onClick={this.handleLike} />}
-                  {` Total Likes: ${accommodation.Likes}`}
-                </Col>
-                <Col className="dislike">
-                  {checkHost() ? null : hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" onClick={this.handleDislike} />}
-                  {` Total Dislikes: ${accommodation.Unlikes}`}
-                </Col>
+                  <Col className="like">
+                    {checkHost() ? null : hasLiked ? <ThumbUpAltIcon className="like-button" /> : <ThumbUpOutlinedIcon className="like-button" data-test="like" onClick={this.handleLike} />}
+                    {` Total Likes: ${accommodation.Likes}`}
+                  </Col>
+                  <Col className="dislike">
+                    {checkHost() ? null : hasUnliked ? <ThumbDownAltIcon className="dislike-button" /> : <ThumbDownOutlinedIcon className="dislike-button" data-test="dislike" onClick={this.handleDislike} />}
+                    {` Total Dislikes: ${accommodation.Unlikes}`}
+                  </Col>
                 </Row>
                 <h4>Reviews</h4>
                 {ratingArray.map((rating) => (
@@ -340,10 +390,12 @@ SingleAccommodation.propTypes = {
   hideAlert: PropTypes.func,
   likeUnlikeAccommodation: PropTypes.func,
   getBookings: PropTypes.func,
+  deleteAccommodation: PropTypes.func,
 };
 
 export const mapStateToProps = (state) => ({
   accommodation: state.accommodation.singleAccommodation,
+  status: state.accommodation.deleteStatus,
   booked: state.bookings.booked,
   bookings: state.bookings.data,
   bookedError: state.bookings.bookedError,
@@ -352,6 +404,14 @@ export const mapStateToProps = (state) => ({
   ratings: state.ratings,
 });
 
-export default connect(mapStateToProps, {
-  GetSingleAccommodation, BookAccommodation, getBookings, hideAlert, showAlert, rateAccommodation, likeUnlikeAccommodation, getBookings,
-})(SingleAccommodation);
+export default compose(withRouter, connect(mapStateToProps, {
+  GetSingleAccommodation,
+  BookAccommodation,
+  getBookings,
+  hideAlert,
+  showAlert,
+  rateAccommodation,
+  likeUnlikeAccommodation,
+  getBookings,
+  deleteAccommodation,
+}))(SingleAccommodation);

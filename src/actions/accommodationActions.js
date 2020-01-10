@@ -2,7 +2,7 @@ import {
   ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE, UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
   RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR, HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE, SEARCH_ACCOMMODATIONS,
-  SEARCH_ACCOMMODATIONS_ERROR, CLEAR_SEARCH_ERROR,
+  SEARCH_ACCOMMODATIONS_ERROR, CLEAR_SEARCH_ERROR, DELETE_ACCOMMODATION_SUCCESS, DELETE_ACCOMMODATION_FAIL,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -109,5 +109,17 @@ export const accommodationSearch = (params) => (dispatch) => backendCall.get(`/a
   }).catch((error) => {
     dispatch(
       accommodationType(SEARCH_ACCOMMODATIONS_ERROR, error.response.data),
+    );
+  });
+
+export const deleteAccommodation = (id) => (dispatch) => backendCall.delete(`/accommodations/${id}/delete`, { headers })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      accommodationType(DELETE_ACCOMMODATION_SUCCESS, response),
+    );
+  }).catch((error) => {
+    dispatch(
+      accommodationType(DELETE_ACCOMMODATION_FAIL, error.response.data),
     );
   });

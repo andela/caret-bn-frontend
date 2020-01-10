@@ -165,14 +165,26 @@
 		}
 	}
 
-	.carousel-control-next-icon {
-		// background-color: red;
+	.delete-row {
+		flex-direction: column;
+		align-items: center;
+		p {
+			text-transform: uppercase;
+			font-size: x-small;
+			padding: 2px;
+		}
 	}
+
 	.disabled-date {
 		pointer-events: none;
 	}
 
 	.rateItem {
+		justify-content: flex-start;
+		.feedback {
+			color: $grey;
+			text-transform: capitalize;
+		}
 		div {
 			align-items: center;
 			svg {
@@ -182,8 +194,8 @@
 			}
 
 			img {
-				height: 50px;
-				width: 50px;
+				height: 45px;
+				width: 45px;
 				margin-top: 10%;
 			}
 		}

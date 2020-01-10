@@ -39,6 +39,7 @@ describe('Request Actions Test Suite', () => {
       likeStatus: '',
       highRated: null,
       hihRatedError: null,
+      "deleteStatus": null,
     }
 
     const store = testStore();

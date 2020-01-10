@@ -22,6 +22,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
+      "deleteStatus": null
     });
   });
 
@@ -51,6 +52,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "like": null,
       "dislike": null,
       "likeStatus": '',
+      "deleteStatus": null
     })
   });
 
@@ -82,6 +84,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
+      "deleteStatus": null
     })
   });
 
@@ -110,7 +113,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "highRated": null,
       "hihRatedError": null,
       "searchError": null,
-      "searchResults": null
+      "searchResults": null,
+      "deleteStatus": null
     })
   });
 
@@ -141,7 +145,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "highRated": null,
       "hihRatedError": null,
       "searchError": null,
-      "searchResults": null
+      "searchResults": null,
+      "deleteStatus": null
     })
   });
 
@@ -173,7 +178,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
-
+      "deleteStatus": null
     })
   });
 
@@ -206,6 +211,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
+      "deleteStatus": null
     });
   });
 
@@ -238,6 +244,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
+      "deleteStatus": null
     })
   });
 
@@ -270,6 +277,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "likeStatus": '',
       "highRated": null,
       "hihRatedError": null,
+      "deleteStatus": null
     });
   });
 
@@ -301,6 +309,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "searchResults": null,
       "highRated": action.payload,
       "hihRatedError": null,
+      "deleteStatus": null
     })
   });
 
@@ -333,6 +342,7 @@ describe('Create accommodation Reducer Tests ', () => {
       "searchResults": null,
       "highRated": null,
       "hihRatedError": action.payload,
+      "deleteStatus": null
     });
   });
 
