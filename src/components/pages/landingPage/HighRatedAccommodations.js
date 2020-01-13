@@ -48,7 +48,7 @@ export class HighRatedAccommodation extends Component {
                         Rating:
                         {' '}
                         {ratedAccommodation.averageRating}
-                        / 5
+                        /5
                         </div>
                         </p>
                   </div>

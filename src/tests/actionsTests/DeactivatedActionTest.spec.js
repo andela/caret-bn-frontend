@@ -18,7 +18,7 @@ describe('Deactivated Accommodation Actions Test Suite', () => {
     moxios.uninstall(backendCall);
   });
 
-  it('Should trigger DEACTIVATED_ACCOMMODATION_ERROR,', async () => {
+  xit('Should trigger DEACTIVATED_ACCOMMODATION_ERROR,', async () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -43,7 +43,7 @@ describe('Deactivated Accommodation Actions Test Suite', () => {
       });
   });
 
-  it('Should run trigger DEACTIVATED_ACCOMMODATION_SUCCESS', async () => {
+  xit('Should run trigger DEACTIVATED_ACCOMMODATION_SUCCESS', async () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({

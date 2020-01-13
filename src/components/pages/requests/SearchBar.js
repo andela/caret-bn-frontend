@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { getLocations } from '../../../actions/locationActions';
 import { searchRequestAction } from '../../../actions/requestsActions';
 import { managerSearchRequestAction } from '../../../actions/managerRequestAction';
+import { resetPageAction, cancelResetPageAction } from '../../../actions/resetPageAction';
 import authHelper from '../../../helpers/authHelper';
 import StatsForm from './StatsForm';
 
@@ -81,8 +82,10 @@ export class SearchBar extends Component {
       this.setState((state) => ({ ...state, isLoading: true }));
       if (!checkManager()) {
         await props.managerSearchRequestAction(searchParams);
+        props.resetPageAction();
       } else {
         await props.searchRequestAction(searchParams);
+        props.resetPageAction();
       }
       this.setState((state) => ({ ...state, isLoading: false, emptyParams: false }));
     } else {
@@ -249,6 +252,8 @@ SearchBar.propTypes = {
   getLocations: PropTypes.func.isRequired,
   searchRequestAction: PropTypes.func.isRequired,
   managerSearchRequestAction: PropTypes.func.isRequired,
+  resetPageAction: PropTypes.func.isRequired,
+  cancelResetPageAction: PropTypes.func.isRequired,
   locations: PropTypes.any,
 };
 
@@ -256,4 +261,6 @@ export const mapStateToProps = (state) => ({
   locations: state.locations.data,
 });
 
-export default connect(mapStateToProps, { getLocations, searchRequestAction, managerSearchRequestAction })(SearchBar);
+export default connect(mapStateToProps, {
+  getLocations, searchRequestAction, managerSearchRequestAction, resetPageAction, cancelResetPageAction,
+})(SearchBar);

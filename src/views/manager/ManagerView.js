@@ -1,8 +1,11 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Container, Row, Col, Spinner, Button,
+  Container, Row, Col, Pagination, Spinner, Button,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -12,11 +15,12 @@ import ManagerItem from '../../components/pages/manager/ManagerItem';
 import Alert from '../../components/global/AlertComponent';
 import SearchBar from '../../components/pages/requests/SearchBar';
 import { checkManager } from '../../helpers/authHelper';
-
+import { cancelResetPageAction } from '../../actions/resetPageAction';
 
 export class ManagerView extends Component {
   state = {
     isLoading: false,
+    currentPage: 1,
   }
 
   async componentDidMount() {
@@ -28,24 +32,64 @@ export class ManagerView extends Component {
     this.setState({ isLoading: false });
   }
 
-  renderResults = (data, dataError) => (
+  pageList = (currentPage, data) => {
+    const numberPages = Math.ceil(data.length / 6);
+    const pages = [];
+    for (let i = 1; i <= numberPages; i++) {
+      pages.push(
+        <Pagination.Item key={i} onClick={() => this.setState({ currentPage: i })} active={currentPage === i}>{i}</Pagination.Item>,
+      );
+    }
+    return pages;
+  }
 
-    <div>
-      { data && data.length === 0 && (
-        <Row>
-          No request
-        </Row>
-      ) }
-      <Row className="centered-flex">
-        { data && data.map((item) => (
-          <ManagerItem key={item.id} item={item} user={item.requester.username} email={item.requester.email} />
-        )) }
-      </Row>
-      <Row>
-        { dataError && <Row>{dataError.message}</Row> }
-      </Row>
-    </div>
-  );
+  resetPage = () => {
+    const { props } = this;
+    props.cancelResetPageAction();
+    this.setState({
+      currentPage: 1,
+    });
+  };
+
+  renderResults = (data, dataError, currentPage) => {
+    const { isLoading } = this.state;
+    const start = (currentPage - 1) * 6;
+    return (
+      <>
+      {isLoading ? null : (
+        <div>
+          { data && data.length === 0 && (
+            <Row>
+              No request
+            </Row>
+          ) }
+
+          {data && (
+            <p>
+              Showing requests
+              {' '}
+              { start + 1 }
+              {' '}
+              to
+              {' '}
+              { data.slice(start, currentPage * 6).length + start }
+            </p>
+          )}
+
+          <Row className="d-flex">
+            { data && data.slice(start, currentPage * 6).map((item) => (
+              <ManagerItem key={item.id} item={item} user={item.requester.username} email={item.requester.email} />
+            )) }
+          </Row>
+          <Row>
+            { dataError && <Row>{dataError.message}</Row> }
+          </Row>
+        </div>
+      )}
+      </>
+    );
+  }
+
 
   allRequestsButton = () => (
     <Row>
@@ -60,12 +104,22 @@ export class ManagerView extends Component {
   render() {
     let data;
     let dataError;
+    const dataData = [];
     const { isLoading } = this.state;
+    const { currentPage } = this.state;
     const { props } = this;
-    const { managerSearchRequest } = props;
+    const { managerSearchRequest, resetState } = props;
     const { status, managerSearchDataError, managerSearchData } = managerSearchRequest;
-    // eslint-disable-next-line no-nested-ternary
     props.data ? data = props.data.data : props.dataError ? dataError = props.dataError : '';
+    if (props.data) {
+      data.map((user) => user.requests.map((item) => {
+        const newItem = item;
+        newItem.requester = { username: user.username, email: user.email };
+        dataData.push(item);
+      }));
+    }
+
+    (resetState) ? this.resetPage() : currentPage;
 
     return (
       <>
@@ -78,7 +132,6 @@ export class ManagerView extends Component {
             <Col md={5} />
           </Row>
 
-          <Row />
 
           <SearchBar allRequestsButton={this.allRequestsButton} />
 
@@ -91,18 +144,35 @@ export class ManagerView extends Component {
           </Row>
 
           {data && data.length === 0 && <Alert variant="danger" heading="Error" message="No Requests Found" />}
-          <Row className="centered-flex mx-auto">
-          {status === '' && data && data.map((user) => (
-            user.requests.map((item) => (
-              <ManagerItem key={item.id} item={item} user={user.username} email={user.email} />
-            ))
-          ))}
-          </Row>
           <Row>
             {dataError && <Alert variant="danger" heading="Error" message={dataError.message} />}
           </Row>
-          <Row />
-            { status !== '' && this.renderResults(managerSearchData, managerSearchDataError)}
+
+          { status === '' && dataData && this.renderResults(dataData, dataError, currentPage)}
+          { status !== '' && this.renderResults(managerSearchData, managerSearchDataError, currentPage)}
+
+          { (!isLoading && dataData && status === '') && (
+              <Row className="center-items">
+                <Pagination size="sm">
+                  <Pagination.First data-test="page-first" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: 1 })} />
+                  <Pagination.Prev data-test="page-prev" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: currentPage - 1 })} />
+                  {this.pageList(currentPage, dataData)}
+                  <Pagination.Next data-test="page-next" disabled={currentPage === Math.ceil(dataData.length / 6)} onClick={() => this.setState({ currentPage: currentPage + 1 })} />
+                  <Pagination.Last data-test="page-last" disabled={currentPage === Math.ceil(dataData.length / 6)} onClick={() => this.setState({ currentPage: Math.ceil(dataData.length / 6) })} />
+                </Pagination>
+              </Row>
+          )}
+          { (!isLoading && managerSearchData && status !== '') && (
+              <Row className="center-items">
+                <Pagination size="sm">
+                  <Pagination.First data-test="page-first" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: 1 })} />
+                  <Pagination.Prev data-test="page-prev" disabled={currentPage === 1} onClick={() => this.setState({ currentPage: currentPage - 1 })} />
+                  {this.pageList(currentPage, managerSearchData)}
+                  <Pagination.Next data-test="page-next" disabled={currentPage === Math.ceil(managerSearchData.length / 6)} onClick={() => this.setState({ currentPage: currentPage + 1 })} />
+                  <Pagination.Last data-test="page-last" disabled={currentPage === Math.ceil(managerSearchData.length / 6)} onClick={() => this.setState({ currentPage: Math.ceil(managerSearchData.length / 6) })} />
+                </Pagination>
+              </Row>
+          )}
         </Container>
       ) }
       </>
@@ -114,11 +184,13 @@ export const mapStateToProps = (state) => ({
   data: state.managerRequest.data,
   dataError: state.managerRequest.dataError,
   managerSearchRequest: state.managerSearchRequest,
+  resetState: state.resetPageReducer.resetState,
 });
 
 ManagerView.propTypes = {
   getManagerRequestAction: PropTypes.func.isRequired,
-  history: PropTypes.any,
+  cancelResetPageAction: PropTypes.func.isRequired,
+  resetState: PropTypes.any,
   data: PropTypes.object,
   dataError: PropTypes.object,
   managerSearchRequest: PropTypes.object,
@@ -127,4 +199,4 @@ ManagerView.propTypes = {
   managerSearchDataError: PropTypes.object,
 };
 
-export default connect(mapStateToProps, { getManagerRequestAction })(ManagerView);
+export default connect(mapStateToProps, { getManagerRequestAction, cancelResetPageAction })(ManagerView);
