@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Card, Button, Row, Container, Form,
+  Card, Button, Row, Container, Form, Spinner,
 } from 'react-bootstrap';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { getSpecificUser } from '../../../actions/userActions';
@@ -61,9 +61,11 @@ export class ViewSpecificUser extends Component {
     return (
       <div className="view-specific-user">
         <Container className="user-view">
-          <Row>
-            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
-          </Row>
+            {isLoading ? (
+<div className="d-flex justify-content-center">
+        <Spinner animation="grow" size="lg" variant="primary" />
+</div>
+            ) : ''}
           {data && (
             <Card border="light" text="black" className="user-card">
               {assignedRoleError && <AlertComponent variant="danger" heading="Error" message={(assignedRoleError.data.error) ? 'Please select the new role to assign to the user' : assignedRoleError.data.message} />}

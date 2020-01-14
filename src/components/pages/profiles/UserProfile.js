@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FormData from 'form-data';
 import { connect } from 'react-redux';
 import {
-  Row, Button, Col,
+  Row, Button, Col, Spinner,
 } from 'react-bootstrap';
 import Switch from 'react-switch';
 import PropTypes from 'prop-types';
@@ -154,9 +154,11 @@ export class UserProfile extends Component {
           <Breadcrumbs itemsArray={['> Home', '  Profile']} />
         </Col>
       </Row>
-      <Row>
-        {isLoading ? <i className="fas fa-spinner fa-pulse loader-big align-items-center" /> : ''}
-      </Row>
+        {isLoading ? (
+          <div className="d-flex justify-content-center">
+                  <Spinner animation="grow" size="lg" variant="primary" />
+          </div>
+        ) : ''}
       {
         data
         && (

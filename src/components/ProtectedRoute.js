@@ -9,9 +9,7 @@ import isAuth from '../helpers/isAuthenticated';
 export default class ProtectedRoute extends Component {
   render() {
     const { component: Component, ...props } = this.props;
-    return (
-      <Route {...props} render={(props) => (isAuth() ? <Component {...props} /> : window.location.replace('/login'))} />
-    );
+    return (isAuth()) ? <Route {...props} render={(props) => <Component {...props} />} /> : window.location.replace('/login');
   }
 }
 

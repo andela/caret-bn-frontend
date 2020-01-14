@@ -4,13 +4,16 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import {
-  Form, InputGroup, FormControl, Button,
+  Form, InputGroup, FormControl, Button, Col, Row,
 } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import SendIcon from '@material-ui/icons/Send';
 import Messages from './Messages';
 import { getChatHistory } from '../../../actions/chatActions';
+import Breadcrumbs from '../../global/Breadcrumbs';
+
 
 class CommunityChat extends Component {
   state={
@@ -19,6 +22,8 @@ class CommunityChat extends Component {
     allMessages: [],
     activeHistoryButton: true,
   }
+
+bottomOfChat = React.createRef();
 
 initChat = () => {
   const socket = socketIOClient.connect('https://caret-bn-backend-staging.herokuapp.com/', {
@@ -31,6 +36,7 @@ initChat = () => {
       text: data.message,
       sender: `${data.sender}: `,
       type: 'received',
+      time: moment().calendar(),
     });
     this.setState({
       allMessages: all,
@@ -60,8 +66,9 @@ seeChatHistory = async () => {
   const chatMessages = allMessages.concat(
     chatHistory.data.sort((latest, oldest) => (latest.id - oldest.id)).map((item) => ({
       text: item.message,
-      sender: item.user.username,
+      sender: (item.user.username === myUsername) ? 'Me' : item.user.username,
       type: (item.user.username === myUsername) ? 'sent' : 'received',
+      time: moment(`${item.createdAt}`).format('DD/MM/YYYY h:mm a'),
     })),
   );
   this.setState({ allMessages: chatMessages, activeHistoryButton: false });
@@ -75,7 +82,7 @@ handleChange = async (e) => {
   });
 }
 
-sendMessage = (e) => {
+sendMessage = async (e) => {
   e.preventDefault();
   const { message, stateSocket, allMessages } = this.state;
   stateSocket.emit('sendMessage', {
@@ -86,36 +93,45 @@ sendMessage = (e) => {
   });
   const all = allMessages.concat({
     text: message,
-    sender: 'Me:',
+    sender: 'Me',
     type: 'sent',
+    time: moment().calendar(),
   });
-  this.setState({
+  await this.setState({
     allMessages: all,
     message: '',
   });
+  this.scrollToBottom();
+}
+
+scrollToBottom() {
+  this.bottomOfChat.current.scrollIntoView();
 }
 
 render() {
   const { allMessages, activeHistoryButton, message } = this.state;
 
-  const messageContainerStyle = (type) => ({
-    display: 'flex',
-    width: '98.5%',
-    padding: '10px',
-    justifyContent: (type === 'sent' ? 'flex-end' : 'flex-start'),
+  const messageContainerStyle = () => ({
+    justifyContent: 'center',
   });
   const messageStyle = (type) => ({
-    backgroundColor: (type === 'sent' ? '#0890bf' : '#148799'),
-    margin: '0 10px',
-    padding: '5px',
-    color: '#fff',
-    borderRadius: '5px',
-    flex: 0.5,
+    backgroundColor: 'rgb(233, 235, 238)',
+    margin: '0 0.5rem',
+    padding: '0.5rem 0.5rem 0 0.5rem',
+    color: '#2f3236',
+    borderRadius: (type === 'sent' ? '1rem 1rem 0 1rem' : '0 1rem 1rem 1rem'),
   });
 
   return (
+    <>
+    <Row>
+      <Col md={3} className="breadcrumbs">
+        <Breadcrumbs itemsArray={['> Chat', 'Community Chat']} />
+      </Col>
+    </Row>
     <div className="chatRoom">
-      <div className="chatWindowStyle mt-0 mb-5" id="chat-window">
+      <div className="chatWindowStyle">
+      <div className=" mt-0 mb-5" id="chat-window">
         {
           allMessages.map((message, i) => (
               <Messages
@@ -123,20 +139,22 @@ render() {
                 render={() => (
                 <div style={messageContainerStyle(message.type)}>
                   <div style={messageStyle(message.type)}>
-                    <h6 style={{ margin: '5px 0' }}>{message.sender}</h6>
+                    <h6 style={{ margin: '5px 0', fontWeight: 'bolder' }}>{message.sender}</h6>
                     <p style={{ fontSize: '15px' }}>{message.text}</p>
+                    <p style={{ textAlign: 'right', fontSize: '0.5rem' }}>{message.time}</p>
                   </div>
+                  <div ref={this.bottomOfChat} />
                 </div>
                 )}
               />
           ))
         }
       </div>
-      <div className="fixed-bottom">
-          <Form className="inputStyles">
+      <div className="messabe-box">
+          <Form>
             <InputGroup>
             {activeHistoryButton ? <Button onClick={this.seeChatHistory}>See history</Button> : null }
-              <FormControl className="chat-message" data-test="message" placeholder="Type your message here..." name="message" onChange={this.handleChange} value={this.state.message} className="normal-input" style={{ flex: '2', margin: '0 5px 0 0' }} required />
+              <FormControl className="chat-message" data-test="message" placeholder="Type your message here..." name="message" onChange={this.handleChange} value={this.state.message} required />
                 <InputGroup.Append>
                   <Button
                     type="submit"
@@ -145,13 +163,15 @@ render() {
                     style={{ flex: '.5' }}
                     disabled={(message === '')}
                   >
-                  Send
+                  <SendIcon />
                   </Button>
                 </InputGroup.Append>
             </InputGroup>
           </Form>
       </div>
+      </div>
     </div>
+    </>
   );
 }
 }

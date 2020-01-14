@@ -87,7 +87,7 @@ export class DeactivatedAccommodation extends React.Component {
     }
     return (
       <div className="d-flex justify-content-center">
-        <i className="fas fa-spinner fa-pulse loader-big" />
+        <Spinner animation="grow" size="lg" variant="primary" />
       </div>
     );
   }

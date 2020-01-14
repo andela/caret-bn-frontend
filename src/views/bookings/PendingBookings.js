@@ -162,6 +162,7 @@ class PendingBookings extends React.Component {
                 </Card.Text>
                 <Row className="btn-holder">
                   <Confirm data-test="approve" variant="success" action="approve" id={booking.id} processAction={this.actionSwitch} title="Accept" size="md" buttonClass="process-request-button btn-block" />
+                  &nbsp;
                   <Confirm data-test="reject" variant="danger" action="reject" id={booking.id} processAction={this.actionSwitch} title="Reject" size="md" buttonClass="process-request-button btn-block" />
                 </Row>
               </Card.Body>

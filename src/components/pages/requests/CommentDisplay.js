@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { sortArrayDesd as sortComments } from 'tesla-error-handler';
 import {
-  Container, Row, Col, Button, Form,
+  Container, Row, Col, Button, Form, Spinner,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import 'react-day-picker/lib/style.css';
@@ -123,9 +123,11 @@ export class CommentDisplay extends Component {
       )}
         </div>
         <Container>
-          <Row className="text-center mx-auto">
-            {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
-          </Row>
+            {isLoading ? (
+<div className="d-flex justify-content-center">
+        <Spinner animation="grow" size="lg" variant="primary" />
+</div>
+            ) : ''}
         </Container>
       </>
     );

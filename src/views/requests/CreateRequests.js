@@ -282,80 +282,82 @@ class CreateRequests extends Component {
 
     if (locations.data !== null && bookings.data !== null) {
       return (
-        <Container fluid className="edit-form">
+        <Row style={{ padding: '0 30px' }}>
           <Row>
             <BreadCrumbs itemsArray={['Home', 'Requests', 'Create']} />
           </Row>
-          <Row className="error-holder">
-            {
-              (this.state.error.hasError)
-                ? <AlertComponent variant="danger" message={this.state.error.message} heading={this.state.error.type} dismissible />
-                : (requestState.status === 'error')
-                  ? <AlertComponent variant="danger" message={(requestState.dataError.data.error ? requestState.dataError.data.error : requestState.dataError.data.message)} heading="Could not place your request" />
-                  : (requestState.status === 'success')
-                    ? <Redirect to="/requests" />
-                    : ''
-            }
-          </Row>
+          <Container fluid className="edit-form">
+            <Row className="error-holder">
+              {
+                (this.state.error.hasError)
+                  ? <AlertComponent variant="danger" message={this.state.error.message} heading={this.state.error.type} dismissible />
+                  : (requestState.status === 'error')
+                    ? <AlertComponent variant="danger" message={(requestState.dataError.data.error ? requestState.dataError.data.error : requestState.dataError.data.message)} heading="Could not place your request" />
+                    : (requestState.status === 'success')
+                      ? <Redirect to="/requests" />
+                      : ''
+              }
+            </Row>
 
-          <Row className="section">
-            <h4>Basic Information</h4>
-            <p>Tell us what we need to know to help you get started.</p>
-            <div />
-          </Row>
-          <Row className="center-items">
-            <Col xs={12} sm={12} md={2} lg={3}>
-              <Form.Group>
-                <Form.Label>Trip Type</Form.Label>
-                <Form.Control as="select" onChange={this.handleChange} name="typeId" data-test="type-id">
-                  <option>--</option>
-                  <option value={1}>One Way Trip</option>
-                  <option value={2}>Return Trip</option>
-                  <option value={3}>Multi City Trip</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col xs={12} sm={12} md={2} lg={3}>
-              <Form.Group>
-                <Form.Label>Origin</Form.Label>
-                <Form.Control as="select" name="locationId" onChange={this.handleChange} data-test="location-id">
-                  <option>--</option>
-                  {locations.data.data.map((location) => (<option value={location.id} key={location.id}>{location.name}</option>))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col xs={12} sm={12} md={2} lg={3}>
-              <Form.Group>
-                <Form.Label>Departure Date</Form.Label>
-                <Form.Control as="input" type="date" name="departureDate" onChange={this.handleChange} data-test="departure-date" />
-              </Form.Group>
-            </Col>
-            <Col xs={12} sm={12} md={2} lg={3}>
-              <Form.Group>
-                <Form.Label>Return Date</Form.Label>
-                <Form.Control as="input" type="date" name="returnDate" onChange={this.handleChange} disabled={this.state.disableReturnDate} data-test="return-date" />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="section">
-            <h4>Destinations</h4>
-            <p>Please add all locations you will be visiting during your trip.</p>
-          </Row>
-          <Row className="center-items">
-            {this.state.destinationComponents}
-          </Row>
-          <Row className="space-horizontal">
-            <Button className="full-width-buttons" onClick={() => this.addDestination()} onChange={this.handleChange} disabled={this.state.disableAddDestination} data-test="add-destination">
-              <Add />
-              Include New Destination
-            </Button>
+            <Row className="section">
+              <h4>Basic Information</h4>
+              <p>Tell us what we need to know to help you get started.</p>
+              <div />
+            </Row>
+            <Row className="center-items">
+              <Col xs={12} sm={12} md={2} lg={3}>
+                <Form.Group>
+                  <Form.Label>Trip Type</Form.Label>
+                  <Form.Control as="select" onChange={this.handleChange} name="typeId" data-test="type-id">
+                    <option>--</option>
+                    <option value={1}>One Way Trip</option>
+                    <option value={2}>Return Trip</option>
+                    <option value={3}>Multi City Trip</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col xs={12} sm={12} md={2} lg={3}>
+                <Form.Group>
+                  <Form.Label>Origin</Form.Label>
+                  <Form.Control as="select" name="locationId" onChange={this.handleChange} data-test="location-id">
+                    <option>--</option>
+                    {locations.data.data.map((location) => (<option value={location.id} key={location.id}>{location.name}</option>))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col xs={12} sm={12} md={2} lg={3}>
+                <Form.Group>
+                  <Form.Label>Departure Date</Form.Label>
+                  <Form.Control as="input" type="date" name="departureDate" onChange={this.handleChange} data-test="departure-date" />
+                </Form.Group>
+              </Col>
+              <Col xs={12} sm={12} md={2} lg={3}>
+                <Form.Group>
+                  <Form.Label>Return Date</Form.Label>
+                  <Form.Control as="input" type="date" name="returnDate" onChange={this.handleChange} disabled={this.state.disableReturnDate} data-test="return-date" />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="section">
+              <h4>Destinations</h4>
+              <p>Please add all locations you will be visiting during your trip.</p>
+            </Row>
+            <Row className="center-items">
+              {this.state.destinationComponents}
+            </Row>
+            <Row className="space-horizontal">
+              <Button className="full-width-buttons" onClick={() => this.addDestination()} onChange={this.handleChange} disabled={this.state.disableAddDestination} data-test="add-destination">
+                <Add />
+                Include New Destination
+              </Button>
 
-            <Button className="full-width-buttons" disabled={this.state.disablePlaceRequest} onClick={() => this.placeRequest()} data-test="place-request">
-              <Send />
-              Place Request
-            </Button>
-          </Row>
-        </Container>
+              <Button className="full-width-buttons" disabled={this.state.disablePlaceRequest} onClick={() => this.placeRequest()} data-test="place-request">
+                <Send />
+                Place Request
+              </Button>
+            </Row>
+          </Container>
+        </Row>
       );
     }
 

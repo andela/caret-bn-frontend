@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { Component } from 'react';
 import {
   Navbar, Nav, Dropdown, NavDropdown,
@@ -21,7 +22,7 @@ const { checkSupplier, checkAdmin, checkManager } = authHelper;
 
 export class MenuComponent extends Component {
   state = {
-    username: '',
+    navExpanded: false,
   };
 
   async componentDidMount() {
@@ -29,6 +30,11 @@ export class MenuComponent extends Component {
     await props.GetUserProfile();
     await props.getNotifsAction();
   }
+
+  toggleExpanded = () => ((innerWidth < 1024)
+    ? this.setState({
+      navExpanded: !this.state.navExpanded,
+    }) : null)
 
   markAllNotifs = async () => {
     const { props } = this;
@@ -45,7 +51,7 @@ export class MenuComponent extends Component {
   };
 
   render() {
-    const { props } = this;
+    const { props, state: { navExpanded } } = this;
     const { data, pathname, notifsData } = props;
     const urls = ['/login', '/register', '/forgotpassword', '/registered'];
     const displayMenu = !(urls.includes(pathname) || pathname.match(/resetpassword/) || pathname.match(/verify/));
@@ -55,150 +61,166 @@ export class MenuComponent extends Component {
       unreadNotifs = notifsData.filter((notif) => !notif.isRead).length;
     }
 
-    if (displayMenu) {
-      return (
-        <>
-          <Navbar fixed="top" data-test="menu-test" bg="primary" variant="dark" expand="lg" className="top-navbar">
-            <Link to="/">
-              <Navbar.Brand>
-                <img src={barefootLogo} className="navbar-logo" alt="barefoot nomad" />
-                {' '}
-                Barefoot Nomad
-              </Navbar.Brand>
-            </Link>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ml-auto">
-                <Link to="/">
-                  <div className="account-icon">
-                    <HomeOutlined className="icon" />
-                    Home
-                  </div>
-                </Link>
-                <Link to="/admin/users">
-                  {!checkAdmin() ? null
-                    : (
-                      <div className="account-icon">
-                        <GroupIcon className="icon" />
-                        Users
-                      </div>
-                    )}
-                </Link>
-                <Link to="/requests">
-                  {checkSupplier() ? null
-                    : (
-                      <div className="account-icon">
-                        <FileCopy className="icon" />
-                        My Requests
-                      </div>
-                    )}
-                </Link>
+    const links = [{
+      path: '/',
+      icon: <HomeOutlined className="icon" />,
+      label: 'Home',
+      midlleware: () => true,
+      id: 1,
+    },
+    {
+      path: '/admin/users',
+      icon: <GroupIcon className="icon" />,
+      label: 'Users',
+      midlleware: checkAdmin(),
+      id: 2,
+    },
+    {
+      path: '/requests',
+      icon: <FileCopy className="icon" />,
+      label: 'My Requests',
+      midlleware: !checkSupplier(),
+      id: 3,
+    },
+    {
+      path: '/bookings/pending',
+      icon: <LocalHotel className="icon" />,
+      label: 'Bookings',
+      midlleware: checkSupplier(),
+      id: 4,
+    },
+    {
+      path: '/my-bookings',
+      icon: <LocalHotel className="icon" />,
+      label: 'My Bookings',
+      midlleware: !checkSupplier(),
+      id: 5,
+    },
+    {
+      path: '/my-bookmarks',
+      icon: <BookmarksTwoTone className="icon" />,
+      label: 'My Bookmarks',
+      midlleware: !checkSupplier(),
+      id: 6,
+    },
+    {
+      path: '/user-manager',
+      icon: <AssignmentIndIcon className="icon" />,
+      label: 'Manage Requests',
+      midlleware: !checkManager(),
+      id: 7,
+    },
+    {
+      path: '/accommodations',
+      icon: <AirlineSeatFlatAngled className="icon" />,
+      label: 'Accommodations',
+      midlleware: () => true(),
+      id: 8,
+    }];
 
-                <Link to="/bookings/pending">
-                  {checkSupplier() ? (
-                    <div className="account-icon">
-                      <LocalHotel className="icon" />
-                      Bookings
-                    </div>
-                  )
-                    : ''}
-                </Link>
-
-                <Link className="nav-links" to="/my-bookings">
-                  {!checkSupplier() ? (
-                    <div className="account-icon">
-                      <LocalHotel className="icon" />
-                      My Bookings
-                    </div>
-                  )
-                    : ''}
-                </Link>
-
-                <Link className="nav-links" to="/my-bookmarks">
-                  {!checkSupplier() ? (
-                    <div className="account-icon">
-                      <BookmarksTwoTone className="icon" />
-                      My Bookmarks
-                    </div>
-                  )
-                    : ''}
-                </Link>
-
-                <Link to="/user-manager">
-                  {checkManager() ? null
-                    : (
-                      <div className="account-icon">
-                        <AssignmentIndIcon className="icon" />
-                        Manage Requests
-                      </div>
-                    )}
-                </Link>
-                <Link to="/accommodations">
-                  <div className="account-icon">
-                    <AirlineSeatFlatAngled className="icon" />
-                    Accommodations
-                  </div>
-                </Link>
-                <Link to="/notifications">
-                  <div className="account-icon">
-                    <span>
-                      <Notifications className="icon" />
-                      {unreadNotifs === 0 ? null : (<span className="notif-number">{unreadNotifs}</span>)}
-                    </span>
-                    {/* Notifications */}
-                    <NavDropdown className="nav-drop nav-drop-notif" title="Notifications" id="basic-nav-dropdown" alignRight>
-                      {unreadNotifs === 0 && <NavDropdown.Item className="dropdown-item">No new notifications!</NavDropdown.Item>}
-                      {unreadNotifs > 0 && (
-                        <>
-                          <NavDropdown.Item data-test="mark-all-click" className="dropdown-item text-primary font-weight-bold text-right" onClick={() => this.markAllNotifs()}><u>Mark All as Read</u></NavDropdown.Item>
-                          <NavDropdown.Divider />
-                          {notifsData && notifsData.sort((recent, old) => moment(`${old.createdAt}`) - moment(`${recent.createdAt}`)).slice(0, 10).filter((notif) => !notif.isRead).map((notif) => (
-                            <NavDropdown.Item key={notif.id} className="dropdown-item font-weight-bold">
-                              {notif.activity.substring(0, notif.activity.indexOf('.'))}
-                              {'.'}
-                              <br />
-                              <u>
-                                <Link data-test="link-click" className="text-underline" to={`/${notif.entity}s/${notif.entityId}`} onClick={() => this.markLink(notif)}>
-                                  View
+    const menuBar = (
+      <div className="nav-container">
+        <Navbar
+          fixed="top"
+          data-test="menu-test"
+          bg="primary"
+          variant="dark"
+          expand="lg"
+          className="top-navbar"
+          expanded={navExpanded}
+          onToggle={this.toggleExpanded}
+        >
+          <Link to="/">
+            <Navbar.Brand>
+              <img src={barefootLogo} className="navbar-logo" alt="barefoot nomad" />
+              {' '}
+              Barefoot Nomad
+            </Navbar.Brand>
+          </Link>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              {
+                links.map((link) => {
+                  if (link.midlleware) {
+                    return (
+                      <Link to={link.path} key={link.id} onClick={this.toggleExpanded}>
+                        <div className="account-icon">
+                          {link.icon}
+                          <span>{link.label}</span>
+                        </div>
+                      </Link>
+                    );
+                  }
+                })
+              }
+              <Link to="/notifications">
+                <div className="account-icon">
+                  <span>
+                    <Notifications className="icon" />
+                    {unreadNotifs === 0 ? null : (<span className="notif-number">{unreadNotifs}</span>)}
+                  </span>
+                  <NavDropdown className="nav-drop nav-drop-notif space" title="Notifications" id="basic-nav-dropdown" alignRight>
+                    {unreadNotifs === 0 && <NavDropdown.Item className="dropdown-item">No new notifications!</NavDropdown.Item>}
+                    {unreadNotifs > 0 && (
+                      <>
+                        <NavDropdown.Item data-test="mark-all-click" className="dropdown-item text-primary font-weight-bold text-right" onClick={() => this.markAllNotifs()}><u>Mark All as Read</u></NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        {notifsData && notifsData.sort((recent, old) => moment(`${old.createdAt}`) - moment(`${recent.createdAt}`)).slice(0, 10).filter((notif) => !notif.isRead).map((notif) => (
+                          <NavDropdown.Item key={notif.id} className="dropdown-item font-weight-bold">
+                            {notif.activity.substring(0, notif.activity.indexOf('.'))}
+                            {'.'}
+                            <br />
+                            <u>
+                              <Link
+                                data-test="link-click"
+                                className="text-underline"
+                                to={`/${notif.entity}s/${notif.entityId}`}
+                                onClick={() => {
+                                  this.toggleExpanded();
+                                  this.markLink(notif);
+                                }}
+                              >
+                                View
                                   {' '}
-                                  {notif.entity}
-                                </Link>
-                              </u>
-                              <small className="text-muted float-right text-lowercase">
-                                {moment(`${notif.createdAt}`).fromNow()}
-                              </small>
-                            </NavDropdown.Item>
-                          ))}
-                        </>
-                      )}
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item className="text-primary text-center ">
-                        <Link className="font-weight-bold" to="/notifications">
-                          <u>View All</u>
-                        </Link>
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  </div>
-                </Link>
-                <Link to="/profile">
-                  <div className="account-icon dropdown">
+                                {notif.entity}
+                              </Link>
+                            </u>
+                            <small className="text-muted float-right text-lowercase">
+                              {moment(`${notif.createdAt}`).fromNow()}
+                            </small>
+                          </NavDropdown.Item>
+                        ))}
+                      </>
+                    )}
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item className="text-primary text-center ">
+                      <Link className="font-weight-bold" to="/notifications" onClick={this.toggleExpanded}>
+                        <u>View All</u>
+                      </Link>
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
+              </Link>
+              <Link to="/profile">
+                <div className="account-icon">
+                  <span>
                     <img src={(data && data.profile) && (data.profile.image)} className="icon menu-photo" />
-                    <NavDropdown className="nav-drop mr-3" title={(data && data.profile) && (data.profile.username)} id="basic-nav-dropdown" alignRight>
-                      <NavDropdown.Item className="dropdown-item" href="/profile">Profile</NavDropdown.Item>
-                      {checkHost() ? null : <NavDropdown.Item><Link to="/community">Community Chat</Link></NavDropdown.Item>}
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</NavDropdown.Item>
-                    </NavDropdown>
-                  </div>
-                </Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-          <div style={{ marginBottom: '100px' }} />
-        </>
-      );
-    }
-    return null;
+                  </span>
+                  <NavDropdown className="nav-drop nav-drop-notif space" title={(data && data.profile) && (data.profile.username)} id="basic-nav-dropdown" alignRight>
+                    <NavDropdown.Item className="dropdown-item" href="/profile" onClick={this.toggleExpanded}>Profile</NavDropdown.Item>
+                    {checkHost() ? null : <NavDropdown.Item><Link to="/community" onClick={this.toggleExpanded}>Community Chat</Link></NavDropdown.Item>}
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</NavDropdown.Item>
+                  </NavDropdown>
+                </div>
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      </div>
+    );
+    return (displayMenu) ? menuBar : null;
   }
 }
 

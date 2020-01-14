@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Container, Row, Col, Button,
+  Container, Row, Col, Button, Spinner,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -45,10 +45,11 @@ export class Notifications extends Component {
             <Breadcrumbs itemsArray={['> Home', 'Notifications']} />
           </Col>
         </Row>
-
-        <Row className="text-center mx-auto">
-          {isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : ''}
-        </Row>
+          {isLoading ? (
+<div className="d-flex justify-content-center">
+        <Spinner animation="grow" size="lg" variant="primary" />
+</div>
+          ) : ''}
 
         {notifsData && (
           <Row className="bg-white rounded">
