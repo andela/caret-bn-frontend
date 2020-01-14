@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import {
-  Row, Button, Modal, Col,
+  Row, Button, Modal, Col, Spinner,
 } from 'react-bootstrap';
 import { CheckCircleOutlineOutlined, HighlightOffOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -47,7 +47,7 @@ export class Confirm extends Component {
               <h5>
                 Processing
                 {' '}
-                <i className="fas fa-spinner fa-pulse" />
+                <Spinner animation="grow" size="lg" variant="primary" />
               </h5>
             </div>
           ) : (

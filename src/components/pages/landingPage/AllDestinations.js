@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Spinner } from 'react-bootstrap';
 import { getLocations, getTopDestinations } from '../../../actions/locationActions';
 import HighRatedAccommodation from './HighRatedAccommodations';
 
@@ -29,7 +29,11 @@ export class AllDestinations extends Component {
 
       return (
       <div className="landing-page">
-        <Row>{ isLoading ? <i className="fas fa-spinner fa-pulse loader-big" /> : '' }</Row>
+{ isLoading ? (
+<div className="d-flex justify-content-center">
+        <Spinner animation="grow" size="lg" variant="primary" />
+</div>
+) : '' }
         <Row>
           <Col xs={12} md={8} className="destinations">
             {topDestinationData && (
