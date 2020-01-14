@@ -38,7 +38,7 @@ describe('Login Action Tests ', () => {
         expect(calledAction[0].type).toEqual(LOGIN_SUCCESS)
     });
 
-    xit('Should fail to login ', async () => {
+    it('Should fail to login ', async () => {
         moxios.wait(async () => {
             const request = moxios.requests.mostRecent();
             request.respondWith(loginFailure);

@@ -13,6 +13,9 @@ const bookingsType = (type, payload) => ({
 
 const token = getToken();
 
+const host = window.location.origin;
+
+
 const headers = {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
@@ -31,7 +34,7 @@ export const getPendingBookings = () => (dispatch) => backendCall.get('/accommod
   dispatch(bookingsType(GET_PENDING_BOOKINGS_ERROR, error));
 });
 
-export const approveBooking = (id) => (dispatch) => backendCall.patch(`/accommodations/bookings/approve/${id}`, {}, { headers }).then((response) => {
+export const approveBooking = (id) => (dispatch) => backendCall.patch(`/accommodations/bookings/approve/${id}`, { host }, { headers }).then((response) => {
   dispatch(bookingsType(APPROVE_BOOKING, response.data));
   return dispatch(bookingsType(SHOW_ALERT));
 }).catch((error) => {
@@ -47,7 +50,7 @@ export const rejectBooking = (id) => (dispatch) => backendCall.patch(`/accommoda
   dispatch(bookingsType(SHOW_ALERT));
 });
 export const BookAccommodation = (checkInDate, checkOutDate, accomodationId, roomsNumber) => (dispatch) => backendCall.patch('/accommodations/book', {
-  checkInDate, checkOutDate, roomsNumber, accomodationId,
+  checkInDate, checkOutDate, roomsNumber, accomodationId, host,
 }, { headers })
   .then((res) => {
     const response = res.data;

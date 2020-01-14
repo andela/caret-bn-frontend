@@ -29,7 +29,7 @@ export class MyBookings extends Component {
     switch (status.id) {
       case 1:
         return (
-          <Row className="font-weight-bold">
+          <Row className="pl-4 font-weight-bold">
             Status:
             {' '}
             <span style={{ color: '#C2A90F' }} className="pl-1">
@@ -40,7 +40,7 @@ export class MyBookings extends Component {
         );
       case 2:
         return (
-          <Row className="font-weight-bold">
+          <Row className="pl-4 font-weight-bold">
             Status:
             {' '}
             <span className="text-danger pl-1">
@@ -51,7 +51,7 @@ export class MyBookings extends Component {
         );
       default:
         return (
-          <Row className="font-weight-bold">
+          <Row className="pl-4 font-weight-bold">
             Status:
             {' '}
             <span className="text-success pl-1">
@@ -108,7 +108,7 @@ export class MyBookings extends Component {
             </Row>
           </Container>
         </Row>
-        <Row className="">
+        <Row className="" style={{ margin: '0 1px' }}>
           { filtered.length === 0 && <div>No Bookings</div> }
           {filtered.map((booking, index) => (
             <Card className="booking-card" data-test="booking-card">
@@ -119,19 +119,19 @@ export class MyBookings extends Component {
               </Card.Header>
               <Card.Body>
                 <Card.Text>
-                  <Row>
+                  <Row className="pl-4">
                     <span className="font-weight-bold pr-1">Space Required:</span>
                     {' '}
                     {booking.bookedSpace}
                     {' '}
                     rooms
                   </Row>
-                  <Row>
+                  <Row className="pl-4">
                   <span className="font-weight-bold pr-1">Check In:</span>
                     {' '}
                     {booking.checkIn}
                   </Row>
-                  <Row>
+                  <Row className="pl-4">
                   <span className="font-weight-bold pr-1">Check Out:</span>
                     {' '}
                     {booking.checkOut}

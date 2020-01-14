@@ -89,7 +89,7 @@ export class OneBooking extends Component {
               <Card.Body>
                 <Card.Text>
                   <Row>
-                    <Col md={6} className="description">
+                    <Col xs={12} sm={12} md={6} lg={6} className="description">
                         <Row>
                           <span className="font-weight-bold pr-1">Space Required:</span>
                           {' '}
@@ -109,7 +109,7 @@ export class OneBooking extends Component {
                         </Row>
                         {this.renderStatus(oneBooking.data.status)}
                     </Col>
-                    <Col md={6}>
+                    <Col>
                       <img style={{ width: '100%' }} src={(typeof (oneBooking.data.accommodation.images) === 'string') ? oneBooking.data.accommodation.images : oneBooking.data.accommodation.images[0]} alt="accommodation" />
                     </Col>
                   </Row>

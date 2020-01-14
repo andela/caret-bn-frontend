@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-restricted-globals */
 import React, { Component } from 'react';
 import {
@@ -17,6 +20,7 @@ import barefootLogo from '../../assets/images/foot-print.png';
 import { GetUserProfile } from '../../actions/profileAction';
 import { getNotifsAction, markAllNotifAction, markOneNotifAction } from '../../actions/notificationsActions';
 import authHelper, { checkHost } from '../../helpers/authHelper';
+import initSocketNotif from '../../helpers/socketNotif';
 
 const { checkSupplier, checkAdmin, checkManager } = authHelper;
 
@@ -26,6 +30,7 @@ export class MenuComponent extends Component {
   };
 
   async componentDidMount() {
+    initSocketNotif();
     const { props } = this;
     await props.GetUserProfile();
     await props.getNotifsAction();
@@ -203,7 +208,7 @@ export class MenuComponent extends Component {
                 </div>
               </Link>
               <Link to="/profile">
-                <div className="account-icon">
+                <div className="account-icon dropdown">
                   <span>
                     <img src={(data && data.profile) && (data.profile.image)} className="icon menu-photo" />
                   </span>
@@ -227,6 +232,7 @@ export class MenuComponent extends Component {
 MenuComponent.propTypes = {
   pathname: PropTypes.string,
   notifsData: PropTypes.any,
+  data: PropTypes.any,
   GetUserProfile: PropTypes.func.isRequired,
   getNotifsAction: PropTypes.func.isRequired,
   markAllNotifAction: PropTypes.func.isRequired,

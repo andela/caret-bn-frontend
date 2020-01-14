@@ -57,11 +57,11 @@ describe('Notifications Test Suite', () => {
   it('Should return initial data', () => {
     const initialState = {
       allNotifs: {
-        notifsData: null,
+        notifsData: [],
         notifsDataError: null,
       }
     };
-    expect(mapStateToProps(initialState).notifsData).toEqual(null);
+    expect(mapStateToProps(initialState).notifsData).toEqual([]);
   });
 
 });

@@ -11,11 +11,13 @@ const requestType = (type, payload) => ({
   payload,
 });
 
+const host = window.location.origin;
+
 const headers = {
   Authorization: `Bearer ${token}`,
 };
 
-export const sendRequest = (request) => (dispatch) => backendCall.post('/requests', request, { headers }).then((response) => {
+export const sendRequest = (request) => (dispatch) => backendCall.post('/requests', { ...request, host }, { headers }).then((response) => {
   dispatch(requestType(MAKE_REQUEST_SUCCESS, response.data));
   dispatch(requestType(SHOW_ALERT));
 }).catch((error) => {

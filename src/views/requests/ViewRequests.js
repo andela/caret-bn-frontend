@@ -60,7 +60,7 @@ export class ViewRequests extends Component {
   renderResults = (data, dataError, currentPage) => {
     const start = (currentPage - 1) * 6;
     return (
-      <div>
+      <div className="mx-2">
         { data && data.length === 0 && (
           <Row>
             No request
