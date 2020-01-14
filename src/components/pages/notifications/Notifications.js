@@ -51,12 +51,7 @@ export class Notifications extends Component {
         </Row>
 
         {notifsData && (
-          <Row className="bg-white">
-            {/* <Row classname="text-left">
-              <Button className="btn-sm" onClick={() => this.markAllUnread()}>
-              {isLoading ? <i style={{ fontSize: '20px' }} className="fas fa-spinner fa-pulse" /> : 'Mark All as Unread'}
-              </Button>
-            </Row> */}
+          <Row className="bg-white rounded">
               {notifsData.map((item) => (
                 <NotificationItem className="notif-item" item={item} />
               ))}

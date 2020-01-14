@@ -20,6 +20,7 @@ export const signupAction = (userData) => (dispatch) => backendCall.post('/users
   })
   .catch((err) => {
     dispatch(authType(SIGNUP_FAIL, err.response.data));
+    dispatch(authType(SHOW_ALERT));
   });
 
 const userLogin = ({ email, password }) => async (dispatch) => {

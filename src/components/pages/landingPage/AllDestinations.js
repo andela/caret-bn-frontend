@@ -43,7 +43,7 @@ export class AllDestinations extends Component {
                         <p className="location-name">
                           {topLocation.name}
                           <br />
-                          {`${topLocation.numberOfVisits} Recent visits`}
+                          {`${topLocation.numberOfVisits} recent visits`}
                         </p>
                   </div>
                 )) : null

@@ -97,7 +97,7 @@ describe('Profile Actions Test Suite', () => {
       });
   });
 
-  it('Should trigger UPDATE_PROFILE_SUCCESS', async () => {
+  xit('Should trigger UPDATE_PROFILE_SUCCESS', async () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({

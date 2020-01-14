@@ -72,7 +72,7 @@ export class MyBookings extends Component {
     const toFilter = bookings;
     let filtered;
     if (filterState) {
-      filtered = toFilter.data.filter((notif) => notif.status.id === filterState);
+      filtered = toFilter.data.filter((booking) => booking.status.id === filterState);
     } else {
       filtered = toFilter.data;
     }
@@ -85,29 +85,31 @@ export class MyBookings extends Component {
           </Col>
         </Row>
         <Row className="center-items">
-        <Container>
-        <Row>
-          <ButtonGroup size="sm">
-            <Button variant="outline-secondary">Filter By Status</Button>
-            <DropdownButton
-              alignRight
-              className="no-round-left"
-              title={options[filterState]}
-              id="document-type"
-              onSelect={(eventKey, event) => this.setState({ filterState: parseInt(eventKey, 10) })}
-              variant={variants[filterState]}
-              style={{ borderTopLeftRadius: '0' }}
-            >
-              {options.map((opt, i) => (
-                <Dropdown.Item key={i} eventKey={i}>
-                  {opt}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-          </ButtonGroup>
+          <Container>
+            <Row>
+              <ButtonGroup size="sm">
+                <Button variant="outline-secondary">Filter By Status</Button>
+                <DropdownButton
+                  alignRight
+                  className="no-round-left"
+                  title={options[filterState]}
+                  id="document-type"
+                  onSelect={(eventKey, event) => this.setState({ filterState: parseInt(eventKey, 10) })}
+                  variant={variants[filterState]}
+                  style={{ borderTopLeftRadius: '0' }}
+                >
+                  {options.map((opt, i) => (
+                    <Dropdown.Item key={i} eventKey={i}>
+                      {opt}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </ButtonGroup>
+            </Row>
+          </Container>
         </Row>
-        </Container>
-        <Row className="centered-flex">
+        <Row className="">
+          { filtered.length === 0 && <div>No Bookings</div> }
           {filtered.map((booking, index) => (
             <Card className="booking-card" data-test="booking-card">
               <Card.Header style={{ textDecoration: 'none' }} className="text-primary font-weight-bold">
@@ -147,7 +149,6 @@ export class MyBookings extends Component {
               </Card.Footer>
             </Card>
           ))}
-        </Row>
         </Row>
       </Container>
     );
