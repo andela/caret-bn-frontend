@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 const wrapper = shallow(<NewAccommodation  />);
 
-describe('Accommodations view Test Suite', () => {
+describe('Accommodations View Test Suite', () => {
   it('Should Render Accommodations Component', () => {
     expect(wrapper.exists()).toBe(true);
   });

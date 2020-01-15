@@ -14,7 +14,6 @@ import Messages from './Messages';
 import { getChatHistory } from '../../../actions/chatActions';
 import Breadcrumbs from '../../global/Breadcrumbs';
 
-
 class CommunityChat extends Component {
   state={
     stateSocket: '',

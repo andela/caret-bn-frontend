@@ -83,6 +83,7 @@ const mainState = {
        component.instance().closeEditMode({  preventDefault: jest.fn()});
        component.instance().actionSwitch();
        component.instance().handleChange({ target: { comment: {}, id: 1 }, preventDefault: jest.fn()});
+       component.setProps({ editData: true });
     });
 
     it('Should return initial data', () => {

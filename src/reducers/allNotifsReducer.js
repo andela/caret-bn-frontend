@@ -1,8 +1,9 @@
-import { GET_ALL_NOTIF_SUCCESS, GET_ALL_NOTIF_ERROR } from '../actions/types';
+import { GET_ALL_NOTIF_SUCCESS, GET_ALL_NOTIF_ERROR, NEW_NOTIFICATION } from '../actions/types';
 
 const initialState = {
-  notifsData: null,
+  notifsData: [],
   notifsDataError: null,
+  newNotif: null,
 };
 
 export default (state = initialState, action) => {
@@ -16,8 +17,14 @@ export default (state = initialState, action) => {
     case GET_ALL_NOTIF_ERROR:
       return {
         ...state,
-        notifsData: null,
+        notifsData: [],
         notifsDataError: action.payload,
+      };
+    case NEW_NOTIFICATION:
+      return {
+        ...state,
+        newNotif: action.payload,
+        notifsData: [...state.notifsData, action.payload],
       };
     default:
       return {

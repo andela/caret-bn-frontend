@@ -31,6 +31,8 @@ const mainState = {
 const props = {
   props: requestsMocks.getLocationsProps,
   getLocations: jest.fn(),
+  resetPageAction: jest.fn(),
+  searchRequestAction: jest.fn(),
 }
 
 const testStore = (state) => {
@@ -69,6 +71,7 @@ describe('SearchBar Test Suite', () => {
     const statusId = { target: { name: 'statusId', value: '1' } };
     component.find('[data-test="status-id"]').simulate('change', statusId);
     component.find('[data-test="search-request"]').simulate('click');
+    component.find('[data-test="stats-request"]').simulate('click');
     expect(handleSubmitSpy).toReturn();
   });
 

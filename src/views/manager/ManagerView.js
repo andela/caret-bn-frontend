@@ -57,7 +57,7 @@ export class ManagerView extends Component {
     return (
       <>
       {isLoading ? null : (
-        <div>
+      <div className="mx-2">
           { data && data.length === 0 && (
             <Row>
               No request

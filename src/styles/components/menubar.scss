@@ -41,6 +41,13 @@
 		float: left;
 		margin-left: -7rem;
 		margin-top: .5rem;
+
+		a {
+				a {
+					padding: 0 0;
+				}
+			
+		}
 	}
 
 	a {
@@ -72,6 +79,18 @@
 			margin: 0 0;
 			padding: 0 0;
 		}
+
+		.dropdown-menu {
+			position: static;
+			float: left;
+			margin-left: -7rem;
+			margin-top: .5rem;
+			a {
+				padding: 0 25px;
+			}
+		}
+	
+		
 	}
 	.account-icon {
 		flex-direction: column;

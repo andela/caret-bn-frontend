@@ -26,7 +26,7 @@ describe('Signup Actions Test Suite', () => {
     moxios.uninstall(backendCall);
   });
 
-  xit('Should run trigger fail', async (done) => {
+  it('Should run trigger fail', async (done) => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({

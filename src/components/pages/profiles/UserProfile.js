@@ -145,7 +145,6 @@ export class UserProfile extends Component {
     } = this.state;
 
     const { data, dataError, statesss } = props;
-    console.log('data ===> ', data);
 
     return (
       <div className="user-profile">

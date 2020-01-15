@@ -1,6 +1,6 @@
 {
 	"testRegex": "((\\.|/*.)(spec))\\.js?$",
-	"setupFilesAfterEnv": [ "<rootDir>/jest.setup.js" ],
+	"setupFilesAfterEnv": [ "<rootDir>/jest.setup.js", "<rootDir>/setup.js" ],
 	"collectCoverageFrom": [
 		"src/**/*.{js,jsx,ts,tsx}",
 		"!<rootDir>/node_modules/",

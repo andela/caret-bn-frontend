@@ -1,12 +1,13 @@
 import allNotifsReducer from '../../reducers/allNotifsReducer';
-import { GET_ALL_NOTIF_SUCCESS, GET_ALL_NOTIF_ERROR } from '../../actions/types';
+import { GET_ALL_NOTIF_SUCCESS, GET_ALL_NOTIF_ERROR, NEW_NOTIFICATION } from '../../actions/types';
 
 describe('All Notifications Reducer Test Suite', () => {
   it('Should return default state', () => {
     const newState = allNotifsReducer(undefined, {});
     expect(newState).toEqual({
-      "notifsData": null,
+      "notifsData": [],
       "notifsDataError": null,
+      "newNotif": null,
     });
   });
 
@@ -24,6 +25,7 @@ describe('All Notifications Reducer Test Suite', () => {
     expect(returnedSate).toEqual({
       "notifsData": action.payload.data,
       "notifsDataError": null,
+      "newNotif": null,
     })
   });
 
@@ -39,8 +41,22 @@ describe('All Notifications Reducer Test Suite', () => {
     }
     const returnedSate = allNotifsReducer(undefined, action);
     expect(returnedSate).toEqual({
-      "notifsData": null,
+      "notifsData": [],
       "notifsDataError": action.payload,
+      "newNotif": null,
+    });
+  });
+
+  it('Should return NEW_NOTIFICATION', () => {
+    const action = {
+      type: NEW_NOTIFICATION,
+      payload: {},
+    }
+    const returnedSate = allNotifsReducer(undefined, action);
+    expect(returnedSate).toEqual({
+      "notifsData": [action.payload],
+      "notifsDataError": null,
+      "newNotif": action.payload,
     });
   });
 

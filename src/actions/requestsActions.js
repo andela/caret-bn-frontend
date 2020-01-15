@@ -12,6 +12,9 @@ const requestType = (type, payload) => ({
 
 const token = getToken();
 
+const host = window.location.origin;
+
+
 const headers = {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
@@ -41,7 +44,7 @@ export const searchRequestAction = (searchParams) => (dispatch) => backendCall.g
     dispatch(requestType(SEARCH_REQUESTS_FAIL, error.response.data));
   });
 
-export const processRequestAction = (action, id) => (dispatch) => backendCall.patch(`/requests/manager/${action}/${id}`, {}, { headers })
+export const processRequestAction = (action, id) => (dispatch) => backendCall.patch(`/requests/manager/${action}/${id}`, { host }, { headers })
   .then((response) => {
     dispatch(requestType(PROCESS_REQUEST_SUCCESS, response.data));
   })
