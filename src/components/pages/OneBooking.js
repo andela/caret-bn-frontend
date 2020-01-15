@@ -66,6 +66,10 @@ export class OneBooking extends Component {
     const { oneBooking } = props;
     const { isLoading } = state;
 
+    if (oneBooking) {
+      document.title = `Barefoot Nomad - Bookings - ${oneBooking.data.accommodation.name}`;
+    }
+
     return (
       <Container fluid>
         <Row>

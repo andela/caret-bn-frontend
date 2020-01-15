@@ -168,6 +168,7 @@ export class MyBookings extends Component {
   )
 
   render() {
+    document.title = 'Barefoot Nomad - Bookings';
     const { isLoading } = this.state;
     const { status } = this.props;
 

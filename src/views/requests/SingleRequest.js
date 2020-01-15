@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -149,6 +150,9 @@ export class SingleRequest extends Component {
     } = props;
     const { isLoading, isDisabled } = this.state;
     const id = singleData && singleData.requester.id;
+
+    document.title = `Barefoot Nomad - Request ${requestId}`;
+
     return (
       <>
         {checkSupplier() && <Redirect to="/" />}

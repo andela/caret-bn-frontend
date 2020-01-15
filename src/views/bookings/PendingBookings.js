@@ -182,6 +182,7 @@ class PendingBookings extends React.Component {
   )
 
   render() {
+    document.title = 'Barefoot Nomad - Pending Bookings';
     const { isLoading, userId } = this.state;
 
     const { bookings, status } = this.props;

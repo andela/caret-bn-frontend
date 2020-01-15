@@ -24,6 +24,7 @@ export class ViewUsers extends Component {
   }
 
   render() {
+    document.title = 'Barefoot Nomad - Admin';
     const { allUserData } = this.props;
     const { isLoading } = this.state;
     return (
@@ -33,11 +34,11 @@ export class ViewUsers extends Component {
         <Breadcrumbs itemsArray={['> Admin', 'Users', 'All users']} />
       </Col>
         </Row>
-{ isLoading ? (
-<div className="d-flex justify-content-center">
-        <Spinner animation="grow" size="lg" variant="primary" />
-</div>
-) : '' }
+            { isLoading ? (
+            <div className="d-flex justify-content-center">
+                    <Spinner animation="grow" size="lg" variant="primary" />
+            </div>
+            ) : '' }
             <div className="view-all-users">
               {
                 allUserData ? allUserData.data.map((user) => (

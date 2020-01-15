@@ -14,6 +14,7 @@ export class VerifyUser extends React.Component {
   }
 
   render() {
+    document.title = 'Barefoot Nomad - Verification';
     const { error, payload } = this.props.verify;
     return (
     <div>

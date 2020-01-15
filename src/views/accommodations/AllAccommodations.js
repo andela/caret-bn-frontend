@@ -4,6 +4,7 @@ import AllAccommodation from '../../components/pages/AllAccommodation';
 
 export class GetAllAccommodations extends Component {
   render() {
+    document.title = 'Barefoot Nomad - Accommodations';
     return (
       <div>
         <AllAccommodation data-test="AllAccommodation" />

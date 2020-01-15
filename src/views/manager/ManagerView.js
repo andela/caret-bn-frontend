@@ -84,7 +84,7 @@ export class ManagerView extends Component {
           <Row>
             { dataError && <Row>{dataError.message}</Row> }
           </Row>
-        </div>
+      </div>
       )}
       </>
     );
@@ -102,6 +102,7 @@ export class ManagerView extends Component {
   )
 
   render() {
+    document.title = 'Barefoot Nomad - Manage requests';
     let data;
     let dataError;
     const dataData = [];

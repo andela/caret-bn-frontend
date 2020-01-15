@@ -8,6 +8,7 @@ import { checkAdmin } from '../../helpers/authHelper';
 
 export class SpecificUSer extends Component {
   render() {
+    document.title = 'Barefoot Nomad - Admin';
     const { userId } = this.props.match.params;
     return (
             <div>

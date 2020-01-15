@@ -7,7 +7,7 @@ const GetsingleAccommodation = (props) => {
         <div>
             <SingleAccommodation data-test="singleAccommodation" slug={slug} />
         </div>
-  )
+  );
 };
 
 export default GetsingleAccommodation;

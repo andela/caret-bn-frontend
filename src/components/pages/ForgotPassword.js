@@ -26,10 +26,11 @@ handleSubmit = async (e) => {
   const { props, state } = this;
   this.setState({ isLoading: true });
   await props.resetPaswordRequest(state.email);
-  this.setState({ isLoading: false, email: ''});
+  this.setState({ isLoading: false, email: '' });
 }
 
 render() {
+  document.title = 'Barefoot Nomad - Forgot Password';
   const { email } = this.state;
   const { isLoading } = this.state;
   return (

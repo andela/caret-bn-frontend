@@ -125,6 +125,7 @@ class CreateAccommodation extends Component {
   };
 
   render() {
+    document.title = 'Barefoot Nomad - Accommodations';
     const { isLoading } = this.state;
     const { accommodationError, locations } = this.props;
     return (

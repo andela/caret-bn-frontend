@@ -278,6 +278,7 @@ class CreateRequests extends Component {
   }
 
   render() {
+    document.title = 'Barefoot Nomad - Requests';
     const { requestState, locations, bookings } = this.props;
 
     if (locations.data !== null && bookings.data !== null) {
