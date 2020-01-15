@@ -33,7 +33,7 @@ initChat = () => {
     const { allMessages } = this.state;
     const all = allMessages.concat({
       text: data.message,
-      sender: `${data.sender}: `,
+      sender: `${data.sender}`,
       type: 'received',
       time: moment().calendar(),
     });
@@ -110,17 +110,6 @@ scrollToBottom() {
 render() {
   const { allMessages, activeHistoryButton, message } = this.state;
 
-  const messageContainerStyle = () => ({
-    justifyContent: 'center',
-  });
-  const messageStyle = (type) => ({
-    backgroundColor: 'rgb(233, 235, 238)',
-    margin: '0 0.5rem',
-    padding: '0.5rem 0.5rem 0 0.5rem',
-    color: '#2f3236',
-    borderRadius: (type === 'sent' ? '1rem 1rem 0 1rem' : '0 1rem 1rem 1rem'),
-  });
-
   return (
     <>
     <Row>
@@ -128,19 +117,19 @@ render() {
         <Breadcrumbs itemsArray={['> Chat', 'Community Chat']} />
       </Col>
     </Row>
-    <div className="chatRoom">
+    <div className="chatRoom ">
       <div className="chatWindowStyle">
-      <div className=" mt-0 mb-5" id="chat-window">
+      <div className="d-flex flex-column mt-0 mb-5" id="chat-window">
         {
           allMessages.map((message, i) => (
               <Messages
                 key={i}
                 render={() => (
-                <div style={messageContainerStyle(message.type)}>
-                  <div style={messageStyle(message.type)}>
-                    <h6 style={{ margin: '5px 0', fontWeight: 'bolder' }}>{message.sender}</h6>
+                <div className={(message.type === 'sent') ? 'sent-message-box' : 'received-message-box'}>
+                  <div className="d-flex flex-column" className={(message.type === 'sent') ? 'sent-message' : 'received-message'}>
+                    <h6 style={{ margin: '3px 0', fontWeight: 'bolder', color: '#073763' }}>{message.sender}</h6>
                     <p style={{ fontSize: '15px' }}>{message.text}</p>
-                    <p style={{ textAlign: 'right', fontSize: '0.5rem' }}>{message.time}</p>
+                    <p style={{ textAlign: 'right', fontSize: '0.5rem', marginBottom: '0.5rem' }}>{message.time}</p>
                   </div>
                   <div ref={this.bottomOfChat} />
                 </div>

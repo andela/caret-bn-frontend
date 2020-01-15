@@ -14,6 +14,35 @@
     bottom: 0;
     width: 50vw;
   }
+
+  .sent-message-box{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.3rem 0;
+    padding: 0 0.5rem;
+  }
+  .received-message-box{
+    display: flex;
+    justify-content: flex-start;
+    margin: 0.3rem 0;
+    padding: 0 0.5rem;
+  }
+  .sent-message{
+    background-color: #dbdbdb;
+    width: auto;
+    max-width: 80%;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    color: #2f3236;
+    border-radius: 1rem 1rem 0 1rem;
+  }
+  .received-message{
+    background-color: rgb(233, 235, 238);
+    width: auto;
+    max-width: 80%;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    color: #2f3236;
+    border-radius: 0 1rem 1rem 1rem;
+  }
 }
 
 @media (max-width:992px){
