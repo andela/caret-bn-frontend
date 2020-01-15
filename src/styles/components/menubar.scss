@@ -3,18 +3,26 @@
 	flex-direction: row;
 	align-items: center;
 	font-size: 12px;
-	justify-content: flex-end;
+	justify-content: flex-start;
 	text-transform: uppercase;
 	color: $white;
 	&:hover {
 		color: $light;
 		text-decoration: none;
 	}
+
+	svg {
+		margin-right: 50px;
+		font-size: 30px;
+	}
+	img {
+		margin-right: 50px;
+	}
 }
 
 .sticky-nav {
-  position: sticky;
-  top: 0;
+	position: sticky;
+	top: 0;
 }
 
 .nav-drop {
@@ -29,10 +37,18 @@
 
 .navbar-nav {
 	.dropdown-menu {
-    position: static;
-    float: left;
-    margin-left: -7rem;
-    margin-top: .5rem;
+		position: static;
+		float: left;
+		margin-left: -7rem;
+		margin-top: .5rem;
+	}
+
+	a {
+		margin: 10px 0;
+		padding: 0 25px;
+	}
+	a:hover {
+		text-decoration: none;
 	}
 }
 
@@ -51,6 +67,12 @@
 }
 
 @media (min-width: 1024px) {
+	.navbar-nav {
+		a {
+			margin: 0 0;
+			padding: 0 0;
+		}
+	}
 	.account-icon {
 		flex-direction: column;
 		width: 130px;
@@ -58,5 +80,11 @@
 		.icon {
 			margin: 10px;
 		}
+		svg {
+			font-size: 2rem;
+		}
+	}
+	.space {
+		margin-top: 1.4px;
 	}
 }

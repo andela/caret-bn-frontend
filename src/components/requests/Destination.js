@@ -56,7 +56,7 @@ export default class Destination extends Component {
         <Row className="action-row">
           <Col xs={12} sm={12} md={2} lg={3}>
             <Form.Group id="formGridCheckbox">
-              <Form.Check name="isFinal" data-tag={position} type="checkbox" data-test="isFinal" label="I'm not going anywhere after this stop. (Final Destination)" onChange={() => finalMarking(position)} />
+              <Form.Check name="isFinal" data-tag={position} type="checkbox" data-test="isFinal" label="This is my Final Destination" onChange={() => finalMarking(position)} />
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={2} lg={3}>
@@ -64,7 +64,7 @@ export default class Destination extends Component {
               <IconButton data-tag={position} aria-label="delete" data-test="remove-destination" onClick={() => removeDestination(position)}>
                 <Delete fontSize="inherit" />
               </IconButton>
-              <Form.Label>Remove this from my itenerary</Form.Label>
+              <Form.Label>Remove this destination</Form.Label>
             </Form.Group>
           </Col>
         </Row>
