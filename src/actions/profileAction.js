@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import {
-  GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL,
+  GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL, SHOW_ALERT,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import 'regenerator-runtime';
@@ -41,8 +41,14 @@ export const UpdateUserProfile = (userData) => (dispatch) => backendCall.patch(`
     dispatch(
       profileType(UPDATE_PROFILE_SUCCESS, response),
     );
+    dispatch(
+      profileType(SHOW_ALERT, null),
+    );
   }).catch((error) => {
     dispatch(
       profileType(UPDATE_PROFILE_FAIL, error.response),
+    );
+    dispatch(
+      profileType(SHOW_ALERT, null),
     );
   });

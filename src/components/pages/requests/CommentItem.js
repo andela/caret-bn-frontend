@@ -113,7 +113,7 @@ export class CommentItem extends Component {
              <img src={element.user.image} className="icon menu-photo" />
              <div className="d-flex flex-column ml-3">
               <p className="small py-0 mb-0 ">{element.user.username}</p>
-              <p className="small py-0 mb-0 text-secondary"><small>{moment(element.updatedAt).fromNow()}</small></p>
+              <p className="small py-0 mb-0 text-secondary"><small>{moment(element.createdAt).fromNow()}</small></p>
              </div>
              </div>
              <div className="d-flex justify-content-between align-items-center">

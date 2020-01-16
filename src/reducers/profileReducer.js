@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
         ...state,
         data: action.payload,
         status: 'success',
+        dataError: null,
       };
     case UPDATE_PROFILE_FAIL:
       return {

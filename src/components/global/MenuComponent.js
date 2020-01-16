@@ -207,7 +207,6 @@ export class MenuComponent extends Component {
                   </NavDropdown>
                 </div>
               </Link>
-              <Link to="/profile">
                 <div className="account-icon dropdown">
                   <span>
                     <img src={(data && data.profile) && (data.profile.image)} className="icon menu-photo" />
@@ -219,7 +218,6 @@ export class MenuComponent extends Component {
                     <NavDropdown.Item href="/login" onClick={() => { window.localStorage.removeItem('token'); }}>Logout</NavDropdown.Item>
                   </NavDropdown>
                 </div>
-              </Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
