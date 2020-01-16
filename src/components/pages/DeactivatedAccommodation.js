@@ -16,7 +16,7 @@ import isAuthenticated from '../../helpers/isAuthenticated';
 import { showAlert } from '../../actions/alertAction';
 import SearchBar from './accommodations/SearchBar';
 import AlertComponent from '../global/AlertComponent';
-import DeactivatedListItem from './accommodations/DeactivatedListItem';
+import AccommodationListItem from './accommodations/AccommodationListItem';
 
 export class DeactivatedAccommodation extends React.Component {
   state = {
@@ -64,6 +64,18 @@ export class DeactivatedAccommodation extends React.Component {
     });
   }
 
+  handleLike = async (slug, action) => {
+    const { likeUnlikeAccommodation, getDeactivatedAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await getDeactivatedAccommodation();
+  }
+
+  handleDislike = async (slug, action) => {
+    const { likeUnlikeAccommodation, getDeactivatedAccommodation } = this.props;
+    await likeUnlikeAccommodation(slug, action);
+    await getDeactivatedAccommodation();
+  }
+
   renderAcommodation() {
     const {
       accommodationDeactivatedData, searchResults, searchError, showAlert,
@@ -81,7 +93,7 @@ export class DeactivatedAccommodation extends React.Component {
     (!this.state.isSearching) ? displayItems = accommodationDeactivatedData.data : displayItems = searchResults.data;
     if (displayItems) {
       const accommodation = displayItems.map((post) => (
-        <DeactivatedListItem post={post} userId={this.state.userId} data-test="accommodation-item" />
+        <AccommodationListItem post={post} userId={this.state.userId} data-test="accommodation-item" />
       ));
       return accommodation;
     }

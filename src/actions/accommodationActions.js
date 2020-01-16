@@ -1,9 +1,10 @@
+
 import {
   ADD_ACCOMMODATION_SUCESS, ADD_ACCOMMODATION_FAILURE, ALL_ACCOMMODATION_SUCCESS, ALL_ACCOMMODATION_FAILURE,
   SINGLE_ACCOMMODATION_SUCCESS, SINGLE_ACCOMMODATION_FAILURE, UPDATE_ACCOMMODATION_SUCCESS, UPDATE_ACCOMMODATION_FAILURE,
   RESET_ACCOMMODATION_STATUS, SHOW_ALERT, LIKE_ACCOMMODATION, LIKE_ACCOMMODATION_ERROR, HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE, SEARCH_ACCOMMODATIONS,
-  SEARCH_ACCOMMODATIONS_ERROR, CLEAR_SEARCH_ERROR, DELETE_ACCOMMODATION_SUCCESS, DELETE_ACCOMMODATION_FAIL,
-  DEACTIVATED_ACCOMMODATION_SUCCESS, DEACTIVATED_ACCOMMODATION_ERROR,
+  SEARCH_ACCOMMODATIONS_ERROR, CLEAR_SEARCH_ERROR, DEACTIVATED_ACCOMMODATION_SUCCESS, DEACTIVATED_ACCOMMODATION_ERROR, ACTIVATE_ACCOMMODATION_ERROR,
+  ACTIVATE_ACCOMMODATION_SUCCESS, DELETE_ACCOMMODATION_SUCCESS, DELETE_ACCOMMODATION_FAIL,
 } from './types';
 import backendCall from '../helpers/backendCall';
 import { getToken } from '../helpers/authHelper';
@@ -17,6 +18,11 @@ const token = getToken();
 
 const headers = {
   'Content-Type': 'multipart/form-data',
+  Authorization: `Bearer ${token}`,
+};
+
+const activationHeaders = {
+  'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
 };
 
@@ -135,4 +141,19 @@ export const getDeactivatedAccommodation = () => (dispatch) => backendCall.get('
     dispatch(
       accommodationType(DEACTIVATED_ACCOMMODATION_ERROR, error.response.data),
     );
+  });
+
+export const activateAccommodation = (slug, reasons) => (dispatch) => backendCall.patch(`/accommodations/activate/${slug}`, { reasons }, { headers: activationHeaders })
+  .then((res) => {
+    const response = res.data;
+    dispatch(
+      accommodationType(ACTIVATE_ACCOMMODATION_SUCCESS, response),
+    );
+    dispatch(accommodationType(SHOW_ALERT));
+    window.location = '/accommodations';
+  }).catch((error) => {
+    dispatch(
+      accommodationType(ACTIVATE_ACCOMMODATION_ERROR, error.response.data),
+    );
+    dispatch(accommodationType(SHOW_ALERT));
   });

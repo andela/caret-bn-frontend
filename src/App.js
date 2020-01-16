@@ -20,6 +20,7 @@ import MenuComponent from './components/global/MenuComponent';
 import GetAllAccommodations from './views/accommodations/AllAccommodations';
 import GetAllDeactivatedAccommodations from './views/accommodations/AllDeactivatedAccommodation';
 import NewAccommodation from './views/accommodations/NewAccommodation';
+import ActivateAccommodations from './views/accommodations/activateAccommodation';
 import editAccommodation from './views/accommodations/editAccommodation';
 import ManagerView from './views/manager/ManagerView';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -66,6 +67,8 @@ export class App extends Component {
           <ProtectedRoute exact path="/bookings/:id" component={OneBooking} />
           <ProtectedRoute exact path="/my-bookmarks" component={Bookmarks} />
           <ProtectedRoute exact path="/community" component={CommunityChat} />
+          <ProtectedRoute path="/accommodations/activate/:slug" component={ActivateAccommodations} />
+          <ProtectedRoute path="/accommodations/deactivate/:slug" component={ActivateAccommodations} />
           <ProtectedRoute path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

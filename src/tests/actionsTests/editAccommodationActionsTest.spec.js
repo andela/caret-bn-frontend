@@ -42,6 +42,8 @@ describe('Request Actions Test Suite', () => {
       deleteStatus: null,
       accommodationDeactivatedData: [],
       accommodationDeactivatedError: {},
+      activateAccommodationData: null,
+      activateAccommodationError: null,
     }
 
     const store = testStore();

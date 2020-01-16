@@ -25,6 +25,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     });
   });
 
@@ -57,6 +59,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     })
   });
 
@@ -91,6 +95,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     })
   });
 
@@ -123,6 +129,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     })
   });
 
@@ -157,6 +165,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     })
   });
 
@@ -191,6 +201,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
 
     })
   });
@@ -227,6 +239,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     });
   });
 
@@ -262,6 +276,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     })
   });
 
@@ -297,6 +313,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     });
   });
 
@@ -331,6 +349,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     })
   });
 
@@ -366,8 +386,8 @@ describe('Create accommodation Reducer Tests ', () => {
       "deleteStatus": null,
       "accommodationDeactivatedData": [],
       "accommodationDeactivatedError": {},
+      "activateAccommodationData": null,
+      "activateAccommodationError": null,
     });
   });
-
-
 }); 

@@ -7,6 +7,7 @@ import {
   HIGH_RATED_SUCCESS, HIGH_RATED_FAILURE,
   SEARCH_ACCOMMODATIONS_ERROR, SEARCH_ACCOMMODATIONS, CLEAR_SEARCH_ERROR, DELETE_ACCOMMODATION_FAIL, DELETE_ACCOMMODATION_SUCCESS,
   DEACTIVATED_ACCOMMODATION_SUCCESS, DEACTIVATED_ACCOMMODATION_ERROR,
+  ACTIVATE_ACCOMMODATION_SUCCESS, ACTIVATE_ACCOMMODATION_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,9 @@ const initialState = {
   deleteStatus: null,
   accommodationDeactivatedError: {},
   accommodationDeactivatedData: [],
+  activateAccommodationData: null,
+  activateAccommodationError: null,
+
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -148,6 +152,21 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         accommodationDeactivatedData: null,
         accommodationDeactivatedError: payload,
+        status: 'error',
+      };
+
+    case ACTIVATE_ACCOMMODATION_SUCCESS:
+      return {
+        ...state,
+        activateAccommodationData: payload,
+        activateAccommodationError: null,
+        status: 'action_success',
+      };
+    case ACTIVATE_ACCOMMODATION_ERROR:
+      return {
+        ...state,
+        activateAccommodationData: null,
+        activateAccommodationError: payload,
         status: 'error',
       };
 

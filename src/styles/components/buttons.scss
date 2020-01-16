@@ -6,6 +6,11 @@
 	align-items: center;
 	margin: 10px 0;
 }
+.center-button {
+	display: block !important;
+	margin: 0 auto !important;
+
+}
 
 @media (min-width: 768px) {
 	.full-width-buttons {
