@@ -182,6 +182,8 @@ export class SingleAccommodation extends React.Component {
           break;
       }
 
+      document.title = `Barefoot Nomad - Accommodations - ${accommodation.name}`;
+
       return (
         <div key={accommodation.id} className="container-fluid single-container ">
           <Row className="row-between">

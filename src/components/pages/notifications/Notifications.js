@@ -31,6 +31,7 @@ export class Notifications extends Component {
   };
 
   render() {
+    document.tile = 'Barefoot Nomad - Notifications';
     const { props, state: { isLoading } } = this;
     const { notifsData } = props;
 
@@ -46,9 +47,9 @@ export class Notifications extends Component {
           </Col>
         </Row>
           {isLoading ? (
-<div className="d-flex justify-content-center">
-        <Spinner animation="grow" size="lg" variant="primary" />
-</div>
+          <div className="d-flex justify-content-center">
+                  <Spinner animation="grow" size="lg" variant="primary" />
+          </div>
           ) : ''}
 
         {notifsData && (

@@ -108,6 +108,7 @@ scrollToBottom() {
 }
 
 render() {
+  document.title = 'Barefoot Nomad - Community Chat';
   const { allMessages, activeHistoryButton, message } = this.state;
 
   return (

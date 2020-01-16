@@ -99,6 +99,7 @@ export class ViewRequests extends Component {
   )
 
   render() {
+    document.title = 'Barefoot Nomad - Requests';
     let data;
     let dataError;
     let statsData;

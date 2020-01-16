@@ -98,6 +98,7 @@ class editAccommodation extends Component {
   editFailed = (message, name) => <AlertComponent variant="danger" message={message} heading={`Unable to update ${name}`} dismissible data-test="error-alert" />
 
   render() {
+    document.title = 'Barefoot Nomad - Accommodations';
     const {
       locations, status, updateError, resetAccommodationState,
     } = this.props;

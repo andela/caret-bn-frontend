@@ -65,6 +65,7 @@ export class Login extends Component {
   };
 
   render() {
+    document.title = 'Barefoot Nomad - Login';
     const { isLoading, email, password } = this.state;
     const { dataError } = this.props || {};
 

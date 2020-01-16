@@ -139,6 +139,7 @@ export class UserProfile extends Component {
   };
 
   render() {
+    document.title = 'Barefoot Nomad - Profile';
     const { props } = this;
     const {
       isLoading, image, email, username, gender, phone, language, country, company, department, selectedFile, isReadOnly, isDisabled, status, emailNotif, appNotif,

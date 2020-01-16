@@ -67,6 +67,7 @@ export class Signup extends Component {
   };
 
   render() {
+    document.title = 'Barefoot Nomad - Register';
     const {
       email, username, password, confirmPassword, isLoading,
     } = this.state;

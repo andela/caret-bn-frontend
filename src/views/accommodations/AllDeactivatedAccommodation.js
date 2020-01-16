@@ -4,6 +4,7 @@ import DeactivatedAccommodation from '../../components/pages/DeactivatedAccommod
 
 export class GetAllDeactivatedAccommodations extends Component {
   render() {
+    document.title = 'Barefoot Nomad - Accommodations';
     return (
       <div>
         <DeactivatedAccommodation data-test="DeactivatedAccommodation" />

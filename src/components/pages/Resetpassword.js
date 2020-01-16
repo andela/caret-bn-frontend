@@ -31,10 +31,11 @@ handleSubmit = async (e) => {
 
   this.setState({ isLoading: true });
   await props.resetPasword(state.newPassword, state.confirmPassword, token);
-  this.setState({ isLoading: false, newPassword: '', confirmPassword: ''});
+  this.setState({ isLoading: false, newPassword: '', confirmPassword: '' });
 }
 
 render() {
+  document.title = 'Barefoot Nomad - Reset Password';
   const { newPassword, confirmPassword } = this.state;
   const { data } = this.props;
   const { isLoading } = this.state;
