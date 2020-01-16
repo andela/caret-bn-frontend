@@ -7,7 +7,7 @@ import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import axios from "axios";
 import sinon from "sinon";
-import CommunityChat from '../../components/pages/chat/CommunityChat';
+import CommunityChat, { mapStateToProps } from '../../components/pages/chat/CommunityChat';
 import findByTestAttribute from '../../utilities/tests/findByTestAttribute';
 import mockStore from '../../utilities/tests/mockStore';
 
@@ -61,7 +61,26 @@ describe('Chat component test suite', () => {
         });
 
         const messageInput = findByTestAttribute(wrapper, 'message');
-         messageInput.simulate('change', { target: {name: 'message', value: 'hello'},  preventDefault: jest.fn()});
-        expect(wrapper.state().message).toBe('hello');
+        const chatButton = findByTestAttribute(wrapper, 'chat-send');
+        messageInput.simulate('change', { target: {name: 'message', value: 'hello'},  preventDefault: jest.fn()});
+        wrapper.setState((state) => ({ ...state, displayEmoji: true }));
+        wrapper.instance().addEmoji({ native: 'emoji' });
+        wrapper.instance().toggleEmoji();
+        wrapper.instance().hideEmoji();
+        chatButton.simulate('click');
+        expect(wrapper.state().message).toBe('helloemoji');
     });
+
+    it('Should return initial data', () => {
+        const initialState = {
+            chat: {
+              chatHistory: null,
+              chatHistoryError: null,
+            },
+            profile: {
+                data: null,
+            },
+        };
+        expect(mapStateToProps(initialState).chatHistory).toEqual(null);
+      });
 });

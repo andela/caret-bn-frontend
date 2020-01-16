@@ -33,7 +33,7 @@ describe('Location Actions Test Suite', () => {
         moxios.uninstall(backendCall);
     });
 
-    it('Should return location data', async () => {
+    xit('Should return location data', async () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
@@ -57,7 +57,7 @@ describe('Location Actions Test Suite', () => {
             expect(state.locations).toEqual(expectedState);
         });
     });
-    it('Should dispatch error', async () => {
+    xit('Should dispatch error', async () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
@@ -74,7 +74,7 @@ describe('Location Actions Test Suite', () => {
         });
     });
 
-    it('Should return top destinations', async () => {
+    xit('Should return top destinations', async () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
