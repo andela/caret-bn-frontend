@@ -1,3 +1,5 @@
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prefer-stateless-function */
@@ -9,7 +11,9 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import SendIcon from '@material-ui/icons/Send';
+import { Send, EmojiEmotionsOutlined } from '@material-ui/icons';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker } from 'emoji-mart';
 import Messages from './Messages';
 import { getChatHistory } from '../../../actions/chatActions';
 import Breadcrumbs from '../../global/Breadcrumbs';
@@ -20,6 +24,7 @@ class CommunityChat extends Component {
     message: '',
     allMessages: [],
     activeHistoryButton: true,
+    displayEmoji: false,
   }
 
 bottomOfChat = React.createRef();
@@ -81,6 +86,20 @@ handleChange = async (e) => {
   });
 }
 
+toggleEmoji = () => {
+  this.setState((state) => ({ ...state, displayEmoji: !this.state.displayEmoji }));
+}
+
+hideEmoji = () => {
+  this.setState((state) => ({ ...state, displayEmoji: false }));
+}
+
+addEmoji = (e) => {
+  const emoji = e.native;
+  this.setState((state) => ({ ...state, message: this.state.message + emoji }));
+  this.hideEmoji();
+}
+
 sendMessage = async (e) => {
   e.preventDefault();
   const { message, stateSocket, allMessages } = this.state;
@@ -101,6 +120,7 @@ sendMessage = async (e) => {
     message: '',
   });
   this.scrollToBottom();
+  this.hideEmoji();
 }
 
 scrollToBottom() {
@@ -108,8 +128,10 @@ scrollToBottom() {
 }
 
 render() {
-  document.title = 'Barefoot Nomad - Community Chat';
-  const { allMessages, activeHistoryButton, message } = this.state;
+  document.title = 'Barefoot Nomad - Chat';
+  const {
+    allMessages, activeHistoryButton, message, displayEmoji,
+  } = this.state;
 
   return (
     <>
@@ -120,7 +142,7 @@ render() {
     </Row>
     <div className="chatRoom ">
       <div className="chatWindowStyle">
-      <div className="d-flex flex-column mt-0 mb-5" id="chat-window">
+      <div className="d-flex flex-column mt-0 mb-5" id="chat-window" onClick={this.hideEmoji}>
         {
           allMessages.map((message, i) => (
               <Messages
@@ -140,23 +162,31 @@ render() {
         }
       </div>
       <div className="messabe-box">
-          <Form>
-            <InputGroup>
-            {activeHistoryButton ? <Button onClick={this.seeChatHistory}>See history</Button> : null }
-              <FormControl className="chat-message" data-test="message" placeholder="Type your message here..." name="message" onChange={this.handleChange} value={this.state.message} required />
-                <InputGroup.Append>
-                  <Button
-                    type="submit"
-                    className="button-normal"
-                    onClick={this.sendMessage}
-                    style={{ flex: '.5' }}
-                    disabled={(message === '')}
-                  >
-                  <SendIcon />
-                  </Button>
-                </InputGroup.Append>
-            </InputGroup>
-          </Form>
+        {displayEmoji && <Picker title="Pick your emoji…" emoji="point_up" onSelect={(e) => this.addEmoji(e)} />}
+        <Form>
+          <InputGroup>
+          {activeHistoryButton ? <Button onClick={this.seeChatHistory}>See history</Button> : null }
+            <InputGroup.Prepend>
+              <InputGroup.Text>
+                <EmojiEmotionsOutlined onClick={this.toggleEmoji} />
+              </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl className="chat-message" data-test="message" placeholder="Type your message here..." name="message" onChange={this.handleChange} value={this.state.message} onClick={this.hideEmoji} required />
+            <InputGroup.Append>
+              <Button
+                data-test="chat-send"
+                type="submit"
+                className=""
+                onClick={this.sendMessage}
+                style={{ flex: '.5' }}
+                disabled={(message === '')}
+                variant="primary"
+              >
+              <Send />
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </Form>
       </div>
       </div>
     </div>
@@ -171,7 +201,7 @@ CommunityChat.propTypes = {
   userData: PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   chatHistory: state.chat.chatHistory,
   chatHistoryError: state.chat.chatHistoryError,
   userData: state.profile.data,
